@@ -1,0 +1,30 @@
+<% content_for :ibox_content do %>
+<h1>Quantitativo de jovens aguardando vaga</h1>
+<table class="table table-hover table-sm sortable">
+  <thead>
+    <tr>
+      <th>Nº Recepção</th>
+      <th>Nome</th>
+      <th>Nascimento</th>
+      <th>Idade</th>
+      <th>Apreensão</th>
+      <th>Pontuação</th>
+      <th>Data Início</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @lista_de_espera_vagas_2.each do |lista| %>
+    <tr>
+      <td><%= lista.socioeduk_jovem_recepcao_id %></td>
+      <td><%= lista.nome %></td>
+      <td><%= lista.data_nascimento %></td>
+      <td><%= lista.idade %></td>
+      <td><%= lista.apreensao %></td>
+      <td><%= lista.pontuacao_bkp %></td>
+      <td><%= lista.data_espera %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end -%>
+<%= render partial: 'common/box', locals: { title: I18n.t('activerecord.models.unidade_socioeducativa', default: UnidadeSocioeducativa.model_name.plural.humanize.upcase) } %>

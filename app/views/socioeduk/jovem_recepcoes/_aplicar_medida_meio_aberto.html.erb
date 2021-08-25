@@ -1,0 +1,67 @@
+<%= form_for(:frm, :url => {action: :aplicar_medida_meio_aberto}, html: { class: 'form-horizontal' }) do |f| %>
+  <%= f.hidden_field :socioeduk_jovem_recepcao_id, :value => params[:jovem_recepcao_id].to_i %>
+
+  <div class="form-group">
+    <div class="col-sm-12 col-offset-1">
+      <label class="required">Tipo medida</label>
+      <%= f.collection_select :socioeduk_tipo_medida_socioeducativa_id, Socioeduk::TipoMedidaSocioeducativa.where(tipo_medida: "ABERTO"), :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control', onclick: 'habilitar_botao(); liberar_botao_salvar();' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-3 col-offset-1">
+      <label class="required">Data saída</label>
+      <%= f.text_field :data_movimentacao, class: 'form-control', onblur: 'liberar_botao_salvar()' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12 col-offset-1">
+      <label>Observação</label>
+      <%= f.text_area :observacao_saida, class: 'form-control', style:'height: 80px;', disabled: true, onblur: 'liberar_botao_salvar()' %>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <div class="col-sm-12">
+      <%= f.submit "Salvar", class: 'btn btn-primary', data: { disable_with: disable_with }, id: 'salvar_meio_aberto', disabled: 'true' %>
+    </div>
+  </div>
+<% end %>
+
+
+<script>
+  $(document).ready(function() {
+    $("#frm_data_movimentacao").mask("99/99/9999");
+  });
+
+  function liberar_botao_salvar(){
+    tipo_medida = $('#frm_socioeduk_tipo_medida_socioeducativa_id').find(":selected").val();
+    observacao = $('#frm_observacao_saida').val();
+    data = $('#frm_data_movimentacao').val();
+
+    if(tipo_medida == 17){
+      if(tipo_medida > 0 && observacao != '' && data != '')
+        $('#salvar_meio_aberto').prop("disabled", false);
+      else
+        $('#salvar_meio_aberto').prop("disabled", true);
+    }
+    else{
+      if(tipo_medida > 0 && data != '')
+        $('#salvar_meio_aberto').prop("disabled", false);
+      else
+        $('#salvar_meio_aberto').prop("disabled", true); 
+    }
+
+  }
+
+  function habilitar_botao(){
+    var tipo_medida = $('#frm_socioeduk_tipo_medida_socioeducativa_id').find(":selected").val();
+    if(tipo_medida == 17){
+      $('#frm_observacao_saida').prop("disabled", false);
+      $('#salvar_meio_aberto').prop("disabled", true);
+    }
+    else{
+      $('#frm_observacao_saida').prop("disabled", true);
+      $('#salvar_meio_aberto').prop("disabled", false);
+    }
+  }
+</script>

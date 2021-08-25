@@ -1,0 +1,43 @@
+<% content_for :title do %>
+  <%= t('.title', default: @socioeduk_doc_recepcao.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t('.title', default: @socioeduk_doc_recepcao.class.model_name.human ) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                                    
+                  
+                  <th><%= Socioeduk::DocRecepcao.human_attribute_name :doc_recepcao %></th>
+                                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_doc_recepcao.doc_recepcao %></td>
+                                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', socioeduk_doc_recepcoes_path, class: 'btn btn-default') %>
+<%= link_to 'Editar', edit_socioeduk_doc_recepcao_path(@socioeduk_doc_recepcao), class: 'btn btn-success' %>

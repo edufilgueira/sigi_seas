@@ -1,0 +1,110 @@
+<% content_for :title do %>
+    <%#= t('.title', default: @qtd_infracoes_tentada_consumadas.class.model_name.human ) %>
+  <% end -%>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+  
+        <div class="ibox-title">
+          <h5>Mapeamento de Atendimentos</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="close-link">
+              <i class="fa fa-times"></i>
+            </a>
+          </div>
+        </div>
+  
+        <div class="ibox-content">
+          <div class="row">
+          <%= form_for(:frm, :url => {controller: :relatorios, action: :mapeamento_atendimentos}, method: 'POST') do |f| %>
+            <div class="form-group">
+              <div class="col-sm-2"">
+                <%= f.number_field :ano, placeholder: "Ano Ex: 2020", class: "form-control", value: @ano%>
+              </div>
+              <div class="col-sm-2"">
+                <%= f.select :situacao, ['Admitido', 'Recepcionado'], selected: @situacao %>
+              </div>
+              <div class="col-sm-2">
+                <%= f.submit 'Buscar', class: "btn btn-primary" %>
+              </div><br><br><br><br>
+            </div>
+          <% end %>
+            
+            <style>
+              .tdr{border-right: solid 1px #C0C0C0;text-align: center;}
+            </style>
+            
+            <% if(!@movimentacoes.nil?) %>
+              <h1><%= @situacao %></h1>
+              <table class="table sortable" style="border: solid 1px #C0C0C0;text-align: center;">
+                <thead class="thead-dark">
+                  <tr style="background-color: #4c6370;color: #FFF;">
+                    <th class="tdr">JAN</th>
+                    <th class="tdr">FEV</th>
+                    <th class="tdr">MAR</th>
+                    <th class="tdr">ABR</th>
+                    <th class="tdr">MAI</th>
+                    <th class="tdr">JUN</th>
+                    <th class="tdr">JUL</th>
+                    <th class="tdr">AGO</th>
+                    <th class="tdr">SET</th>
+                    <th class="tdr">OUT</th>
+                    <th class="tdr">NOV</th>
+                    <th class="tdr">DEZ</th>
+                    <th class="tdr">TOTAL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="tdr"><%= @janeiro %></td>
+                    <td class="tdr"><%= @fevereiro %></td>
+                    <td class="tdr"><%= @marco %></td>
+                    <td class="tdr"><%= @abril %></td>
+                    <td class="tdr"><%= @maio %></td>
+                    <td class="tdr"><%= @junho %></td>
+                    <td class="tdr"><%= @julho %></td>
+                    <td class="tdr"><%= @agosto %></td>
+                    <td class="tdr"><%= @setembro %></td>
+                    <td class="tdr"><%= @outubro %></td>
+                    <td class="tdr"><%= @novembro %></td>
+                    <td class="tdr"><%= @dezembro %></td>
+                    <td><%= @total %></td>
+                  </tr>
+                </tbody>
+              </table>
+              <% cont = 0 %>
+              <table class="table table-hover table-sm">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>Data do Movimento</th>
+                    <th>Origem</th>
+                    <th>Destino</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @movimentacoes.each do |movimentacao| %>
+                  <% cont += 1 %>
+                  <tr>
+                    <td><%= cont %></td>
+                    <td><%= link_to( movimentacao.nome, {controller: :jovens, action: :show, id: movimentacao.jovem_id} ) %></td>
+                    <td><%= movimentacao.data_movimentacao %></td>
+                    <td><%= movimentacao.de %></td>
+                    <td><%= movimentacao.para %></td>
+                  </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%#= link_to('Listar', socioeduk_relatorio_diarios_path, class: 'btn btn-default') %>
+  <%#= link_to 'Editar', edit_socioeduk_relatorio_diario_path(@socioeduk_relatorio_diario), class: 'btn btn-success' %>

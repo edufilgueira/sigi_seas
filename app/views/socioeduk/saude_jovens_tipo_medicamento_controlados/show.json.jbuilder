@@ -1,0 +1,1 @@
+json.partial! "socioeduk_saude_jovens_tipo_medicamento_controlados/socioeduk_saude_jovens_tipo_medicamento_controlado", socioeduk_saude_jovens_tipo_medicamento_controlado: @socioeduk_saude_jovens_tipo_medicamento_controlado

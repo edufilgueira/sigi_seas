@@ -1,0 +1,51 @@
+<% content_for :title do %>
+  <%= t('.title', default: @itens_solicitacao_patrimonio.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t('.title', default: @itens_solicitacao_patrimonio.class.model_name.human ) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                                    
+                  
+                  <th><%= ItensSolicitacaoPatrimonio.human_attribute_name :solicitacao_patrimonio %></th>
+                                    
+                  
+                  <th><%= ItensSolicitacaoPatrimonio.human_attribute_name :item_patrimonio %></th>
+                                    
+                  
+                  <th><%= ItensSolicitacaoPatrimonio.human_attribute_name :quantidade_solicitada %></th>
+                                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @itens_solicitacao_patrimonio.solicitacao_patrimonio %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @itens_solicitacao_patrimonio.item_patrimonio %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @itens_solicitacao_patrimonio.quantidade_solicitada %></td>
+                                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', itens_solicitacao_patrimonios_path, class: 'btn btn-default') %>
+<%= link_to 'Editar', edit_itens_solicitacao_patrimonio_path(@itens_solicitacao_patrimonio), class: 'btn btn-success' %>

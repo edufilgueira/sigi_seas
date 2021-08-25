@@ -1,0 +1,2 @@
+module UnidadeBlocoDormitoriosHelper
+end

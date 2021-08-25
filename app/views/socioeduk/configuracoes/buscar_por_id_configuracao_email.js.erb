@@ -1,0 +1,2 @@
+<% html =  @configuracao_email.gsub('{"body":"','').gsub('"}','') %>
+$('iframe').contents().find('body').html("<%= raw html %>");

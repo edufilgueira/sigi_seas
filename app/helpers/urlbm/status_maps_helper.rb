@@ -1,0 +1,2 @@
+module Urlbm::StatusMapsHelper
+end

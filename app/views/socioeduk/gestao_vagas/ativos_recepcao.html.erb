@@ -1,0 +1,101 @@
+<%- model_class = Socioeduk::JovemRecepcao -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_jovem_recepcao', default: Socioeduk::JovemRecepcao.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <!-- <h5><%=  I18n.t('activerecord.models.socioeduk_jovem_recepcao', default: Socioeduk::JovemRecepcao.model_name.human.pluralize.titleize) %></h5> -->
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <h1><%= I18n.t('titles.socioeduk_jovem_recepcoes') %></h1>
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= form_for(:frm, url: buscar_jovem_recepcionado_socioeduk_gestao_vagas_path, method: :get) do |f| %>
+              <div class="form-group">
+                <div class="col-sm-3"">
+                  <%= f.text_field :nome, placeholder: "Adolescente", class: "form-control", value: @nome, onblur: "remover_ascentos_nome()" %>
+                </div>
+                <div class="col-sm-3"">
+                  <%= f.select :status, [['Ativo','true'],['Inativo','false']], {include_blank: "Todos", selected: @status}, class: 'form-control' %>
+                </div>
+                <%= f.submit 'Buscar', class: "btn btn-primary" %>
+                <%= link_to "Limpar", ativos_recepcao_socioeduk_gestao_vagas_path, class:"btn btn-warning" %>
+              </div>
+            <% end %>
+            <%#= link_to_new new_socioeduk_jovem_recepcao_path %>
+            <% if !@socioeduk_jovem_recepcoes.nil? %>
+              <div class="col-lg-2">
+                <div class="widget style1 navy-bg" style="height: 76px;">
+                  <div class="row vertical-align">
+                    <div class="col-3">
+                      <i class="fa fa-user fa-3x"></i>
+                    </div>
+                    <div class="col-9 text-right">
+                      <h2 class="font-bold"><%= @socioeduk_jovem_recepcoes.length %> </h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <table class="table table-hover table-sm sortable">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th><%= model_class.human_attribute_name(:socioeduk_jovem) %></th>
+                    <th><%= model_class.human_attribute_name(:nome_mae) %></th>
+                    <th>Data Recepção</th>
+                    <th>Tipo Medida</th>
+                    <th>Status</th>
+                    <!--<th>Ação</th>-->
+                  </tr>
+                </thead>
+                <tbody>
+                  <% cont = 0 %>
+                  <% @socioeduk_jovem_recepcoes.each do |socioeduk_jovem_recepcao| %>
+                    <% cont += 1 %>
+                    <% if socioeduk_jovem_recepcao&.status %>
+                      <tr>
+                    <% else %>
+                      <tr style="color: #710000; background-color: bisque;">
+                    <% end %>
+                    <td><%= cont %></td>
+                    <td><%= socioeduk_jovem_recepcao&.nome_jovem %></td>
+                    <td><%= socioeduk_jovem_recepcao&.nome_mae %></td>
+                    <td><%= socioeduk_jovem_recepcao&.datahora_apresentacao %></td>
+                    <td><%= socioeduk_jovem_recepcao&.descricao %></td>
+                    <% if socioeduk_jovem_recepcao&.status %>
+                      <td>ativo</td>
+                      <!--<td><%= link_to(content_tag(:i, nil, class: "fa fa-list-ol"), socioeduk_jovem_recepcao_listar_recepcoes_path(socioeduk_jovem_recepcao.id_jovem), title: "Visualizar Recepções", class: "btn btn-info btn-sm") %></td>-->
+                    <% else %>
+                      <td>inativo</td>
+                      <!--<td><%= link_to(content_tag(:i, nil, class: "fa fa-list-ol"), socioeduk_jovem_recepcao_editar_recepcoes_path(socioeduk_jovem_recepcao.id_jovem), title: "Visualizar Recepções", class: "btn btn-danger btn-sm") %></td>-->
+                    <% end %>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function remover_ascentos_nome() {
+    texto = $("#q_nome_cont").val();
+    $("#q_nome_cont").val(retira_acentos(texto));
+  }
+</script>

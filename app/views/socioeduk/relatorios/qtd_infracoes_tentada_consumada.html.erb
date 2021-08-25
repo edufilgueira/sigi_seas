@@ -1,0 +1,90 @@
+<% content_for :title do %>
+  <%#= t('.title', default: @qtd_infracoes_tentada_consumadas.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+
+      <div class="ibox-title">
+        <h5>Relatório Por Ato Infracional</h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="ibox-content">
+        <div class="row">
+        <%= form_for(:frm, :url => {action: :qtd_infracoes_tentada_consumada}, method: 'POST') do |f| %>
+          <div class="form-group">
+            <div class="col-sm-2">
+              <%= f.text_field :data_inicial, placeholder: "Data Inicial", class: "form-control maskdata datepicker", value: @data_inicial%>
+            </div>
+            <div class="col-sm-2">
+              <%= f.text_field :data_final, placeholder: "Data Final", class: "form-control maskdata datepicker", value: @data_final %>
+            </div>
+            <div class="col-sm-4">
+              <%= f.select :status, Socioeduk::StatusProcesso.all.collect {|p| [ p.descricao, p.id ] }, {include_blank: "-- Status Processo --", selected: @status}, class: 'form-control' %>
+            </div>
+            <!--<div class="col-sm-4">
+              <%= f.select :unidade, UnidadeSocioeducativa.all.collect {|p| [ p.nome, p.id ] }, {include_blank: "Unidade", selected: @unidade}, class: 'form-control' %>
+            </div>
+            <div class="col-sm-4">
+              <%= f.select :regiao, Cidade.where('id = regiao_pai').collect {|p| [ p.nome, p.id ] }, {include_blank: "Região", selected: @unidade}, class: 'form-control' %>
+            </div>-->
+          </div>
+          <div class="form-group">
+            <div class="col-sm-4">
+              <%= f.select :tipo_medida, Socioeduk::TipoMedidaSocioeducativa.where("tipo_medida = 'FECHADO'").collect {|p| [ p.descricao, p.id ] }, {include_blank: "-- Tipo de Medida --", selected: @tipo_medida}, class: 'form-control' %>
+            </div>
+            <div class="col-sm-4" style="padding: 10px;">
+              <%= f.select :situacao_cumprimento, Socioeduk::SituacaoCumprimento.all.collect {|p| [ p.descricao, p.id ] }, {include_blank: "-- Situação de Cumprimento --", selected: @situacao_cumprimento}, class: 'form-control' %>
+            </div>
+            <div class="col-sm-2" style="padding-top: 10px;">
+              <%= f.submit 'Buscar', class: "btn btn-primary" %>
+            </div>
+          </div>
+        <% end %>
+        <br>
+      </div>
+        <% if(!@lista.nil?) %>
+        <div class="tabelaFixa"> 
+            <table class="table table-hover table-sm sortable table-bordered">
+              <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Tentada</th>
+                    <th>Consumada</th>
+                    <th>Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @lista.each do |item| %>
+                  <tr>
+                    <td><%= item[:nome] %></td>
+                    <td class="tentada"><%= item[:tentada] %></td>
+                    <td class="consumada"><%= item[:consumada] %></td>
+                    <td class="total"><%= item[:consumada] + item[:tentada] %></td>
+                  </tr>
+                  <% end %>
+                  <tr>
+                    <td><h4>Totais</h4> </td>
+                    <td id="resultado1"><h4></h4></td>
+                    <td id="resultado2"><h4></h4></td>
+                    <td id="resultadoTotal"><h4></h4></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+              <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%#= link_to('Listar', socioeduk_relatorio_diarios_path, class: 'btn btn-default') %>
+<%#= link_to 'Editar', edit_socioeduk_relatorio_diario_path(@socioeduk_relatorio_diario), class: 'btn btn-success' %>

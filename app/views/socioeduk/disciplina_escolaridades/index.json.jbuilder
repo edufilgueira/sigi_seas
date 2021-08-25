@@ -1,0 +1,1 @@
+json.array! @socioeduk_disciplina_escolaridades, partial: 'socioeduk_disciplina_escolaridades/socioeduk_disciplina_escolaridade', as: :socioeduk_disciplina_escolaridade

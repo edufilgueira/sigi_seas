@@ -1,0 +1,118 @@
+
+# default: &default
+#   adapter: postgresql
+#   encoding: unicode
+#   # For details on connection pooling, see Rails configuration guide
+#   # http://guides.rubyonrails.org/configuring.html#database-pooling
+#   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+#   username: seas_erp
+#   password: 53@51q3e!Q#E
+#   host: 192.168.0.9
+#   port: 5432
+
+
+# development:
+#   <<: *default
+#   database: principal_producao
+#   schema_search_path: erp_seas
+  
+# test:
+#   <<: *default
+#   database: edu_test
+
+# production:
+#   <<: *default
+#   database: principal_producao
+#   schema_search_path: erp_seas
+
+
+
+
+
+
+
+
+
+
+
+
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: postgres
+  password: v03admin%
+  host: 192.168.0.205
+  port: 5434
+
+development:
+  <<: *default
+  database: principal_producao
+  schema_search_path: erp_seas
+
+test:
+  <<: *default
+  database: edu_test
+
+production:
+  <<: *default
+  database: principal_producao
+  schema_search_path: erp_seas
+
+
+# nonato
+# default: &default
+#   adapter: postgresql
+#   encoding: unicode
+#   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+#   username: postgres
+#   password: postgres
+#   host: 192.168.0.202
+#   port: 5432
+
+# development:
+#   <<: *default
+#   database: postgres
+#   schema_search_path: erp_seas
+
+# test:
+#   <<: *default
+#   database: edu_test
+
+# production:
+#   <<: *default
+#   database: principal_producao
+#   schema_search_path: erp_seas
+
+
+
+
+# Servidor de teste
+# default: &default
+#   adapter: postgresql
+#   encoding: unicode
+#   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+#   username: postgres
+#   password: seas@1234
+#   host: 192.168.0.1
+#   port: 5432
+
+# development:
+#   <<: *default
+#   database: modelo_front
+
+# test:
+#   <<: *default
+#   database: frontend_test
+#   username: <%= ENV.fetch("PGUSER") {"postgres"} %>
+#   password: seas@1234
+#   host: <%= ENV.fetch("PGHOST") {"192.168.0.1"} %>
+
+#   production:
+#   <<: *default
+#   database: sis_indicador
+#   schema_search_path: indicators_prod
+#   username: postgres
+#   password: seas@1234
+#   host: 192.168.0.1

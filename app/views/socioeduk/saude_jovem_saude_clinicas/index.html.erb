@@ -1,0 +1,53 @@
+<%- model_class = Socioeduk::SaudeJovemSaudeClinica -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_saude_jovem_saude_clinica', default: Socioeduk::SaudeJovemSaudeClinica.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.socioeduk_saude_jovem_saude_clinica', default: Socioeduk::SaudeJovemSaudeClinica.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= link_to_new new_socioeduk_saude_jovem_saude_clinica_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_cid) %></th>
+                                    <th><%= model_class.human_attribute_name(:diagnostico) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_local_tratamento) %></th>
+                                    <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @socioeduk_saude_jovem_saude_clinicas.each do |socioeduk_saude_jovem_saude_clinica| %>
+                <tr>
+                                    <td><%= socioeduk_saude_jovem_saude_clinica.socioeduk_cid.descricao %></td>
+                                    <td><%= socioeduk_saude_jovem_saude_clinica.diagnostico %></td>
+                                    <td><%= socioeduk_saude_jovem_saude_clinica.socioeduk_local_tratamento.descricao %></td>
+                                    <td>
+                    <%= link_to_show(socioeduk_saude_jovem_saude_clinica) %>
+                    <%= link_to_edit(edit_socioeduk_saude_jovem_saude_clinica_path(socioeduk_saude_jovem_saude_clinica)) %>
+                    <%= link_to_delete(socioeduk_saude_jovem_saude_clinica) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

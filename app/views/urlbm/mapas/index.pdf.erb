@@ -1,0 +1,449 @@
+<!-- <%- model_class = Urlbm::Mapa -%> <% content_for :title do %> <%=
+I18n.t('activerecord.models.urlbm_mapa', default:
+Urlbm::Mapa.model_name.human.pluralize.titleize) %> <% end -%> -->
+<!-- <meta charset="utf-8"> -->
+  <div class="ibox-content " id="tableMapaPdf">
+    <%= wicked_pdf_image_tag 'logo-seas.png' %>
+    <%= wicked_pdf_stylesheet_link_tag 'application.css' -%>
+    <%= wicked_pdf_javascript_include_tag 'application.js' %>
+  </div>
+  <h1><%= I18n.t('titles.urlbm_mapas') %></h1>
+<div class="row">
+    <div class="col-lg-12">
+        <div class=" float-e-margins">
+            <div>
+                <div>
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div>
+                    <div >
+                        <p class="col-sm-2">Data: <%= @dataAtual %> </p>
+                        <p class="col-sm-1">Hora: <%= @horaAtual %> </p>
+                    </div>
+                </div>
+                    <div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-2 table_font">
+                                        <%=model_class.human_attribute_name(:urlbm_status_map_id)%>
+                                    </th>
+                                    <th class="col-sm-2">
+                                        <%=model_class.human_attribute_name(:socioeduk_jovem_recepcao_id)%>
+                                    </th>
+                                    <th>
+                                        <%= model_class.human_attribute_name(:num_processo) %>
+                                    </th>
+                                    <th><%= model_class.human_attribute_name(:responsavel) %></th>
+                                    <th><%= model_class.human_attribute_name(:telefone) %></th>
+                                    <th>
+                                        <%= model_class.human_attribute_name(:data_ocorrencia) %>
+                                    </th>
+                                    <th>
+                                        <%= model_class.human_attribute_name(:data_admissao) %>
+                                    </th>
+                                    <th>
+                                        <%= model_class.human_attribute_name(:data_nascimento) %>
+                                    </th>
+                                    <!--<th><%= model_class.human_attribute_name(:data_judicial) %></th>-->
+                                    <th><%= model_class.human_attribute_name(:reincidente) %></th>
+                                    <th><%= model_class.human_attribute_name(:idade) %></th>
+                                    <th><%= model_class.human_attribute_name(:bo_mapa) %></th>
+                                    <!--<th><%= model_class.human_attribute_name(:obs) %></th>-->
+                                    <th>
+                                        <%= model_class.human_attribute_name(:urlbm_ato_infracional_id)%>
+                                    </th>
+                                    <!--<th><%= model_class.human_attribute_name(:cidade) %></th>-->
+                                    <!-- <th width="18%"><%= I18n.t('helpers.actions') %></th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Exibe status de Aguardadando CRV-->
+                                <% @aguardando_crv.each do |urlbm_mapa| %>
+                                <tr>
+                                    <td>
+                                        <div >
+                                            <%= urlbm_mapa.urlbm_status_map&.nome_status %>
+                                        </div>
+                                        <% if urlbm_mapa.urlbm_status_map_id == 5 || urlbm_mapa.urlbm_status_map_id == 7 || urlbm_mapa.urlbm_status_map_id == 16 %>
+                                            <div class="label label-primary">
+                                                <%= urlbm_mapa.data_judicial %>
+                                            </div>
+                                        <% end %>     
+                                        <% if urlbm_mapa.urlbm_status_map_id == 17 || urlbm_mapa.urlbm_status_map_id == 18 %>
+                                            <div class="label label-primary">
+                                                <%= urlbm_mapa.obs %>
+                                            </div>
+                                        <% end %>
+                                        <% if urlbm_mapa.urlbm_status_map_id == 15 %>
+                                            <div class="label label-primary">
+                                                <%= urlbm_mapa.cidade&.nome %>
+                                            </div>
+                                        <% end %>
+                                    </td>
+                                    <td class="col-sm-2">
+                                        <%= link_to urlbm_mapa.socioeduk_jovem_recepcao.socioeduk_jovem.nome, edit_socioeduk_jovem_path(urlbm_mapa.socioeduk_jovem_recepcao&.socioeduk_jovem_id)%>
+                                    </td>
+                                    <td><%= urlbm_mapa.num_processo %></td>
+                                    <td class="col-sm-2">
+                                        <%= urlbm_mapa.socioeduk_jovem_recepcao.socioeduk_jovem.responsavel %></td>
+                                    <td class="maskphonecelular col-sm-2"><%= urlbm_mapa.telcontato %></td>
+                                    <td class="maskdatahora"><%= urlbm_mapa.data_ocorrencia %></td>
+                                    <td><%=urlbm_mapa.socioeduk_jovem_recepcao.datahora_apresentacao %></td>
+                                    <td  id="dataNascimento" class="maskdata"><%= urlbm_mapa.socioeduk_jovem_recepcao.socioeduk_jovem.data_nascimento %></td>
+                                    <!--<td><%= urlbm_mapa.data_judicial %></td>-->
+                                    <% if urlbm_mapa.reincidente == true %>
+                                    <td class="list-group-item-heading"><b>R</b></td>
+                                    <% else %>
+                                    <td class="list-group-item-heading"><b>P</b></td>
+                                    <% end %>
+                                    <td><%= urlbm_mapa.idade %></td>
+                                    <td><%= urlbm_mapa.bo_mapa %></td>
+                                    <!--<td><%= urlbm_mapa.obs %></td>-->
+                                    <td class="col-sm-2"><%= urlbm_mapa.urlbm_ato_infracional.tipo %></td>
+                                    <!--<td><%= urlbm_mapa.cidade.nome %></td>-->
+                                    <!-- <td>
+                                        <%= link_to 'Editar Recepção', edit_socioeduk_jovem_path(urlbm_mapa.socioeduk_jovem_recepcao_id) %>
+                                        <%= link_to_edit(edit_urlbm_mapa_path(urlbm_mapa)) %>
+                                        <%= link_to_delete(urlbm_mapa) %>
+                                        <%= link_to I18n.t('helpers.links.cancel'), socioeduk_jovem_recepcoes_path, class: 'btn btn-warning' %>
+                                    </td> -->
+                                </tr>
+                                <% end %>
+                                <!-- Exibe status de Indisponibilidade de Vagas-->
+                                <% @indisponibilidade_vagas.each do |urlbm_mapa| %>
+                                <tr>
+                                    <td>
+                                        <div >
+                                            <%= urlbm_mapa.urlbm_status_map&.nome_status %>
+                                        </div>
+                                        <% if urlbm_mapa.urlbm_status_map_id == 5 || urlbm_mapa.urlbm_status_map_id == 7 || urlbm_mapa.urlbm_status_map_id == 16 %>
+                                            <div class="label label-primary">
+                                                <%= urlbm_mapa.data_judicial %>
+                                            </div>
+                                        <% end %>
+                                        
+                                        <% if urlbm_mapa.urlbm_status_map_id == 17 || urlbm_mapa.urlbm_status_map_id == 18 %>
+                                            <div class="label label-primary">
+                                                <%= urlbm_mapa.obs %>
+                                            </div>
+                                        <% end %>
+                                        <% if urlbm_mapa.urlbm_status_map_id == 15 %>
+                                            <div class="label label-primary">
+                                                <%= urlbm_mapa.cidade&.nome %>
+                                            </div>
+                                        <% end %>
+                                    </td>
+                                    <td class="col-sm-2">
+                                        <%= link_to urlbm_mapa.socioeduk_jovem_recepcao.socioeduk_jovem.nome, edit_socioeduk_jovem_path(urlbm_mapa.socioeduk_jovem_recepcao&.socioeduk_jovem_id)%>
+                                    </td>
+                                    <td><%= urlbm_mapa.num_processo %></td>
+                                    <td class="col-sm-2">
+                                        <%= urlbm_mapa.socioeduk_jovem_recepcao.socioeduk_jovem.responsavel %></td>
+                                    <td class="maskphonecelular col-sm-2"><%= urlbm_mapa.telcontato %></td>
+                                    <td class="maskdatahora"><%= urlbm_mapa.data_ocorrencia %></td>
+                                    <td><%=urlbm_mapa.socioeduk_jovem_recepcao.datahora_apresentacao %></td>
+                                    <td><%= urlbm_mapa.socioeduk_jovem_recepcao.socioeduk_jovem.data_nascimento %></td>
+                                    <!--<td><%= urlbm_mapa.data_judicial %></td>-->
+                                    <% if urlbm_mapa.reincidente == true %>
+                                    <td class="list-group-item-heading"><b>R</b></td>
+                                    <% else %>
+                                    <td class="list-group-item-heading"><b>P</b></td>
+                                    <% end %>
+                                    <td><%= urlbm_mapa.idade %></td>
+                                    <td><%= urlbm_mapa.bo_mapa %></td>
+                                    <!--<td><%= urlbm_mapa.obs %></td>-->
+                                    <td class="col-sm-2"><%= urlbm_mapa.urlbm_ato_infracional.tipo %></td>
+                                    <!--<td><%= urlbm_mapa.cidade.nome %></td>-->
+                                    <td>
+                                        <!---<%= link_to 'Editar Recepção', edit_socioeduk_jovem_path(urlbm_mapa.socioeduk_jovem_recepcao_id) %>--->
+                                        <!-- <%= link_to_edit(edit_urlbm_mapa_path(urlbm_mapa)) %>
+                                        <%= link_to_delete(urlbm_mapa) %> -->
+                                        <!-- <%= link_to I18n.t('helpers.links.cancel'), socioeduk_jovem_recepcoes_path, class: 'btn btn-warning' %> -->
+                                    </td>
+                                </tr>
+                                <% end %>
+                                <!-- Exibe status de Aguardando Família -->
+                                <% @aguardando_familia.each do |urlbm_mapa| %>
+                                <tr>
+                                    <td>
+                                        <div >
+                                            <%= urlbm_mapa.urlbm_status_map&.nome_status %>
+                                        </div>
+                                        <% if urlbm_mapa.urlbm_status_map_id == 5 || urlbm_mapa.urlbm_status_map_id == 7 || urlbm_mapa.urlbm_status_map_id == 16 %>
+                                            <div class="label label-primary">
+                                                <%= urlbm_mapa.data_judicial %>
+                                            </div>
+                                        <% end %>
+                                        
+                                        <% if urlbm_mapa.urlbm_status_map_id == 17 || urlbm_mapa.urlbm_status_map_id == 18 %>
+                                            <div class="label label-primary">
+                                                <%= urlbm_mapa.obs %>
+                                            </div>
+                                        <% end %>
+                                        <% if urlbm_mapa.urlbm_status_map_id == 15 %>
+                                            <div class="label label-primary">
+                                                <%= urlbm_mapa.cidade&.nome %>
+                                            </div>
+                                        <% end %>
+                                    </td>
+                                    <td class="col-sm-2">
+                                        <%= link_to urlbm_mapa.socioeduk_jovem_recepcao.socioeduk_jovem.nome, edit_socioeduk_jovem_path(urlbm_mapa.socioeduk_jovem_recepcao&.socioeduk_jovem_id)%>
+                                    </td>
+                                    <td><%= urlbm_mapa.num_processo %></td>
+                                    <td class="col-sm-2">
+                                        <%= urlbm_mapa.socioeduk_jovem_recepcao.socioeduk_jovem.responsavel %></td>
+                                    <td class="maskphonecelular col-sm-2"><%= urlbm_mapa.telcontato %></td>
+                                    <td class="maskdatahora"><%= urlbm_mapa.data_ocorrencia %></td>
+                                    <td><%=urlbm_mapa.socioeduk_jovem_recepcao.datahora_apresentacao %></td>
+                                    <td><%= urlbm_mapa.socioeduk_jovem_recepcao.socioeduk_jovem.data_nascimento %></td>
+                                    <!--<td><%= urlbm_mapa.data_judicial %></td>-->
+                                    <% if urlbm_mapa.reincidente == true %>
+                                    <td class="list-group-item-heading"><b>R</b></td>
+                                    <% else %>
+                                    <td class="list-group-item-heading"><b>P</b></td>
+                                    <% end %>
+                                    <td><%= urlbm_mapa.idade %></td>
+                                    <td><%= urlbm_mapa.bo_mapa %></td>
+                                    <!--<td><%= urlbm_mapa.obs %></td>-->
+                                    <td class="col-sm-2"><%= urlbm_mapa.urlbm_ato_infracional.tipo %></td>
+                                    <!--<td><%= urlbm_mapa.cidade.nome %></td>-->
+                                    <td>
+                                        <!---<%= link_to 'Editar Recepção', edit_socioeduk_jovem_path(urlbm_mapa.socioeduk_jovem_recepcao_id) %>--->
+                                        <!-- <%= link_to_edit(edit_urlbm_mapa_path(urlbm_mapa)) %>
+                                        <%= link_to_delete(urlbm_mapa) %> -->
+                                        <!-- <%= link_to I18n.t('helpers.links.cancel'), socioeduk_jovem_recepcoes_path, class: 'btn btn-warning' %> -->
+                                    </td>
+                                </tr>
+                                <% end %>
+                                <!-- Exibe status de Aguardando Comarca -->
+                                <% @aguardando_comarca.each do |urlbm_mapa| %>
+                                <tr>
+                                    <td>
+                                        <div >
+                                            <%= urlbm_mapa.urlbm_status_map&.nome_status %>
+                                        </div>
+                                        <% if urlbm_mapa.urlbm_status_map_id == 5 || urlbm_mapa.urlbm_status_map_id == 7 || urlbm_mapa.urlbm_status_map_id == 16 %>
+                                            <div class="label label-primary">
+                                                <%= urlbm_mapa.data_judicial %>
+                                            </div>
+                                        <% end %>
+                                        
+                                        <% if urlbm_mapa.urlbm_status_map_id == 17 || urlbm_mapa.urlbm_status_map_id == 18 %>
+                                            <div class="label label-primary">
+                                                <%= urlbm_mapa.obs %>
+                                            </div>
+                                        <% end %>
+                                        <% if urlbm_mapa.urlbm_status_map_id == 15 %>
+                                            <div class="label label-primary">
+                                                <%= urlbm_mapa.cidade&.nome %>
+                                            </div>
+                                        <% end %>
+                                    </td>
+                                    <td class="col-sm-2">
+                                        <%= link_to urlbm_mapa.socioeduk_jovem_recepcao.socioeduk_jovem.nome, edit_socioeduk_jovem_path(urlbm_mapa.socioeduk_jovem_recepcao&.socioeduk_jovem_id)%>
+                                    </td>
+                                    <td><%= urlbm_mapa.num_processo %></td>
+                                    <td class="col-sm-2">
+                                        <%= urlbm_mapa.socioeduk_jovem_recepcao.socioeduk_jovem.responsavel %></td>
+                                    <td class="maskphonecelular col-sm-2"><%= urlbm_mapa.telcontato %></td>
+                                    <td class="maskdatahora"><%= urlbm_mapa.data_ocorrencia %></td>
+                                    <td><%=urlbm_mapa.socioeduk_jovem_recepcao.datahora_apresentacao %></td>
+                                    <td><%= urlbm_mapa.socioeduk_jovem_recepcao.socioeduk_jovem.data_nascimento %></td>
+                                    <!--<td><%= urlbm_mapa.data_judicial %></td>-->
+                                    <% if urlbm_mapa.reincidente == true %>
+                                    <td class="list-group-item-heading"><b>R</b></td>
+                                    <% else %>
+                                    <td class="list-group-item-heading"><b>P</b></td>
+                                    <% end %>
+                                    <td><%= urlbm_mapa.idade %></td>
+                                    <td><%= urlbm_mapa.bo_mapa %></td>
+                                    <!--<td><%= urlbm_mapa.obs %></td>-->
+                                    <td class="col-sm-2"><%= urlbm_mapa.urlbm_ato_infracional.tipo %></td>
+                                    <!--<td><%= urlbm_mapa.cidade.nome %></td>-->
+                                    <td>
+                                        <!---<%= link_to 'Editar Recepção', edit_socioeduk_jovem_path(urlbm_mapa.socioeduk_jovem_recepcao_id) %>--->
+                                        <!-- <%= link_to_edit(edit_urlbm_mapa_path(urlbm_mapa)) %>
+                                        <%= link_to_delete(urlbm_mapa) %> -->
+                                        <!-- <%= link_to I18n.t('helpers.links.cancel'), socioeduk_jovem_recepcoes_path, class: 'btn btn-warning' %> -->
+                                    </td>
+                                </tr>
+                                <% end %>
+
+                                <!-- Exibe demais Status -->
+                                <% @demaisStatus.each do |urlbm_mapa| %>
+                                <tr>
+                                    <td>
+                                        <div class="danger-element" >
+                                            <%= urlbm_mapa.urlbm_status_map&.nome_status %>
+                                        </div>
+                                        <% if urlbm_mapa.urlbm_status_map_id == 5 || urlbm_mapa.urlbm_status_map_id == 7 || urlbm_mapa.urlbm_status_map_id == 16 %>
+                                            <div class="label label-primary">
+                                                <%= urlbm_mapa.data_judicial %>
+                                            </div>
+                                        <% end %>
+                                        
+                                        <% if urlbm_mapa.urlbm_status_map_id == 17 || urlbm_mapa.urlbm_status_map_id == 18 %>
+                                            <div class="label label-primary">
+                                                <%= urlbm_mapa.obs %>
+                                            </div>
+                                        <% end %>
+                                        <% if urlbm_mapa.urlbm_status_map_id == 15 %>
+                                            <div class="label label-primary">
+                                                <%= urlbm_mapa.cidade&.nome %>
+                                            </div>
+                                        <% end %>
+                                        <% if urlbm_mapa.urlbm_status_map_id == 9 || urlbm_mapa.urlbm_status_map_id == 10 %>
+                                            <div >
+                                                <p class="label label-danger">Engajamento</p>
+                                            </div>
+                                        <% end %>
+
+                                    </td>
+                                    <td class="col-sm-2">
+                                        <%= link_to urlbm_mapa.socioeduk_jovem_recepcao.socioeduk_jovem.nome, edit_socioeduk_jovem_path(urlbm_mapa.socioeduk_jovem_recepcao&.socioeduk_jovem_id)%>
+                                    </td>
+                                    <td><%= urlbm_mapa.num_processo %></td>
+                                    <td class="col-sm-2">
+                                        <%= urlbm_mapa.socioeduk_jovem_recepcao.socioeduk_jovem.responsavel %></td>
+                                    <td class="maskphonecelular col-sm-2"><%= urlbm_mapa.telcontato %></td>
+                                    <td class="maskdatahora"><%= urlbm_mapa.data_ocorrencia %></td>
+                                    <td><%=urlbm_mapa.socioeduk_jovem_recepcao.datahora_apresentacao %></td>
+                                    <td><%= urlbm_mapa.socioeduk_jovem_recepcao.socioeduk_jovem.data_nascimento %></td>
+                                    <!--<td><%= urlbm_mapa.data_judicial %></td>-->
+                                    <% if urlbm_mapa.reincidente == true %>
+                                    <td class="list-group-item-heading"><b>R</b></td>
+                                    <% else %>
+                                    <td class="list-group-item-heading"><b>P</b></td>
+                                    <% end %>
+                                    <td><%= urlbm_mapa.idade %></td>
+                                    <td><%= urlbm_mapa.bo_mapa %></td>
+                                    <!--<td><%= urlbm_mapa.obs %></td>-->
+                                    <td class="col-sm-2"><%= urlbm_mapa.urlbm_ato_infracional.tipo %></td>
+                                    <!--<td><%= urlbm_mapa.cidade.nome %></td>-->
+                                    <td>
+                                        <!---<%= link_to 'Editar Recepção', edit_socioeduk_jovem_path(urlbm_mapa.socioeduk_jovem_recepcao_id) %>--->
+                                        <!-- <%= link_to_edit(edit_urlbm_mapa_path(urlbm_mapa)) %>
+                                        <%= link_to_delete(urlbm_mapa) %> -->
+                                        <!-- <%= link_to I18n.t('helpers.links.cancel'), socioeduk_jovem_recepcoes_path, class: 'btn btn-warning' %> -->
+                                    </td>
+                                </tr>
+                                <% end %>
+                                <!-- Exibe status Projeto Justiça Já -->
+                                <% @projetoJusticaJa.each do |urlbm_mapa| %>
+                                <tr>
+                                    <td>
+                                        <div >
+                                            <%= urlbm_mapa.urlbm_status_map&.nome_status %>
+                                        </div>
+                                        <% if urlbm_mapa.urlbm_status_map_id == 5 || urlbm_mapa.urlbm_status_map_id == 7 || urlbm_mapa.urlbm_status_map_id == 16 %>
+                                            <div class="label label-primary">
+                                                <%= urlbm_mapa.data_judicial %>
+                                            </div>
+                                        <% end %>
+                                        
+                                        <% if urlbm_mapa.urlbm_status_map_id == 17 || urlbm_mapa.urlbm_status_map_id == 18 %>
+                                            <div class="label label-primary">
+                                                <%= urlbm_mapa.obs %>
+                                            </div>
+                                        <% end %>
+                                        <% if urlbm_mapa.urlbm_status_map_id == 15 %>
+                                            <div class="label label-primary">
+                                                <%= urlbm_mapa.cidade&.nome %>
+                                            </div>
+                                        <% end %>
+                                    </td>
+                                    <td class="col-sm-2">
+                                        <%= link_to urlbm_mapa.socioeduk_jovem_recepcao.socioeduk_jovem.nome, edit_socioeduk_jovem_path(urlbm_mapa.socioeduk_jovem_recepcao&.socioeduk_jovem_id)%>
+                                    </td>
+                                    <td><%= urlbm_mapa.num_processo %></td>
+                                    <td class="col-sm-2">
+                                        <%= urlbm_mapa.socioeduk_jovem_recepcao.socioeduk_jovem.responsavel %></td>
+                                    <td class="maskphonecelular col-sm-2"><%= urlbm_mapa.telcontato %></td>
+                                    <td class="maskdatahora"><%= urlbm_mapa.data_ocorrencia %></td>
+                                    <td><%=urlbm_mapa.socioeduk_jovem_recepcao.datahora_apresentacao %></td>
+                                    <td><%= urlbm_mapa.socioeduk_jovem_recepcao.socioeduk_jovem.data_nascimento %></td>
+                                    <!--<td><%= urlbm_mapa.data_judicial %></td>-->
+                                    <% if urlbm_mapa.reincidente == true %>
+                                    <td class="list-group-item-heading"><b>R</b></td>
+                                    <% else %>
+                                    <td class="list-group-item-heading"><b>P</b></td>
+                                    <% end %>
+                                    <td><%= urlbm_mapa.idade %></td>
+                                    <td><%= urlbm_mapa.bo_mapa %></td>
+                                    <!--<td><%= urlbm_mapa.obs %></td>-->
+                                    <td class="col-sm-2"><%= urlbm_mapa.urlbm_ato_infracional.tipo %></td>
+                                    <!--<td><%= urlbm_mapa.cidade.nome %></td>-->
+                                    <td>
+                                        <!---<%= link_to 'Editar Recepção', edit_socioeduk_jovem_path(urlbm_mapa.socioeduk_jovem_recepcao_id) %>--->
+                                        <!-- <%= link_to_edit(edit_urlbm_mapa_path(urlbm_mapa)) %>
+                                        <%= link_to_delete(urlbm_mapa) %> -->
+                                        <!-- <%= link_to I18n.t('helpers.links.cancel'), socioeduk_jovem_recepcoes_path, class: 'btn btn-warning' %> -->
+                                    </td>
+                                </tr>
+                                <% end %>
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //     $(".select4 ").change(function () {
+    //     var selectedMedida = $(this).children("option:selected").val();
+    //     switch (selectedMedida) {
+    //         case '1':
+    //             $("#doc-guia-cnj").show();
+    //             $("#doc-certidao-antecedentes").show();
+    //             $("#doc-pessoais").show();
+    //             $("#doc-decisao-interlocutoria").show();
+    //             $("#doc-pedido-internacao-provisoria").show();
+    //             $("#doc-malote-digital").show();
+    //             break;
+    //         case '2':
+    //             $("#doc-guia-cnj").show();
+    //             $("#doc-certidao-antecedentes").show();
+    //             $("#doc-pessoais").show();
+    //             $("#doc-decisao-interlocutoria").show();
+    //             $("#doc-pedido-internacao-provisoria").show();
+    //             $("#doc-malote-digital").hide();
+    //             break;
+    //         case 'defalt':
+    //             $("#doc-guia-cnj").show();
+    //             $("#doc-certidao-antecedentes").show();
+    //             $("#doc-pessoais").show();
+    //             $("#doc-decisao-interlocutoria").show();
+    //             $("#doc-pedido-internacao-provisoria").show();
+    //             $("#doc-malote-digital").show();
+    //             break;
+    // });
+
+    // $(document).ready(function calcIdade(ano_aniversario, mes_aniversario, dia_aniversario) {
+    //     var d = new Date,
+    //         ano_atual = d.getFullYear(),
+    //         mes_atual = d.getMonth() + 1,
+    //         dia_atual = d.getDate(),
+
+    //         ano_aniversario = +ano_aniversario,
+    //         mes_aniversario = +mes_aniversario,
+    //         dia_aniversario = +dia_aniversario,
+
+    //         quantos_anos = ano_atual - ano_aniversario;
+
+    //     if (mes_atual < mes_aniversario || mes_atual == mes_aniversario && dia_atual < dia_aniversario) {
+    //         quantos_anos--;
+    //     }
+
+    //     return quantos_anos < 0 ? 0 : quantos_anos;
+    // });
+</script>

@@ -1,0 +1,2 @@
+json.extract! socioeduk_tecnico_jovem, :id, :socioeduk_jovem_id, :tem_filhos, :quantos_filhos, :socioeduk_convivio_familiar_id, :codigo_familiar, :cnis, :programas_sociais, :socioeduk_renda_familiar_id, :socioeduk_composicao_familiar_id, :socioeduk_plano_individual_atendimento_id, :nome_tecnico, :profissional_referencia, :created_at, :updated_at
+json.url socioeduk_tecnico_jovem_url(socioeduk_tecnico_jovem, format: :json)

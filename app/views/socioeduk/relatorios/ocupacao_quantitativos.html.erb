@@ -1,0 +1,176 @@
+<%- model_class = UnidadeSocioeducativa -%>
+<% content_for :ibox_content do %>
+<h1><%= I18n.t('titles.socioeduk_gestao_vagas_visualizar_vagas') %></h1>
+  <table class="table table-hover table-sm sortable">
+    <thead>
+      <tr>
+        <th>Região</th>
+        <th><%= model_class.human_attribute_name(:sigla) %></th>
+        <th><%= model_class.human_attribute_name(:nome) %></th>
+        <th style="text-align: center;">Capacidade</th>
+        <th style="text-align: center;">Ocupação</th>
+        <th style="text-align: center;" title="Masculino">M</th>
+        <th style="text-align: center;" title="Feminino">F</th>
+        <th style="text-align: center;" title="Internação Provisória">IP</th>
+        <th style="text-align: center;" title="Internação Definitiva">ID</th>
+        <th style="text-align: center;" title="Internação Sanção">IS</th>
+        <th style="text-align: center;" title="Semiliberdade">SL</th>
+        <th style="text-align: center;" title="Percentual de Ocupação">%</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- VARIAVEIS DO TOTAL DE JOVENS NA CAPITAL -->
+      <% capacidade_total_capital = 0 %>
+      <% quantidade_jovem_admitido_capital = 0 %>
+      <% masculino_capital = 0 %>
+      <% feminino_capital = 0 %>
+      <% internacao_provisoria_capital = 0 %>
+      <% internacao_capital = 0 %>
+      <% sancao_capital = 0 %>
+      <% semiliberdade_capital = 0 %>
+
+      <!-- VARIAVEIS DO TOTAL DE JOVENS NA INTERIOR -->
+      <% capacidade_total_interior = 0 %>
+      <% quantidade_jovem_admitido_interior = 0 %>
+      <% masculino_interior = 0 %>
+      <% feminino_interior = 0 %>
+      <% internacao_provisoria_interior = 0 %>
+      <% internacao_interior = 0 %>
+      <% sancao_interior = 0 %>
+      <% semiliberdade_interior = 0 %>
+
+      <!-- VARIAVEIS DE CONTAGEM DO AGRUPAMENTO DE LINHAS -->
+      <% capital_row = 0 %>
+      <% capital_count = 1 %>
+      <% interior_row = 0 %>
+      <% interior_count = 1 %>
+
+      <!-- CONTAGEM DAS QUANTIDADES DE LINAS NA CAPITAL E INTERIOR -->
+      <% @unidades_socioeducativas.reverse.each do |unidade_socioeducativa| %>
+        <% if unidade_socioeducativa.capital? %>
+          <% capital_row += 1 %>
+        <% else %>
+          <% interior_row += 1 %>
+        <% end %>
+      <% end %>
+      <!-- BLOCO DE CODIGO SINTETICO QUE CONSTROI A LINHA (DADOS) DA URLBM -->
+      <tr>
+        <td></td>
+        <td><%= @unidade_recepcao[0]['sigla'] %></td>
+        <td><%= link_to( @unidade_recepcao[0]['nome'], {controller: :gestao_vagas, action: :ativos_recepcao} ) %></td>
+        <td style="text-align: center;"><%= @unidade_recepcao[0]['capacidade_total'] %></td>
+        <td style="text-align: center;"><%= @unidade_recepcao[0]['quantidade_jovem_admitido'] %></td>
+        <td style="text-align: center;"><%= @unidade_recepcao[0]['masculino'] %></td>
+        <td style="text-align: center;"><%= @unidade_recepcao[0]['feminino'] %></td>
+        <td style="text-align: center; background-color: #f3f3f3">0</td>
+        <td style="text-align: center; background-color: #f3f3f3">0</td>
+        <td style="text-align: center; background-color: #f3f3f3">0</td>
+        <td style="text-align: center; background-color: #f3f3f3">0</td>
+        <td style="text-align: center;background-color: #999999;font-weight: bold;color: #fff;">
+          <% if @unidade_recepcao[0]['quantidade_jovem_admitido'].to_f > 0 %>
+            <%= ((@unidade_recepcao[0]['quantidade_jovem_admitido']&.to_f / @unidade_recepcao[0]['capacidade_total']&.to_f)*100).round(0) %>%
+          <% end %>
+        </td>
+      </tr>
+      <!-- ARRAY PADRÃO QUE LISTA TODAS AS UNIDADES SOCIOEDUCATIVAS DESCONSIDERANDO 'CRV', 'SEAS' E 'URLBM' -->
+      <% @unidades_socioeducativas.reverse.each do |unidade_socioeducativa| %>
+        <tr>
+          <% if unidade_socioeducativa.capital? %>
+            <% capacidade_total_capital += unidade_socioeducativa.capacidade_total %>
+            <% quantidade_jovem_admitido_capital += unidade_socioeducativa.quantidade_jovem_admitido %>
+            <% feminino_capital += unidade_socioeducativa.feminino %>
+            <% masculino_capital += unidade_socioeducativa.masculino %>
+            <% internacao_provisoria_capital += unidade_socioeducativa.internacao_provisoria %>
+            <% internacao_capital += unidade_socioeducativa.internacao %>
+            <% sancao_capital += unidade_socioeducativa.sancao %>
+            <% semiliberdade_capital += unidade_socioeducativa.semiliberdade %>
+            <% if capital_count == 1 %>
+              <td rowspan="<%= capital_row %>" style="vertical-align: middle;">Capital</td>    
+              <% capital_count += 1 %>
+            <% else %>
+              <% capital_count += 1 %>
+            <% end %>
+          <% else %>
+            <% capacidade_total_interior += unidade_socioeducativa.capacidade_total %>
+            <% quantidade_jovem_admitido_interior += unidade_socioeducativa.quantidade_jovem_admitido %>
+            <% feminino_interior += unidade_socioeducativa.feminino %>
+            <% masculino_interior += unidade_socioeducativa.masculino %>
+            <% internacao_provisoria_interior += unidade_socioeducativa.internacao_provisoria %>
+            <% internacao_interior += unidade_socioeducativa.internacao %>
+            <% sancao_interior += unidade_socioeducativa.sancao %>
+            <% semiliberdade_interior += unidade_socioeducativa.semiliberdade %>
+            <% if interior_count == 1 %>
+              <td rowspan="<%= interior_row %>" style="vertical-align: middle;">Interior</td>    
+              <% interior_count += 1 %>
+            <% else %>
+              <% interior_count += 1 %>
+            <% end %>
+          <% end %>
+          <td><%= unidade_socioeducativa.sigla %></td>
+          <td><%= link_to( unidade_socioeducativa.nome, {controller: :gestao_vagas, action: :listar_jovens, id_unidade:unidade_socioeducativa} ) %></td>
+          <td style="text-align: center;"><%= unidade_socioeducativa.capacidade_total %></td>
+          <td style="text-align: center;"><%= unidade_socioeducativa.quantidade_jovem_admitido %></td>
+          <td style="text-align: center;"><%= unidade_socioeducativa.masculino %></td>
+          <td style="text-align: center;"><%= unidade_socioeducativa.feminino %></td>
+          <td style='text-align: center; background-color: #f3f3f3'><%= unidade_socioeducativa.internacao_provisoria %></td>
+          <td style='text-align: center; background-color: #f3f3f3'><%= unidade_socioeducativa.internacao %></td>
+          <td style='text-align: center; background-color: #f3f3f3'><%= unidade_socioeducativa.sancao %></td>
+          <td style='text-align: center; background-color: #f3f3f3'><%= unidade_socioeducativa.semiliberdade %></td>
+          <td style="text-align: center;background-color: #999999;font-weight: bold;color: #fff;">
+            <% if unidade_socioeducativa.quantidade_jovem_admitido&.to_f > 0 %>
+              <%= ((unidade_socioeducativa.quantidade_jovem_admitido&.to_f / unidade_socioeducativa.capacidade_total&.to_f)*100).round(0) %>%
+            <% end %>
+          </td>
+        </tr>
+        <% if unidade_socioeducativa.capital? %>
+          <% if capital_count > capital_row %>
+            <tr>
+              <td colspan="2"></td>
+              <td style="text-align: center;font-weight: bold;font-size: 11px;">Total</td>
+              <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= capacidade_total_capital+@unidade_recepcao[0]['capacidade_total'].to_i %></td>
+              <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= quantidade_jovem_admitido_capital+@unidade_recepcao[0]['quantidade_jovem_admitido'].to_i %></td>
+              <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= masculino_capital+@unidade_recepcao[0]['masculino'].to_i %></td>
+              <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= feminino_capital+@unidade_recepcao[0]['feminino'].to_i %></td>
+              <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= internacao_provisoria_capital %></td>
+              <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= internacao_capital %></td>
+              <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= sancao_capital %></td>
+              <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= semiliberdade_capital %></td>
+              <td></td>
+            </tr>
+          <% end %>
+        <% else %>
+          <% if interior_count > interior_row %>
+            <tr>
+              <td colspan="2"></td>
+              <td style="text-align: center;font-weight: bold;font-size: 11px;">Total</td>
+              <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= capacidade_total_interior %></td>
+              <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= quantidade_jovem_admitido_interior %></td>
+              <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= masculino_interior %></td>
+              <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= feminino_interior %></td>
+              <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= internacao_provisoria_interior %></td>
+              <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= internacao_interior %></td>
+              <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= sancao_interior %></td>
+              <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= semiliberdade_interior %></td>
+              <td></td>
+            </tr>
+          <% end %>
+        <% end %>
+      <% end %>
+      <tr>
+        <td colspan="2"></td>
+        <td style="text-align: center;font-weight: bold;font-size: 11px;">Total Geral</td>
+        <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= capacidade_total_capital + capacidade_total_interior + @unidade_recepcao[0]['capacidade_total'].to_i %></td>
+        <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= quantidade_jovem_admitido_capital + quantidade_jovem_admitido_interior + @unidade_recepcao[0]['quantidade_jovem_admitido'].to_i %></td>
+        <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= masculino_capital + masculino_interior + @unidade_recepcao[0]['masculino'].to_i %></td>
+        <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= feminino_capital + feminino_interior + @unidade_recepcao[0]['feminino'].to_i %></td>
+        <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= internacao_provisoria_capital + internacao_provisoria_interior %></td>
+        <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= internacao_capital + internacao_interior %></td>
+        <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= sancao_capital + sancao_interior %></td>
+        <td style="text-align: center;font-weight: bold;font-size: 12px;"><%= semiliberdade_capital + semiliberdade_interior %></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+<% end -%>
+<%= render partial: 'common/box', locals: { title: I18n.t('activerecord.models.unidade_socioeducativa', default: UnidadeSocioeducativa.model_name.plural.humanize.upcase) } %>
+

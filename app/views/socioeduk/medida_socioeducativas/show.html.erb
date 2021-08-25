@@ -1,0 +1,67 @@
+<% content_for :title do %>
+  <%= t('.title', default: @socioeduk_medida_socioeducativa.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t('.title', default: @socioeduk_medida_socioeducativa.class.model_name.human ) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                                    
+                  
+                  <th><%= SocioedukMedidaSocioeducativa.human_attribute_name :socioeduk_processo %></th>
+                                    
+                  
+                  <th><%= SocioedukMedidaSocioeducativa.human_attribute_name :socioeduk_tipo_medida_socioeducativa %></th>
+                                    
+                  
+                  <th><%= SocioedukMedidaSocioeducativa.human_attribute_name :socioeduk_situacao_cumprimento %></th>
+                                    
+                  
+                  <th><%= SocioedukMedidaSocioeducativa.human_attribute_name :socioeduk_circunstancia %></th>
+                                    
+                  
+                  <th><%= SocioedukMedidaSocioeducativa.human_attribute_name :inicio %></th>
+                                    
+                  
+                  <th><%= SocioedukMedidaSocioeducativa.human_attribute_name :fim_previsto %></th>
+                                    
+                  
+                  <th><%= SocioedukMedidaSocioeducativa.human_attribute_name :periodo_dias %></th>
+                                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_medida_socioeducativa.socioeduk_processo %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_medida_socioeducativa.socioeduk_tipo_medida_socioeducativa %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_medida_socioeducativa.socioeduk_situacao_cumprimento %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_medida_socioeducativa.socioeduk_circunstancia %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_medida_socioeducativa.inicio %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_medida_socioeducativa.fim_previsto %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_medida_socioeducativa.periodo_dias %></td>
+                                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', socioeduk_medida_socioeducativas_path, class: 'btn btn-default') %>
+<%= link_to 'Editar', edit_socioeduk_medida_socioeducativa_path(@socioeduk_medida_socioeducativa), class: 'btn btn-success' %>

@@ -1,0 +1,57 @@
+<%- model_class = GestaoDemandas::Solicitacao -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.gestao_demandas_solicitacao', default: GestaoDemandas::Solicitacao.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.gestao_demandas_solicitacao', default: GestaoDemandas::Solicitacao.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= link_to_new new_gestao_demandas_solicitacao_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                  <th><%= model_class.human_attribute_name(:titulo) %></th>
+                  <th><%= model_class.human_attribute_name(:descricao) %></th>
+                  <th><%= model_class.human_attribute_name(:usuario) %></th>
+                  <th><%= model_class.human_attribute_name(:created_at) %></th>
+                  <!-- <<th width="18%"><%= I18n.t('helpers.actions') %></<th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <% @gestao_demandas_solicitacoes.each do |gestao_demandas_solicitacao| %>
+                <tr>
+                  <td><%= gestao_demandas_solicitacao.titulo %></td>
+                  <td><%= gestao_demandas_solicitacao.descricao %></td>
+                  <td><%= gestao_demandas_solicitacao.usuario&.pessoa&.nome %></td>
+                  <td><%= l(gestao_demandas_solicitacao.created_at) %></td>
+                  <!--
+                  <td>
+                    <%#= link_to_show(gestao_demandas_solicitacao) %>
+                    <%#= link_to_edit(edit_gestao_demandas_solicitacao_path(gestao_demandas_solicitacao)) %>
+                    <%#= link_to_delete(gestao_demandas_solicitacao) %>
+                  </td>
+                  -->
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,1 @@
+json.partial! "itens_solicitacao_patrimonios/itens_solicitacao_patrimonio", itens_solicitacao_patrimonio: @itens_solicitacao_patrimonio

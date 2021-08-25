@@ -1,0 +1,1 @@
+json.array! @recursoshumanos_justificativa_aditivos, partial: 'recursoshumanos_justificativa_aditivos/recursoshumanos_justificativa_aditivo', as: :recursoshumanos_justificativa_aditivo

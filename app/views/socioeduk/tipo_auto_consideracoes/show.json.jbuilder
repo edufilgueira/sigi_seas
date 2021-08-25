@@ -1,0 +1,1 @@
+json.partial! "socioeduk_tipo_auto_consideracoes/socioeduk_tipo_auto_consideracao", socioeduk_tipo_auto_consideracao: @socioeduk_tipo_auto_consideracao

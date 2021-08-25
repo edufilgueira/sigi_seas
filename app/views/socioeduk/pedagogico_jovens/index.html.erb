@@ -1,0 +1,56 @@
+<%- model_class = Socioeduk::PedagogicoJovem -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_pedagogico_jovem', default: Socioeduk::PedagogicoJovem.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.socioeduk_pedagogico_jovem', default: Socioeduk::PedagogicoJovem.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= render partial: 'busca' %>
+            <%= link_to_new new_socioeduk_pedagogico_jovem_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_jovem) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_tipo_alfabetizado) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_situacao_escolar) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_escolaridade) %></th>
+                                    <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @socioeduk_pedagogico_jovens.each do |socioeduk_pedagogico_jovem| %>
+                <tr>
+                                    <td><%= socioeduk_pedagogico_jovem.nome %></td>
+                                    <td><%= socioeduk_pedagogico_jovem.try(:descricao_alfabetizacao)   %></td>
+                                    <td><%= socioeduk_pedagogico_jovem.try(:descricao_escolar) %></td>
+                                    <td><%= socioeduk_pedagogico_jovem.try(:descricao_escolaridade) %></td>
+                                    <td>
+                    <%= link_to_show(socioeduk_pedagogico_jovem) %>
+                    <%= link_to_edit(edit_socioeduk_pedagogico_jovem_path(socioeduk_pedagogico_jovem)) %>
+                    <%= link_to_delete(socioeduk_pedagogico_jovem) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

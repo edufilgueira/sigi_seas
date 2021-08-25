@@ -1,0 +1,1 @@
+json.array! @socioeduk_saude_jovens_tipo_medicamento_controlados, partial: 'socioeduk_saude_jovens_tipo_medicamento_controlados/socioeduk_saude_jovens_tipo_medicamento_controlado', as: :socioeduk_saude_jovens_tipo_medicamento_controlado

@@ -1,0 +1,1 @@
+json.partial! "socioeduk_processo_anexos/socioeduk_processo_anexo", socioeduk_processo_anexo: @socioeduk_processo_anexo

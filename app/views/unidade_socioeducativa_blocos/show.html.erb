@@ -1,0 +1,47 @@
+<% content_for :title do %>
+  <%= t('.title', default: @unidade_socioeducativa_bloco.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t('.title', default: @unidade_socioeducativa_bloco.class.model_name.human ) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                                    
+                  
+                  <th><%= UnidadeSocioeducativaBloco.human_attribute_name :descricao %></th>
+                                    
+                  
+                  <th><%= UnidadeSocioeducativaBloco.human_attribute_name :unidades_socioeducativas %></th>
+                                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @unidade_socioeducativa_bloco.descricao %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @unidade_socioeducativa_bloco.unidades_socioeducativas %></td>
+                                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', unidade_socioeducativa_blocos_path, class: 'btn btn-default') %>
+<%= link_to 'Editar', edit_unidade_socioeducativa_bloco_path(@unidade_socioeducativa_bloco), class: 'btn btn-success' %>

@@ -1,0 +1,2 @@
+module Recursoshumanos::CargoAditivosHelper
+end

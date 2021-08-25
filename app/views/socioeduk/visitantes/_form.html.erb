@@ -1,0 +1,87 @@
+<%= form_for(@socioeduk_visitante, html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @socioeduk_visitante %>
+  <%= render 'layouts/message_required' %>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :nome %>
+      <%= f.text_field :nome, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_tipo_documento %>
+      <%= f.collection_select :socioeduk_tipo_documento_id, Socioeduk::TipoDocumento.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-4 col-offset-1">
+      <%= f.label :numero %>
+      <%= f.text_field :numero, class: 'form-control' %>
+    </div>
+    <div class="col-sm-4 col-offset-1">
+      <%= f.label :uf_documento %>
+      <%= f.select :uf_documento, Pessoa.estados, { prompt: 'Selecione' }, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-4 col-offset-1">
+      <%= f.label :foto %>
+      <%= f.file_field :foto, class: 'form-control'%>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :observacao %>
+      <%= f.text_area :observacao, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-4 col-offset-1">
+      <%= f.label :anexo %>
+      <%= f.file_field :anexo, class: 'form-control' %>
+    </div>
+  </div>
+
+
+  <div class="col-sm-10 b-r nested-row">
+    <div class="form-group table-nested-title">
+      <div class="col-sm-7">Jovem</div>
+      <div class="col-sm-4">Parentesco</div>
+      <div class="col-sm-1">Ação</div>
+    </div>
+    <%= f.nested_fields_for :socioeduk_visitante_jovens do |form| %>
+      <div id="substancias_utilizada<%= form.object.id %>" class="form-group table-nested-identify">
+        <div class="col-sm-7">
+          <%= form.collection_select(:socioeduk_jovem_id, Socioeduk::Jovem.all.order(:nome), :id, :nome_concat_mae, { :prompt => 'Selecione um item' }, class: 'form-control' ) %>
+        </div>
+        <div class="col-sm-4">
+          <%= form.collection_select(:socioeduk_tipo_parentesco_id, Socioeduk::TipoParentesco.all(), :id, :descricao, { :prompt => 'Selecione um item' }, class: 'form-control' ) %>
+        </div>
+        <div class="col-sm-1">
+          <table>
+            <tr>
+              <td>
+                <a class="btn btn-xs btn-primary" title="Editar" href="javascript: void(0);" onclick="editarLinhaNested('substancias_utilizada<%= form.object.id %>')"><i class="fas fa-edit"></i></a>
+              </td>
+              <td>
+                <%= form.hidden_field :id %>
+                <%= form.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px;margin-bottom: 8px;'%>
+              </td>
+            </tr>
+          </table>
+          
+        </div>
+      </div> 
+    <% end %>
+    <%= f.add_nested_fields_link :socioeduk_visitante_jovens, 'Add jovem', class:"btn btn-success"%>			
+  </div>
+  
+  <div class="form-group">
+    <div class="col-sm-10"><br><br><br>
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+      <%= link_to I18n.t('helpers.links.cancel'), socioeduk_visitantes_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+
+
+<% end %>

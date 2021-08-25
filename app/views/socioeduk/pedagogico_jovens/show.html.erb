@@ -1,0 +1,75 @@
+<% content_for :title do %>
+  <%= t('.title', default: @socioeduk_pedagogico_jovem.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t('.title', default: @socioeduk_pedagogico_jovem.class.model_name.human ) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                                    
+                  
+                  <th><%= Socioeduk::PedagogicoJovem.human_attribute_name :socioeduk_jovem %></th>
+                                    
+                  
+                  <th><%= Socioeduk::PedagogicoJovem.human_attribute_name :socioeduk_tipo_alfabetizado %></th>
+                                    
+                  
+                  <th><%= Socioeduk::PedagogicoJovem.human_attribute_name :socioeduk_situacao_escolar %></th>
+                                    
+                  
+                  <th><%= Socioeduk::PedagogicoJovem.human_attribute_name :socioeduk_escolaridade %></th>
+                                    
+                  
+                  <th><%= Socioeduk::PedagogicoJovem.human_attribute_name :ultima_escola_frequentada %></th>
+                                    
+                  
+                  <th><%= Socioeduk::PedagogicoJovem.human_attribute_name :ultimo_ano_escolar %></th>
+                                    
+                  
+                  <th><%= Socioeduk::PedagogicoJovem.human_attribute_name :cgm %></th>
+                                    
+                  
+                  <th><%= Socioeduk::PedagogicoJovem.human_attribute_name :socioeduk_situacao_ocupacional_anterior %></th>
+                                    
+                  
+                  <th><%= Socioeduk::PedagogicoJovem.human_attribute_name :socioeduk_situacao_ocupacional_atual %></th>
+                                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_pedagogico_jovem.socioeduk_jovem %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_pedagogico_jovem.socioeduk_tipo_alfabetizado %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_pedagogico_jovem.socioeduk_situacao_escolar %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_pedagogico_jovem.socioeduk_escolaridade %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_pedagogico_jovem.ultima_escola_frequentada %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_pedagogico_jovem.ultimo_ano_escolar %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_pedagogico_jovem.cgm %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_pedagogico_jovem.socioeduk_situacao_ocupacional_anterior %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_pedagogico_jovem.socioeduk_situacao_ocupacional_atual %></td>
+                                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', socioeduk_pedagogico_jovens_path, class: 'btn btn-default') %>
+<%= link_to 'Editar', edit_socioeduk_pedagogico_jovem_path(@socioeduk_pedagogico_jovem), class: 'btn btn-success' %>

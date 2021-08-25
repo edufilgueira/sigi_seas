@@ -1,0 +1,2 @@
+module Biblioteca::LocaisHelper
+end

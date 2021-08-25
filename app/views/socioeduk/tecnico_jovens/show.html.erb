@@ -1,0 +1,87 @@
+<% content_for :title do %>
+  <%= t('.title', default: @socioeduk_tecnico_jovem.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t('.title', default: @socioeduk_tecnico_jovem.class.model_name.human ) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                                    
+                  
+                  <th><%= Socioeduk::TecnicoJovem.human_attribute_name :socioeduk_jovem %></th>
+                                    
+                  
+                  <th><%= Socioeduk::TecnicoJovem.human_attribute_name :tem_filhos %></th>
+                                    
+                  
+                  <th><%= Socioeduk::TecnicoJovem.human_attribute_name :quantos_filhos %></th>
+                                    
+                  
+                  <th><%= Socioeduk::TecnicoJovem.human_attribute_name :socioeduk_convivio_familiar %></th>
+                                    
+                  
+                  <th><%= Socioeduk::TecnicoJovem.human_attribute_name :codigo_familiar %></th>
+                                    
+                  
+                  <th><%= Socioeduk::TecnicoJovem.human_attribute_name :cnis %></th>
+                                    
+                  
+                  <th><%= Socioeduk::TecnicoJovem.human_attribute_name :programas_sociais %></th>
+                                    
+                  
+                  <th><%= Socioeduk::TecnicoJovem.human_attribute_name :socioeduk_renda_familiar %></th>
+                                    
+                  
+                  <th><%= Socioeduk::TecnicoJovem.human_attribute_name :socioeduk_composicao_familiar %></th>
+                                    
+                  
+                  <th><%= Socioeduk::TecnicoJovem.human_attribute_name :socioeduk_plano_individual_atendimento %></th>
+                                    
+                  
+                  <th><%= Socioeduk::TecnicoJovem.human_attribute_name :nome_tecnico %></th>
+                                    
+                  
+                  <th><%= Socioeduk::TecnicoJovem.human_attribute_name :profissional_referencia %></th>
+                                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_tecnico_jovem.socioeduk_jovem %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_tecnico_jovem.tem_filhos %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_tecnico_jovem.quantos_filhos %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_tecnico_jovem.socioeduk_convivio_familiar %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_tecnico_jovem.codigo_familiar %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_tecnico_jovem.cnis %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_tecnico_jovem.programas_sociais %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_tecnico_jovem.socioeduk_renda_familiar %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_tecnico_jovem.socioeduk_composicao_familiar %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_tecnico_jovem.socioeduk_plano_individual_atendimento %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_tecnico_jovem.nome_tecnico %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_tecnico_jovem.profissional_referencia %></td>
+                                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', socioeduk_tecnico_jovens_path, class: 'btn btn-default') %>
+<%= link_to 'Editar', edit_socioeduk_tecnico_jovem_path(@socioeduk_tecnico_jovem), class: 'btn btn-success' %>

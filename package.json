@@ -1,0 +1,7 @@
+{
+  "name": "frontend",
+  "private": true,
+  "dependencies": {
+    "ionic": "^4.12.0"
+  }
+}

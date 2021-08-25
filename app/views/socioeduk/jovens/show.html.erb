@@ -1,0 +1,298 @@
+<% content_for :title do %>
+<%= t('.title', default: @socioeduk_jovem.class.model_name.human ) %>
+<% end -%>
+<!-- <div class="row">
+  <div class="col-lg-12">
+    <div class="pull-right">
+      <%= link_to('Listar', socioeduk_jovens_path, class: 'btn btn-default') %>
+      <%= link_to 'Editar', edit_socioeduk_jovem_path(@socioeduk_jovem), class: 'btn btn-detran-primary' %>
+    </div>
+    <%#= image_tag @socioeduk_jovem.foto.url, size: '100x100' %>
+    
+    <b style="font-size: 1.5em;"><%= @socioeduk_jovem.nome.upcase %></b>
+  </div>
+</div> -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title"></div>
+            <div class="ibox-content">
+                <div class="bloco_separador">
+                    <div class="titulo_bloco_separador"
+                        style="font-size:18px;text-align: -webkit-center; border-top: 1px solid #ebe8e8;">
+                        <b style="font-size: 1.5em;"><%= @socioeduk_jovem.nome.upcase %></b>
+                    </div>
+                    <div class="row">
+                        <div style="float: right; margin: 0px 0px -130px 8px;border: 3px solid #ebe8e8">
+                            <%#= image_tag @socioeduk_jovem.foto.url, size: '160x120', class: "foto-jovem fullscreen", id: "theImage", onClick: "makeFullScreen();" %>
+                            <%= image_tag fotos_socioeduk_jovens_path(id:@socioeduk_jovem.id), size: '160x120', class: "foto-jovem fullscreen", id: "theImage", onClick: "makeFullScreen();" %>
+                        </div>
+                        <table class="dados_pessoais" width="90%">
+                            <tr>
+                                <td width="50%">
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-6 text-right">
+                                            <dt><%= Socioeduk::Jovem.human_attribute_name :apelido %>:</dt>
+                                        </div>
+                                        <div class="col-sm-6 text-left">
+                                            <dd class="mb-1"><%= @socioeduk_jovem.apelido.upcase %></dd>
+                                        </div>
+                                    </dl>
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-6 text-right">
+                                            <dt><%= Socioeduk::Jovem.human_attribute_name :data_nascimento %>:</dt>
+                                        </div>
+                                        <div class="col-sm-6 text-left">
+                                            <dd class="mb-1"><%= @socioeduk_jovem.data_nascimento %></dd>
+                                        </div>
+                                    </dl>
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-6 text-right">
+                                            <dt><%= Socioeduk::Jovem.human_attribute_name :sexo %>:</dt>
+                                        </div>
+                                        <div class="col-sm-6 text-left">
+                                            <dd class="mb-1"><%= @socioeduk_jovem.sexo.upcase %></dd>
+                                        </div>
+                                    </dl>
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-6 text-right">
+                                            <dt><%= Socioeduk::Jovem.human_attribute_name :estado_civil_id %>:</dt>
+                                        </div>
+                                        <div class="col-sm-6 text-left">
+                                            <dd class="mb-1"><%= @socioeduk_jovem.estado_civil_id.upcase %></dd>
+                                        </div>
+                                    </dl>
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-6 text-right">
+                                            <dt><%= Socioeduk::Jovem.human_attribute_name :idade %>:</dt>
+                                        </div>
+                                        <div class="col-sm-6 text-left">
+                                            <dd class="mb-1">
+                                                <%= Socioeduk::Jovem.idade(@socioeduk_jovem.data_nascimento) %></dd>
+                                        </div>
+                                    </dl>
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-6 text-right">
+                                            <dt><%= Socioeduk::Jovem.human_attribute_name :nome_mae_pai %>:</dt>
+                                        </div>
+                                        <div class="col-sm-6 text-left">
+                                            <dd class="mb-1">
+                                                <%= "#{@socioeduk_jovem.nome_mae} / #{@socioeduk_jovem.nome_pai}".upcase %>
+                                            </dd>
+                                        </div>
+                                    </dl>
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-6 text-right">
+                                            <dt><%= Socioeduk::Jovem.human_attribute_name :naturalidade %>:</dt>
+                                        </div>
+                                        <div class="col-sm-6 text-left">
+                                            <dd class="mb-1"><%= @socioeduk_jovem&.cidade_naturalidade&.nome %></dd>
+                                        </div>
+                                    </dl>
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-6 text-right">
+                                            <dt><%= Socioeduk::Jovem.human_attribute_name :uf %>:</dt>
+                                        </div>
+                                        <div class="col-sm-6 text-left">
+                                            <dd class="mb-1"><%= @socioeduk_jovem&.uf_naturalidade&.nome.upcase %></dd>
+                                        </div>
+                                    </dl>
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-6 text-right">
+                                            <dt><%= Socioeduk::Jovem.human_attribute_name :opcao_sexual %>:</dt>
+                                        </div>
+                                        <div class="col-sm-6 text-left">
+                                            <dd class="mb-1"><%= @socioeduk_jovem&.opcao_sexual&.descricao %></dd>
+                                        </div>
+                                    </dl>
+                                </td>
+                                <td width="50%">
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-6 text-right">
+                                            <dt><%= Socioeduk::Jovem.human_attribute_name :falecido %>:</dt>
+                                        </div>
+                                        <div class="col-sm-6 text-left">
+                                            <dd class="mb-1"><%= @socioeduk_jovem.falecido ? 'Sim' : 'Não' %></dd>
+                                        </div>
+                                    </dl>
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-6 text-right">
+                                            <dt><%= Socioeduk::Jovem.human_attribute_name :dependente_quimico %>:</dt>
+                                        </div>
+                                        <div class="col-sm-6 text-left">
+                                            <dd class="mb-1"><%= @socioeduk_jovem.dependente_quimico ? 'Sim' : 'Não' %>
+                                            </dd>
+                                        </div>
+                                    </dl>
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-6 text-right">
+                                            <dt><%= Socioeduk::Jovem.human_attribute_name :etnia %>:</dt>
+                                        </div>
+                                        <div class="col-sm-6 text-left">
+                                            <dd class="mb-1"><%= @socioeduk_jovem.etnia %></dd>
+                                        </div>
+                                    </dl>
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-6 text-right">
+                                            <dt><%= Socioeduk::Jovem.human_attribute_name :orfao %>:</dt>
+                                        </div>
+                                        <div class="col-sm-6 text-left">
+                                            <dd class="mb-1"><%= @socioeduk_jovem.orfao ? 'Sim' : 'Não' %></dd>
+                                        </div>
+                                    </dl>
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-6 text-right">
+                                            <dt><%= Socioeduk::Jovem.human_attribute_name :responsavel %>:</dt>
+                                        </div>
+                                        <div class="col-sm-6 text-left">
+                                            <dd class="mb-1"><%= @socioeduk_jovem.responsavel %></dd>
+                                        </div>
+                                    </dl>
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-6 text-right">
+                                            <dt><%= Socioeduk::Jovem.human_attribute_name :mora_com %>:</dt>
+                                        </div>
+                                        <div class="col-sm-6 text-left">
+                                            <dd class="mb-1"><%= @socioeduk_jovem.mora_com %></dd>
+                                        </div>
+                                    </dl>
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-6 text-right">
+                                            <dt><%= Socioeduk::Jovem.human_attribute_name :numero_filhos %>:</dt>
+                                        </div>
+                                        <div class="col-sm-6 text-left">
+                                            <dd class="mb-1"><%= @socioeduk_jovem.numero_filhos %></dd>
+                                        </div>
+                                    </dl>
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-6 text-right">
+                                            <dt><%= Socioeduk::Jovem.human_attribute_name :responsavel_filhos %>:</dt>
+                                        </div>
+                                        <div class="col-sm-6 text-left">
+                                            <dd class="mb-1"><%= @socioeduk_jovem.responsavel_filhos %></dd>
+                                        </div>
+                                    </dl>
+                                    <div class="col-sm-6 text-right">
+                                        <dt><%= Socioeduk::Jovem.human_attribute_name :bairro_id %>:</dt>
+                                    </div>
+                                    <div class="col-sm-6 text-left">
+                                        <!-- <dd class="mb-1"><%= @socioeduk_jovem&.cidade_naturalidade&.nome %></dd> -->
+                                        <dd class="mb-1"><%= @endereco_jovens&.bairro_id&.nome %></dd>
+                                    </div>
+                                    </dl>
+                                    <dl class="row mb-0">
+                                        <div class="col-sm-6 text-right">
+                                            <dt><%= "" %>&ensp;</dt>
+                                        </div>
+                                        <div class="col-sm-6 text-left">
+                                            <dd class="mb-1"><%= "" %>&ensp;</dd>
+                                        </div>
+                                    </dl>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="print">
+                            <hr>
+                            <h5>Outros Nomes</h5>
+                            <%= render template: 'socioeduk/outro_nomes/index', locals: { socioeduk_outro_nomes: @socioeduk_jovem.outros_nomes } %>
+                        </div>
+                        <div class="print">
+                            <h5>Características</h5>
+                            <%= render template: 'socioeduk/jovem_caracteristicas/index', locals: { socioeduk_jovem_caracteristicas: @socioeduk_jovem.jovem_caracteristicas } %>
+                        </div>
+                        <div class="print">
+                            <h5>Endereços</h5>
+                            <%= render template: 'socioeduk/endereco_jovens/index', locals: { socioeduk_endereco_jovens: @socioeduk_jovem.endereco_jovens } %>
+                        </div>
+                        <div class="print">
+                            <h5>Contatos</h5>
+                            <%= render template: 'socioeduk/jovem_contatos/index', locals: { socioeduk_jovem_contatos: @socioeduk_jovem.jovem_contatos } %>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 no-print">
+                        <%= render partial: 'tabs' %>
+                    </div>
+
+                    <h2>Dados das Infrações</h2>
+                    <% @jovem_recepcoes = Socioeduk::JovemRecepcao.listar_recepcoes_por_jovem(@socioeduk_jovem.id) %>
+                    <% if !@jovem_recepcoes.blank? %>
+                    <table class="table table-hover" style="border: 1px solid #e5e6e7;">
+                        <thead class="thead-dark">
+                            <tr style="background-color: #ececec">
+                                <th style="width: 60px;">Atual</th>
+                                <th>Dt. Recep.</th>
+                                <th>Unidade Atual</th>
+                                <th>Ultima Medida</th>
+                                <th>Dt. inicio</th>
+                                <th>Tempo</th>
+                                <th>Status</th>
+                                <th class="no-print">Visualizar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% @jovem_recepcoes.each do |jovem_recepcao| %>
+                            <tr>
+                                <% if(jovem_recepcao[:processo_id].nil?) %>
+                                    <td>
+                                        <% if(jovem_recepcao[:status]) %>
+                                            <div class="btn btn-sm btn-primary btn-circle"><i class="fas fa-check" title="Ativo"></i></div>
+                                        <% end %>
+                                    </td>
+                                    <td style="vertical-align: middle;"><%= jovem_recepcao[:data_recepcao] %></td>e
+                                    <!--VERIFICA SE A UNIDADE DESTINO ESTA VAZIA. SE ESTIVER ELE PEGA A ORIGEM, POIS SE O DESTINO ESTIVER 
+                                    VAZIO SIGNIFICA QUE FOI LIBERADO E PRECISA LISTAR A ULTIMA UNIDADE -->
+                                    <% if jovem_recepcao[:unidade] != ' - ' %>
+                                        <td style="vertical-align: middle;"><%= jovem_recepcao[:unidade] %></td>
+                                    <% elsif %> 
+                                        <td style="vertical-align: middle;"><%= jovem_recepcao[:unidade_origem] %></td>
+                                    <% end %>
+                                    <td colspan=5>
+                                        <div class="painel" role="alert">Jovem recepcionado mas não foi encaminhado para unidade.</div>
+                                    </td>
+                                    <% else %>
+                                    <td>
+                                        <% if(jovem_recepcao[:status]) %>
+                                            <div class="btn btn-sm btn-primary btn-circle"><i class="fas fa-check" title="Ativo"></i></div>
+                                        <% end %>
+                                    </td>
+                                    <td style="vertical-align: middle;"><%= jovem_recepcao[:data_recepcao] %></td>
+                                    <!--VERIFICA SE A UNIDADE DESTINO ESTA VAZIA. SE ESTIVER ELE PEGA A ORIGEM, POIS SE O DESTINO ESTIVER 
+                                    VAZIO SIGNIFICA QUE FOI LIBERADO E PRECISA LISTAR A ULTIMA UNIDADE -->
+                                    <% if jovem_recepcao[:unidade] != ' - ' %>
+                                        <td style="vertical-align: middle;"><%= jovem_recepcao[:unidade] %></td>
+                                    <% elsif %> 
+                                        <td style="vertical-align: middle;"><%= jovem_recepcao[:unidade_origem] %></td>
+                                    <% end %>
+                                    <td style="vertical-align: middle;"><%= jovem_recepcao[:medida_socioeducativa] %></td>
+                                    <td style="vertical-align: middle;"><%= jovem_recepcao[:inicio] %></td>
+                                    <td style="vertical-align: middle;text-transform: lowercase;"><%= jovem_recepcao[:tempo] %></td>
+                                    <td style="vertical-align: middle;"><%= jovem_recepcao[:status_processo] %></td>
+                                    <td class="no-print">
+                                        <%= link_to('<i class="glyphicon glyphicon-search"></i>'.html_safe, {controller: :jovens, action: :detalhe_recepcao, id_jovem_recepcao:jovem_recepcao[:id]}, class: "btn btn-sm btn-success") %>
+                                    </td>
+                                <% end %>
+                                <% if jovem_recepcao[:tipo_medida]=='ABERTO' %>
+                                    <tr>
+                                        <td style="border-top: solid 0px;font-size: 20px;text-align: end;color: #638a17;"><i class="glyphicon glyphicon-circle-arrow-right"></i></td>
+                                        <td colspan="2" style="border-top: solid 0px;color: #638a17;"><b>Tipo da Medida:</b> <%= jovem_recepcao[:tms_descricao] %></td>
+                                        <td colspan="5" style="border-top: solid 0px;color: #638a17;"><b>Data Liberação:</b> <%= jovem_recepcao[:data_saida] %></td>
+                                    </tr>
+                                <% elsif jovem_recepcao[:tipo_medida]=='FECHADO' %>
+                                    <tr>
+                                        <td style="border-top: solid 0px;font-size: 20px;text-align: end;color: #a72e2e;"><i class="glyphicon glyphicon-circle-arrow-right"></i></td>
+                                        <td colspan="2" style="border-top: solid 0px;color: #a72e2e;"><b>Tipo da Medida:</b> <%= jovem_recepcao[:tms_descricao] %></td>
+                                        <td colspan="5" style="border-top: solid 0px;color: #a72e2e;"><b>Data Liberação:</b> <%= jovem_recepcao[:data_saida] %></td>
+                                    </tr>
+                                <% end %>
+                            </tr>
+                            <% end %>
+                        </tbody>
+                    </table>
+                    <% end %>
+                    <%= link_to 'Editar', edit_socioeduk_jovem_path(@socioeduk_jovem), class: 'btn btn-primary' %>
+                </div>
+            </div>
+        </div>
+    </div>

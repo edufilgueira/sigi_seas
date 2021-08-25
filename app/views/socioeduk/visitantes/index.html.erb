@@ -1,0 +1,60 @@
+<%- model_class = Socioeduk::Visitante -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_visitante', default: Socioeduk::Visitante.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.socioeduk_visitante', default: Socioeduk::Visitante.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= render partial: 'busca' %>
+            <%= link_to_new new_socioeduk_visitante_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                                    <th><%= model_class.human_attribute_name(:nome) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_jovem) %></th>
+                                    <th><%= model_class.human_attribute_name(:numero) %></th>
+                                    <th><%= model_class.human_attribute_name(:foto) %></th>
+                                    <th><%= model_class.human_attribute_name(:observacao) %></th>
+                                    <th><%= model_class.human_attribute_name(:anexo) %></th>
+                                    <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @socioeduk_visitantes.each do |socioeduk_visitante| %>
+                <tr>
+                                    <td><%= socioeduk_visitante.visitante %></td>
+                                    <td><%= socioeduk_visitante.nome %></td>
+                                    <td><%= socioeduk_visitante.numero %></td>
+                                    <td><%= socioeduk_visitante.foto %></td>
+                                    <td><%= socioeduk_visitante.observacao %></td>
+                                    <td><%= socioeduk_visitante.anexo %></td>
+                                    <td>
+                    <%= link_to_show(socioeduk_visitante) %>
+                    <%= link_to_edit(edit_socioeduk_visitante_path(socioeduk_visitante)) %>
+                    <%= link_to_delete(socioeduk_visitante) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

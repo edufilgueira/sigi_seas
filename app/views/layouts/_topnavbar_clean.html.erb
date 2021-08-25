@@ -1,0 +1,22 @@
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+        <ul class="nav navbar-top-links navbar-right" style="width: 100%; padding-right: 35px;">
+            <!-- <li class="text-success">
+                <span class="label label-primary">
+                    <i class="fas fa-user">
+                        <%#= current_usuario.try(:pessoa).try(:nome).try(:upcase) %>
+                    </i>
+                </span>
+            </li> -->
+            <li style="float: right">
+                <%= link_to(content_tag(:i, nil, class: 'fas fa-sign-out-alt') + 'Sair', destroy_usuario_session_path, :method => :delete) %>
+            </li>
+            <li style="float: right">
+                <%= link_to(content_tag(:i, nil, class: 'fas fa-key') + 'Alterar Senha', edit_usuario_registration_path) %>
+            </li>
+            <li style="float: left">
+                <%= link_to(content_tag(:i, nil, class: 'fas fa-th', title: 'Voltar para o menu principal'), root_path) if params[:action] == 'sistemas_socioeduk' %>
+            </li>
+        </ul>
+    </nav>
+</div>

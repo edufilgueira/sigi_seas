@@ -1,0 +1,26 @@
+<br>
+<%= form_tag({action: :index}, method: :get) do %>
+  <div class="row">
+    <div class="col-md-3">
+      <%= label_tag 'Nº Processo' %>
+      <%= text_field_tag :numero_processo, nil, class: 'form-control' %>
+    </div>
+    <div class="col-md-3">
+      <%= label_tag 'Jovem' %>
+      <%= text_field_tag :jovem, nil, class: 'form-control' %>
+    </div>
+    <div class="col-md-3">
+      <%= label_tag 'Comarca' %>
+      <%= select_tag :municipio_comarca_id, options_from_collection_for_select(Cidade.all, :id, :nome), {include_blank: true, prompt: "Cidade Comarca", class: 'form-control'} %>
+    </div>
+    <div class="col-md-3">
+      <%= label_tag 'Status Processo' %>
+      <%= select_tag :status_processo, options_from_collection_for_select(Socioeduk::StatusProcesso.all, :id, :descricao), {include_blank: true, prompt: "Status do Processo", class: 'form-control'} %>
+    </div>
+  </div>
+  <div class="row">
+    <%= submit_tag 'Buscar', class: 'btn btn-primary' %>
+    <%= link_to "Limpar",  socioeduk_processos_path, class:"btn btn-warning" %>
+  </div>
+<% end %>
+<br>

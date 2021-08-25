@@ -1,0 +1,44 @@
+<%= form_for(@socioeduk_processo_advogado, html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @socioeduk_processo_advogado %>
+  <%= render 'layouts/message_required' %>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_processo %>
+      <%= f.text_field :socioeduk_processo_id, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :nome %>
+      <%= f.text_field :nome, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-4 col-offset-1">
+      <%= f.label :numero %>
+      <%= f.text_field :numero, class: 'form-control' %>
+    </div>
+     <div class="col-sm-4 col-offset-1">
+      <%= f.label :uf_oab %>
+      <%= f.select :uf_oab, Pessoa.estados, { prompt: 'Selecione' }, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10">
+      <%= f.check_box :defensor_publico %>
+      <%= f.label :defensor_publico %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :unidade_socioeducativa %>
+      <%= f.collection_select :unidade_socioeducativa, UnidadeSocioeducativa.all, :id , :nome, {prompt: "selecione"} ,{class: "form-control"} %>  
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10">
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+      <%= link_to I18n.t('helpers.links.cancel'), socioeduk_processo_advogados_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+<% end %>

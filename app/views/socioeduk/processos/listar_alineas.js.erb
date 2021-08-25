@@ -1,0 +1,2 @@
+var alinea = document.getElementById(''.concat("socioeduk_processo_socioeduk_processo_naturezas_attributes_", <%= params[:index].last %>, "_socioeduk_artigo_alinea_id"));
+$(alinea).empty().append("<%= j options_from_collection_for_select(@artigo_alineas, :id, :descricao) %>");

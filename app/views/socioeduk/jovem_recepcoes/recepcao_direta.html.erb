@@ -1,0 +1,28 @@
+<% content_for :title do %>
+  <%= t('.title', default: [:"helpers.titles.#{params[:action]}"], model: Socioeduk::JovemRecepcao.model_name.human.capitalize) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <!-- <h5><%= t('.title', default: [:"helpers.titles.#{params[:action]}"], model: Socioeduk::JovemRecepcao.model_name.human.capitalize) %></h5> -->
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <h1><%= I18n.t('titles.socioeduk_jovem_recepcoes_recepcao_direta') %></h1>
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= render partial: 'form_direta', locals: { disable_with: 'Salvando...' } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

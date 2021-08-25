@@ -1,0 +1,166 @@
+<style>
+    .circle {
+        background-color:#fff;
+        border:1px solid black;    
+        /* height:50px; */
+        border-radius:50%;
+        -moz-border-radius:50%;
+        -webkit-border-radius:50%;
+        width:60px;
+        padding: 5px;
+        text-align: center;
+        font-size: 20px;
+    }
+
+    section {
+        border:1px solid #2b2b2b;
+        padding: 5px;
+    }
+
+    .linha {
+        border-bottom: 1px solid #2b2b2b;
+    }
+
+    .boldFont {
+        font-weight: bold;
+    } 
+
+    h2 {
+        margin: 10px;
+    }
+    
+    ul {
+        list-style-type: none;
+        padding: 5px 30px;
+	}
+
+    .box {
+        border:1px solid #2b2b2b;
+        padding: 1px;
+    }
+
+    .boxFormated {
+        border:1px solid #2b2b2b;
+        padding: 9px;
+    }
+
+    .boxfull {
+        border: 1px solid #2b2b2b;
+        padding: 70px;
+    }
+
+    .boxfullparecer {
+        border: 1px solid #2b2b2b;
+        padding: 30px;
+    }
+
+    .boxfullFormated {
+        border: 1px solid #2b2b2b;
+        padding: 50px;
+    }
+
+    .km {
+        padding: 5px;
+        display: inline-block;
+    }
+</style>
+
+<header>
+    <br>
+        <%= image_tag 'logo-seas' %>
+    <br>
+</header>
+
+<section>
+    <div class="row">
+        <div class="col-md-3" align="left">
+            <div class="circle">
+                <font align="center" style="margin-top:100;"><%= @mapa_bordo.id %></font>
+            </div>
+        </div>
+        <div class="col-md-3" align="right">
+                <span class='boldFont'>GERADO EM</span>
+                <br>
+                <%= @mapa_bordo.data_vistoria %>
+            </ul>
+        </div>
+    </div>
+    <div align="center">
+    <h2>Mapa de Bordo</h2>
+    </div>
+    <ul>
+        <li class = 'boldFont'>VEICULO</li>
+        <li class = 'box'><%= @mapa_bordo.veiculo %></li>
+        <br>
+        <li class = 'boldFont'>VISTORIA</li>
+        <li class = 'box'><%= @mapa_bordo.tipo_vistoria %></li>
+        <br>
+        <li class = 'boldFont'>RESPONSAVEL</li>
+        <li class = 'box'><%= @mapa_bordo.responsavel %></li>
+        <br>
+        <li class = 'boldFont'>MOTORISTA</li>
+        <li class = 'box'><%= @mapa_bordo.motorista %></li>
+        <br>
+        <ul class ='km'>     
+            <li class = 'boldFont km'>KM INICIAL</li>
+            <% if @mapa_bordo.km_inicial.nil? %>
+                <li class="boxFormated"></li>
+            <% else %>
+                <li class = 'box'><%= @mapa_bordo.km_inicial %></li>
+            <% end %>
+            <br>
+            <li class = 'boldFont km'>KM FINAL</li>
+            <% if @mapa_bordo.km_final.nil? %>
+                <li class="boxFormated"></li>
+            <% else %>
+                <li class = 'box'><%= @mapa_bordo.km_final %></li>
+            <% end %>
+            <br> 
+        </ul>    
+        <ul class ='km'>       
+            <li class = 'boldFont km'>HORA INICIAL</li>
+            <% if @mapa_bordo.hora_inicial.nil? %>
+                <li class="boxFormated"></li>
+            <% else %>
+                <li class = 'box'><%= @mapa_bordo.hora_inicial&.strftime('%H:%M') %></li>
+            <% end %>
+            <br>
+            <li class = 'boldFont km'>HORA FINAL</li>
+            <% if @mapa_bordo.hora_final.nil? %>
+                <li class="boxFormated"></li>
+            <% else %>
+                <li class = 'box'><%= @mapa_bordo.hora_final&.strftime('%H:%M') %></li>
+            <% end %>
+            <br>
+        </ul> 
+        <li class = 'boldFont'>PERCURSO</li>
+        <% if @mapa_bordo.percurso.nil? %>
+            <li class="boxfullFormated"></li>
+        <% else %>
+            <li class = 'boxfull'><%= @mapa_bordo.percurso %></li>
+        <% end %>
+        <br>
+        <li class = 'boldFont'>PARECER</li>
+        <% if @mapa_bordo.parecer.nil? %>
+            <li class="boxfullFormated"></li>
+        <% else %>
+            <li class = 'boxfullparecer'><%= @mapa_bordo.parecer %></li>
+        <% end %>
+        <br> 
+    </ul>
+    <br> 
+    <table width="100%">
+        <tr align="center">
+            <td class = 'boldFont'>
+                    ____________________________________        
+                    <br>
+                    GESTOR DE TRANSPORTE
+            </td>
+            <td class = 'boldFont'>
+                    ____________________________________        
+                    <br>
+                    MOTORISTA
+            </td>
+        </tr>
+    </table>
+</section>   

@@ -1,0 +1,2 @@
+var inciso = document.getElementById(''.concat("socioeduk_processo_socioeduk_processo_naturezas_attributes_", <%= params[:index].last %>, "_socioeduk_artigo_inciso_id"));
+$(inciso).empty().append("<%= j options_from_collection_for_select(@artigo_incisos, :id, :descricao) %>");

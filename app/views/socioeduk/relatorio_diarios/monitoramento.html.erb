@@ -1,0 +1,244 @@
+<%- model_class = Socioeduk::RelatorioDiario -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_relatorio_diario', default: Socioeduk::RelatorioDiario.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.socioeduk_relatorio_diario', default: Socioeduk::RelatorioDiario.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="search">
+          <%= form_for(:frm, url: monitoramento_socioeduk_relatorio_diarios_path, html: { class: 'form-horizontal' }) do |f| %>
+            <h3>Buscar</h3>
+            <div class="form-group">
+              <div class="col-sm-2 col-offset-1">
+                <%= f.text_field :data, class: 'form-control datepicker' %>
+              </div>
+              <div class="actions">
+                <%= f.submit "Buscar", class: "btn btn-primary" %>
+              </div>
+            </div>
+          <% end %>
+          <br>
+        </div>
+        <h3 class="center">Data Referência: <small style="font-size: 100%;"><%= @data_referencia %> (<%= I18n.l(@data_referencia, format: '%A') %>)</small></h3>
+        <div class="row tableFixHead" style="overflow-x:scroll;">
+          <div class="col-sm-12 b-r">
+            <table class="table table-bordered table-sm border-black">
+              <thead>
+                <tr class="table-center">
+                  <th rowspan="2" style="vertical-align: inherit;">#</th>
+                  <th rowspan="2" style="vertical-align: inherit;">Unidade</th>
+                  <th rowspan="2" style="vertical-align: inherit;">MSE</th>
+                  <th colspan="2">ADOLESCENTE</th>
+                  <th colspan="2">CAPACIDADE</th>
+                  <th colspan="2">SOCIOEDUCADOR</th>
+                  <th rowspan="2" style="vertical-align: inherit;" colspan="2">CAPAC. / ADOLESC.</th>
+                  <th rowspan="2" style="vertical-align: inherit;">ADOLESC. / SOCIO.</th>
+                  <th rowspan="2" style="vertical-align: inherit;">EVASÃO</th>
+                  <th rowspan="2" style="vertical-align: inherit;">FUGA</th>
+                  <th rowspan="2" style="vertical-align: inherit;">DESCUMP.</th>
+                  <th colspan="3">SITUAÇÃO DE CRISE</th>
+                  <th rowspan="2" style="vertical-align: inherit;">PREENCHIDO POR</th>
+                  <tr>
+                    <th>MAS.</th>
+                    <th>FEM.</th>
+                    <th>NOM.</th>
+                    <th>REAL</th>
+                    <th>MAS.</th>
+                    <th>FEM.</th>
+                    <th>SIMPLES</th>
+                    <th>COMPLEXA</th>
+                    <th>CRÍTICA</th>
+                  </tr>
+                </tr>
+              </thead>
+              <tbody style="overflow:scroll;">
+                <% @socioeduk_relatorio_diarios.each_with_index do |socioeduk_relatorio_diario, index| %>
+                  <% if socioeduk_relatorio_diario.unidade_socioeducativa.cidade.nome.eql?('Fortaleza') %>
+                    <tr class="tr-capital">
+                  <% else %>
+                    <tr class="tr-interior">
+                  <% end %>
+                    <td rowspan="5" style="vertical-align: inherit;"><%= (index+1) %>º</td>
+                    <td rowspan="5" style="vertical-align: inherit;" title="<%= socioeduk_relatorio_diario.unidade_socioeducativa %>"><%= socioeduk_relatorio_diario.unidade_socioeducativa.sigla %></td>
+                  </tr>
+                  <% if socioeduk_relatorio_diario.unidade_socioeducativa.cidade.nome.eql?('Fortaleza') %>
+                    <tr class="tr-capital">
+                  <% else %>
+                    <tr class="tr-interior">
+                  <% end %>
+                    <th>I</th>
+                    <td><%= socioeduk_relatorio_diario.int_mas %></td>
+                    <td><%= socioeduk_relatorio_diario.int_fem %></td>
+                    <td rowspan="4" style="vertical-align: inherit;"><%= socioeduk_relatorio_diario.capacidade_nominal %></td>
+                    <td rowspan="4" style="vertical-align: inherit;"><%= socioeduk_relatorio_diario.capacidade_real %></td>
+                    <td rowspan="4" style="vertical-align: inherit;"><%= socioeduk_relatorio_diario.socioeducador_homem %></td>
+                    <td rowspan="4" style="vertical-align: inherit;"><%= socioeduk_relatorio_diario.socioeducador_mulher %></td>
+                    <td rowspan="4" style="vertical-align: inherit;"><%= socioeduk_relatorio_diario.capacidade_por_adolescente_percentual %></td>
+                    <td rowspan="4" style="vertical-align: inherit;"><%= socioeduk_relatorio_diario.capacidade_socioeducador_por_adolescente_percentual %>%</td>
+                    <td rowspan="4" style="vertical-align: inherit;"><%= socioeduk_relatorio_diario.capacidade_por_adolescente %></td>
+                    <td rowspan="4" style="vertical-align: inherit;"><%= socioeduk_relatorio_diario.evasao %></td>
+                    <td rowspan="4" style="vertical-align: inherit;"><%= socioeduk_relatorio_diario.fuga %></td>
+                    <td rowspan="4" style="vertical-align: inherit;"><%= socioeduk_relatorio_diario.descumprimento %></td>
+                    <td rowspan="4" style="vertical-align: inherit;"><%= socioeduk_relatorio_diario.situacao_crise_simples %></td>
+                    <td rowspan="4" style="vertical-align: inherit;"><%= socioeduk_relatorio_diario.situacao_crise_complexa %></td>
+                    <td rowspan="4" style="vertical-align: inherit;"><%= socioeduk_relatorio_diario.situacao_crise_critica %></td>
+                    <td rowspan="4" style="vertical-align: inherit;"><%= socioeduk_relatorio_diario&.usuario&.pessoa&.nome %></td>
+                  </tr>
+                  <% if socioeduk_relatorio_diario.unidade_socioeducativa.cidade.nome.eql?('Fortaleza') %>
+                    <tr class="tr-capital">
+                  <% else %>
+                    <tr class="tr-interior">
+                  <% end %>
+                    <th>IP</th>
+                    <td><%= socioeduk_relatorio_diario.ip_mas %></td>
+                    <td><%= socioeduk_relatorio_diario.ip_fem %></td>
+                  </tr>
+                  <% if socioeduk_relatorio_diario.unidade_socioeducativa.cidade.nome.eql?('Fortaleza') %>
+                    <tr class="tr-capital">
+                  <% else %>
+                    <tr class="tr-interior">
+                  <% end %>
+                    <th>SL</th>
+                    <td><%= socioeduk_relatorio_diario.sl_mas %></td>
+                    <td><%= socioeduk_relatorio_diario.sl_fem %></td>
+                  </tr>
+                  <% if socioeduk_relatorio_diario.unidade_socioeducativa.cidade.nome.eql?('Fortaleza') %>
+                    <tr class="tr-capital">
+                  <% else %>
+                    <tr class="tr-interior">
+                  <% end %>
+                    <th>SA</th>
+                    <td><%= socioeduk_relatorio_diario.san_mas %></td>
+                    <td><%= socioeduk_relatorio_diario.san_fem %></td>
+                  </tr>
+                  <% if socioeduk_relatorio_diario.unidade_socioeducativa.cidade.nome.eql?('Fortaleza') %>
+                    <tr class="tr-capital">
+                  <% else %>
+                    <tr class="tr-interior">
+                  <% end %>
+                    <td colspan="3" style="font-weight:bold;">TOTAL</td>
+                    <td colspan="2"><%= socioeduk_relatorio_diario.int_mas.to_i + socioeduk_relatorio_diario.int_fem.to_i + socioeduk_relatorio_diario.ip_mas.to_i + socioeduk_relatorio_diario.ip_fem.to_i + socioeduk_relatorio_diario.sl_mas.to_i + socioeduk_relatorio_diario.sl_fem.to_i + socioeduk_relatorio_diario.san_mas.to_i + socioeduk_relatorio_diario.san_fem.to_i %></td>
+                  </tr>
+                </tr>
+                <% end %>
+                <tr>
+                  <th colspan="3">Sub. I</th>
+                  <td><%= @total_capital[0].to_i + @total_interior[0].to_i %></td>
+                  <td><%= @total_capital[1].to_i + @total_interior[1].to_i %></td>
+                  <td rowspan="4" style="vertical-align: inherit;"><%= @total_capital[6].to_i + @total_interior[6].to_i %></td>
+                  <td rowspan="4" style="vertical-align: inherit;"><%= @total_capital[7].to_i + @total_interior[7].to_i %></td>
+                  <td rowspan="4" style="vertical-align: inherit;"><%= @total_capital[8].to_i + @total_interior[8].to_i %></td>
+                  <td rowspan="4" style="vertical-align: inherit;"><%= @total_capital[9].to_i + @total_interior[9].to_i %></td>
+                  <td rowspan="4" style="vertical-align: inherit;"><%= @total_capital[10].to_i + @total_interior[10].to_i %></td>
+                  <td rowspan="4" style="vertical-align: inherit;"><%= @total_capital[14].to_i + @total_interior[14].to_i %></td>
+                  <td rowspan="4" style="vertical-align: inherit;"><%= @total_capital[15].to_i + @total_interior[15].to_i %></td>
+                  <td rowspan="4" style="vertical-align: inherit;"><%= @total_capital[11].to_i + @total_interior[11].to_i %></td>
+                  <td rowspan="4" style="vertical-align: inherit;"><%= @total_capital[12].to_i + @total_interior[12].to_i %></td>
+                  <td rowspan="4" style="vertical-align: inherit;"><%= @total_capital[13].to_i + @total_interior[13].to_i %></td>
+                  <td rowspan="4" style="vertical-align: inherit;"><%= @total_capital[16].to_i + @total_interior[16].to_i %></td>
+                  <td rowspan="4" style="vertical-align: inherit;"><%= @total_capital[18].to_i + @total_interior[18].to_i %></td>
+                  <td rowspan="4" style="vertical-align: inherit;"><%= @total_capital[17].to_i + @total_interior[17].to_i %></td>
+                </tr>
+                <tr>
+                  <th colspan="3">Sub. IP</th>
+                  <td><%= @total_capital[2].to_i + @total_interior[2].to_i %></td>
+                  <td><%= @total_capital[3].to_i + @total_interior[3].to_i  %></td>
+                </tr>
+                <tr>
+                  <th colspan="3">Sub. SL</th>
+                  <td><%= @total_capital[4].to_i + @total_interior[4].to_i %></td>
+                  <td><%= @total_capital[5].to_i + @total_interior[5].to_i %></td>
+                </tr>
+                <tr>
+                  <th colspan="3">Sub. SA</th>
+                  <td><%= @total_capital[19].to_i + @total_interior[19].to_i %></td>
+                  <td><%= @total_capital[20].to_i + @total_interior[20].to_i %></td>
+                </tr>
+                <tr class="tr-capital">
+                  <th colspan="3">Sub. Capital</th>
+                  <td><%= @total_capital[0].to_i + @total_capital[2].to_i + @total_capital[4].to_i + @total_capital[19].to_i %></td>
+                  <td><%= @total_capital[1].to_i + @total_capital[3].to_i + @total_capital[5].to_i + @total_capital[20].to_i %></td>
+                  <td><%= @total_capital[6] %></td>
+                  <td><%= @total_capital[7] %></td>
+                  <td><%= @total_capital[8] %></td>
+                  <td><%= @total_capital[9] %></td>
+                  <td><%= @total_capital[10] %></td>
+                  <td><%= @total_capital[14] %></td>
+                  <td><%= @total_capital[15] %></td>
+                  <td><%= @total_capital[11] %></td>
+                  <td><%= @total_capital[12] %></td>
+                  <td><%= @total_capital[13] %></td>
+                  <td><%= @total_capital[16] %></td>
+                  <td><%= @total_capital[18] %></td>
+                  <td><%= @total_capital[17] %></td>
+                </tr>
+                <tr class="tr-interior">
+                  <th colspan="3">Sub. Interior</th>
+                  <td><%= @total_interior[0].to_i + @total_interior[2].to_i + @total_interior[4].to_i + @total_interior[19].to_i %></td>
+                  <td><%= @total_interior[1].to_i + @total_interior[3].to_i + @total_interior[5].to_i + @total_interior[20].to_i %></td>
+                  <td><%= @total_interior[6] %></td>
+                  <td><%= @total_interior[7] %></td>
+                  <td><%= @total_interior[8] %></td>
+                  <td><%= @total_interior[9] %></td>
+                  <td><%= @total_interior[10] %></td>
+                  <td><%= @total_interior[14] %></td>
+                  <td><%= @total_interior[15] %></td>
+                  <td><%= @total_interior[11] %></td>
+                  <td><%= @total_interior[12] %></td>
+                  <td><%= @total_interior[13] %></td>
+                  <td><%= @total_interior[16] %></td>
+                  <td><%= @total_interior[18] %></td>
+                  <td><%= @total_interior[17] %></td>
+                </tr>
+                <tr>
+                  <th colspan="3">Total Geral</th>
+                  <td><%= (@total_capital[0].to_i + @total_capital[2].to_i + @total_capital[4].to_i + @total_capital[19].to_i) + (@total_interior[0].to_i + @total_interior[2].to_i + @total_interior[4].to_i + @total_interior[19].to_i) %></td>
+                  <td><%= (@total_capital[1].to_i + @total_capital[3].to_i + @total_capital[5].to_i + @total_capital[20].to_i) + (@total_interior[1].to_i + @total_interior[3].to_i + @total_interior[5].to_i + @total_interior[20].to_i) %></td>
+                  <td><%= @total_capital[6].to_i + @total_interior[6].to_i %></td>
+                  <td><%= @total_capital[7].to_i + @total_interior[7].to_i %></td>
+                  <td><%= @total_capital[8].to_i + @total_interior[8].to_i %></td>
+                  <td><%= @total_capital[9].to_i + @total_interior[9].to_i %></td>
+                  <td><%= @total_capital[10].to_i + @total_interior[10].to_i %></td>
+                  <td><%= @total_capital[14].to_i + @total_interior[14].to_i %></td>
+                  <td><%= @total_capital[15].to_i + @total_interior[15].to_i %></td>
+                  <td><%= @total_capital[11].to_i + @total_interior[11].to_i %></td>
+                  <td><%= @total_capital[12].to_i + @total_interior[12].to_i %></td>
+                  <td><%= @total_capital[13].to_i + @total_interior[13].to_i %></td>
+                  <td><%= @total_capital[16].to_i + @total_interior[16].to_i %></td>
+                  <td><%= @total_capital[18].to_i + @total_interior[18].to_i %></td>
+                  <td><%= @total_capital[17].to_i + @total_interior[17].to_i %></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="panel panel-info">
+              <div class="panel-heading center font-bold text-uppercase">
+                Resumo das Situações de Crise: <%= @data_referencia %> (<%= I18n.l(@data_referencia, format: '%A') %>)
+              </div>
+              <div class="panel-body">
+                <% @resumos.each_with_index do |resumo, index| %>
+                  <dl>
+                    <dt><%= (index+1) %>º <%= resumo[0] %></dt>
+                    <dd><%= resumo[1] %></dd>
+                  </dl>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

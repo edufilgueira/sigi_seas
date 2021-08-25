@@ -1,0 +1,1 @@
+json.partial! "recursoshumanos_justificativa_aditivos/recursoshumanos_justificativa_aditivo", recursoshumanos_justificativa_aditivo: @recursoshumanos_justificativa_aditivo

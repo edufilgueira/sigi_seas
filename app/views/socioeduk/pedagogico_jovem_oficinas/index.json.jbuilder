@@ -1,0 +1,1 @@
+json.array! @socioeduk_pedagogico_jovem_oficinas, partial: 'socioeduk_pedagogico_jovem_oficinas/socioeduk_pedagogico_jovem_oficina', as: :socioeduk_pedagogico_jovem_oficina

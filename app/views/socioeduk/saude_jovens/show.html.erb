@@ -1,0 +1,207 @@
+<% content_for :title do %>
+  <%= t('.title', default: @socioeduk_saude_jovem.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t('.title', default: @socioeduk_saude_jovem.class.model_name.human ) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :socioeduk_jovem %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :cartao_sus %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :altura_estimada %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :peso_estimado %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :socioeduk_condicao_fisica %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :gravida %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :data_ultima_menstruacao %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :data_provavel_parto %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :qtd_gestacoes %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :qtd_parto_normal %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :qtd_cesariana %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :qtd_aborto %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :qtd_filhos_vivos %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :filhos_deficiente_fisico %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :metodo_contraceptivo %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :usou_drogas %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :historico_tratamento_psiquiatrico %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :local_tratamento_psiquiatrico_id %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :outro_local_psiquiatrico %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :tempo_psiquiatrico %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :hipotese_diagnostica_transtorno_mental %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :local_tratamento_transtorno_mental_id %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :outro_local_transtorno_mental %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :tempo_transtorno_mental %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :medicamento_controlado %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :tentativa_suicidio %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :tentativa_suicidio_familiar %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :doenca_mental_familiar %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :cid_mental_id %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :diagnostico_mental %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :historico_doenca_tratamento %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :medicamento_doenca_cronica %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :uso_protese %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :uso_ortese %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :fez_cirurgia %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :tem_fratura %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :tem_alergia_alimentar %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :descricao_alergia %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :tem_alergia_medicamentosa %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :descricao_alergia_medicamentosa %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :outras_vacinas_recebidas %></th>
+                                    
+                  
+                  <th><%= Socioeduk::SaudeJovem.human_attribute_name :outros_exames %></th>
+                                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.socioeduk_jovem %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.cartao_sus %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.altura_estimada %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.peso_estimado %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.socioeduk_condicao_fisica %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.gravida %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.data_ultima_menstruacao %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.data_provavel_parto %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.qtd_gestacoes %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.qtd_parto_normal %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.qtd_cesariana %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.qtd_aborto %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.qtd_filhos_vivos %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.filhos_deficiente_fisico %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.metodo_contraceptivo %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.usou_drogas %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.historico_tratamento_psiquiatrico %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.local_tratamento_psiquiatrico_id %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.outro_local_psiquiatrico %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.tempo_psiquiatrico %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.hipotese_diagnostica_transtorno_mental %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.local_tratamento_transtorno_mental_id %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.outro_local_transtorno_mental %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.tempo_transtorno_mental %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.medicamento_controlado %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.tentativa_suicidio %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.tentativa_suicidio_familiar %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.doenca_mental_familiar %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.cid_mental_id %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.diagnostico_mental %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.historico_doenca_tratamento %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.medicamento_doenca_cronica %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.uso_protese %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.uso_ortese %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.fez_cirurgia %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.tem_fratura %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.tem_alergia_alimentar %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.descricao_alergia %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.tem_alergia_medicamentosa %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.descricao_alergia_medicamentosa %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.outras_vacinas_recebidas %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_saude_jovem.outros_exames %></td>
+                                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', socioeduk_saude_jovens_path, class: 'btn btn-default') %>
+<%= link_to 'Editar', edit_socioeduk_saude_jovem_path(@socioeduk_saude_jovem), class: 'btn btn-success' %>

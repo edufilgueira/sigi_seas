@@ -1,0 +1,806 @@
+<%= form_for(@socioeduk_jovem, html: { class: 'form-horizontal' }) do |f| %>
+<%= render 'layouts/error_messages', model_name: @socioeduk_jovem %>
+<% if (params[:notice] == "create") %>
+    <div class="alert alert-success">Registro criado com sucesso</div>
+<% elsif (params[:notice] == "update") %>
+    <div class="alert alert-success">Registro alterado com sucesso</div>
+<% end %>
+<% if !@socioeduk_jovem.usuario_update_id.nil? %>
+    <% usuario_update = Usuario.nome_pessoa(@socioeduk_jovem.usuario_update_id) %>
+<% elsif %>
+    <% usuario_update = "" %>
+<% end %>
+Criado por: <b><i><%= Usuario.nome_pessoa(@socioeduk_jovem.usuario&.id) %></i></b> | Ultima Alteração:
+<i><%= usuario_update %></i>
+<%= render 'layouts/message_required' %>
+<div style="float: right; margin: 0px 0px -130px 8px;border: 3px solid #ebe8e8">
+    <%#= image_tag @socioeduk_jovem.foto.url, size: '160x120', class: "foto-jovem fullscreen", id: "theImage", onClick: "makeFullScreen();" %>
+    <%= image_tag fotos_socioeduk_jovens_path(id:@socioeduk_jovem.id), size: '160x120', class: "foto-jovem fullscreen", id: "theImage", onClick: "makeFullScreen();" %>
+</div>
+<div class="bloco_separador">
+    <div class="titulo_bloco_separador" style="border-top: 1px solid #e5e6e7;">
+        Recepções
+    </div>
+    <section>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <%= f.nested_fields_for :jovem_recepcoes, f.object.jovem_recepcoes.order('created_at asc') do |ff| %>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading<%= ff.object.id %>">
+                    <h5 class="panel-title">
+                        <% if(ff.object.status) %>
+                        <a class="accordion-toggle collapsed" role="button" data-toggle="collapse"
+                            data-parent="#accordion" href="#collapse<%= ff.object.id %>" aria-expanded="true"
+                            aria-controls="collapse<%= ff.object.id %>" style="color: #2f9254;">
+                            Nova Recepção: ( <%= ff.object.created_at %> <i class="fa fa-check text-navy"></i> )
+                        </a>
+                        <% else %>
+                        <a class="accordion-toggle collapsed" role="button" data-toggle="collapse"
+                            data-parent="#accordion" href="#collapse<%= ff.object.id %>" aria-expanded="true"
+                            aria-controls="collapse<%= ff.object.id %>">
+                            <!-- style="text-decoration-line: line-through; color: #e63333" -->
+                        </a>
+                            Recepção Anterior: ( <%= ff.object.created_at %> )
+                        <% end %>
+                    </h5>
+                </div>
+                <div id="collapse<%= ff.object.id %>" class="panel-collapse collapse" role="tabpanel"
+                    aria-labelledby="heading<%= ff.object.id %>">
+                    <div class="panel-body">
+                        <div id="recepcao<%= ff.object.id %>" class="form-group table-nested-identify">
+                            Criado por: <b><i><%= Usuario.nome_pessoa(ff.object.usuario_id) %></i></b> | Ultima
+                            Alteração: <i><%= Usuario.nome_pessoa(ff.object.usuario_update_id) %></i>
+                            <% if(ff.object.new_record?)%>
+                            <% ffusuario_id = current_usuario.id.inspect %>
+                            <%= ff.hidden_field :usuario_id, value: ffusuario_id %>
+                            <% else %>
+                            <% ffusuario_update_id = current_usuario.id.inspect %>
+                            <%= ff.hidden_field :usuario_update_id, value: ffusuario_update_id %>
+                            <% end %>
+                            <a class="btn btn-xs btn-primary" title="Editar" style="float:left"
+                                href="javascript: void(0);"
+                                onclick="editarLinhaNested('recepcao<%= ff.object.id %>')"><i
+                                    class="fas fa-edit"></i></a>
+                            <% if(ff.object.status) %>
+                            <table class="tabela_display">
+                                <% else %>
+                                <table class="table table-bordered" style="background-color: #f3f3f3;">
+                                    <% end %>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <%= ff.label :nome_responsavel %>
+                                                <%= ff.text_field :nome_responsavel, class: 'form-control' %>
+                                            </td>
+                                            <td>
+                                                <%= ff.label :presenca_familiar_junto %>
+                                                <%= ff.text_field :presenca_familiar_junto, class: 'form-control' %>
+                                            </td>
+                                            <td>
+                                                <%= ff.label :telefone %>
+                                                <%= ff.text_field :telefone, class: 'form-control' %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <%= ff.label :condutor_nome %>
+                                                <%= ff.text_field :condutor_nome, class: 'form-control' %>
+                                            </td>
+                                            <td>
+                                                <%= ff.label :condutor_documento, "Documento Funcional" %>
+                                                <%= ff.text_field :condutor_documento, class: 'form-control' %>
+                                            </td>
+                                            <td>
+                                                <%= ff.label :condutor_cargo %>
+                                                <%= ff.text_field :telefone, class: 'form-control' %>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <%= ff.label :socioeduk_doc_recepcoes_id %>
+                                                <%= ff.collection_select :socioeduk_doc_recepcoes_id, Socioeduk::DocRecepcao.all, :id, :doc_recepcao, {include_blank: '--selecione--'}, class: 'form-control select2' %>
+                                            </td>
+                                            <td>
+                                                <%= ff.label :bo %>
+                                                <%= ff.text_field :bo, class: 'form-control' %>
+                                            </td>
+                                            <td>
+                                                <%= ff.label :datahora_apresentacao %>
+                                                <div class='input-group date'>
+                                                    <%= ff.text_field :datahora_apresentacao, class: 'form-control maskdatahora', onblur: "verificar_data_apresentacao(this)", placeholder: 'dd/mm/yyyy hh:mm'%>
+                                                    <%= ff.hidden_field :dias_para_efetuar_cadastro, class: "dias_para_efetuar_cadastro" %>
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                                <label class="validador_data_apresentacao"
+                                                    style="color: #990000;display: none;"></label>
+                                            </td>
+                                            <td>
+                                                <%= ff.label :antecedentes %>
+                                                <%= ff.check_box :antecedentes, class: 'form-control' %>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <%= ff.label :oficio %>
+                                                <%= ff.check_box :oficio, class: 'form-control' %>
+                                            </td>
+                                            <td>
+                                                <%= ff.label :documentos_pessoais %>
+                                                <%= ff.check_box :documentos_pessoais, class: 'form-control' %>
+                                            </td>
+                                            <td>
+                                                <%= ff.label :decisao %>
+                                                <%= ff.check_box :decisao, class: 'form-control' %>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <%= ff.label :corpo_delito %>
+                                                <%= ff.check_box :corpo_delito, class: 'form-control' %>
+                                            </td>
+                                            <td>
+                                                <%= ff.label :certidao_antecedente_criminal %>
+                                                <%= ff.check_box :certidao_antecedente_criminal, class: 'form-control' %>
+                                            </td>
+                                            <td>
+                                                <%= ff.label :kit_vestuario %>
+                                                <%= ff.check_box :kit_vestuario, class: 'form-control' %>
+                                            </td>
+                                        </tr>
+                                        <tr style="border-top: solid 1px #e5e6e7">
+                                            <td colspan="3" style="padding-bottom: 0px;"><%= ff.label :agredido_bool %>
+                                            </td>
+                                        <tr>
+                                            <td colspan="3">
+                                                <table width="100%">
+                                                    <tr>
+                                                        <td width="50px">
+                                                            <%= ff.check_box :agredido_bool, class: 'form-control', style: 'margin-left: 5px; margin-bottom: 8px;' %>
+                                                        </td>
+                                                        <td>
+                                                            <%= ff.text_area :agredido, class: 'form-control', style:'height: 80px;' %>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <%= ff.hidden_field :id %>
+                                <%= ff.hidden_field :recepcao_origem, value: 'Recepcionado' %>
+                                <%#= ff.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px; margin-bottom: 8px;'%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% end %>
+            <% if  @temRecepcaoAtiva == true %>
+            <div class="alert alert-danger" role="alert">
+                Para adicionar uma nova recepção finalize a anterior.
+            </div>
+            <% else %>
+            <%= f.add_nested_fields_link :jovem_recepcoes, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-success", id:"add_nested_jovem_recepcao" %>
+            <% end %>
+        </div>
+    </section>
+</div>
+<div class="bloco_separador">
+    <div class="titulo_bloco_separador">Dados pessoais</div>
+    <div class="form-group">
+        <div class="col-sm-6">
+            <%= f.label :nome, class: 'required' %>
+            <%= f.text_field :nome, class: 'form-control', onblur:'verificar_existencia_nome()' %>
+            <label class="validador" for="socioeduk_jovem_nome" id="socioeduk_jovem_nome_validador">Nome já
+                cadastrado</label>
+        </div>
+        <div class="col-sm-6">
+            <%= f.label :apelido %>
+            <%= f.text_field :apelido, class: 'form-control' %>
+        </div>
+    </div>
+    <div class="form-group">
+        <!-- <div class="col-sm-4">
+            <%= f.check_box :falecido %>
+            <%= f.label :falecido %>
+        </div> -->
+        <div class="col-sm-4">
+            <%= f.check_box :orfao %>
+            <%= f.label :orfao %>
+        </div>
+        <div class="col-sm-4">
+            <%= f.check_box :dependente_quimico %>
+            <%= f.label :dependente_quimico %>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-3">
+            <label class='required'>Sexo</label><br><br>
+            <label class="radio-inline" for="socioeduk_jovem_sexo_m">
+                <%= f.radio_button :sexo, "M" %> Masculino
+            </label>
+            <label class="radio-inline" for="socioeduk_jovem_sexo_f">
+                <%= f.radio_button :sexo, "F" %> Feminino
+            </label>
+        </div>
+        <div class="col-sm-3">
+            <%= f.label :opcao_sexual_id %>
+            <%= f.collection_select :opcao_sexual_id, Socioeduk::OpcaoSexual.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+        </div>
+        <div class="col-sm-3">
+            <%= f.label :data_nascimento %>
+            <div class='input-group date'>
+                <%= f.text_field :data_nascimento, class: 'form-control maskdata', onchange: "calcularIdade(this.value);", onblur: "verificar_data_nascimento(this)" %>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            <label class="validador_data_nascimento" style="color: #990000;display: none;"></label>
+        </div>
+        <div class="col-sm-3">
+            <label>Idade</label><br>
+            <span id="idade"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-6">
+            <%= f.label :nome_mae %>
+            <%= f.text_field :nome_mae, class: 'form-control' %>
+        </div>
+        <div class="col-sm-6">
+            <%= f.label :nome_pai %>
+            <%= f.text_field :nome_pai, class: 'form-control' %>
+        </div>
+    </div>
+    <div>
+        <h2>Documentos <%= f.label :providenciando?, style: "font-size: 15px;" %>
+            <%= f.check_box :providenciando_documentos, class: 'deletar-nested_sem_float', style: 'margin-bottom: 8px; block-size:10px;' %>
+        </h2>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-6">
+            <%= f.label :rg %>
+            <%= f.text_field :rg, class: 'form-control' %>
+        </div>
+        <div class="col-sm-6">
+            <%= f.label :orgao_expedidor %>
+            <%= f.text_field :orgao_expedidor, class: 'form-control' %>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-6">
+            <%= f.label :cpf %>
+            <%= f.text_field :cpf, class: 'form-control maskcpf' %>
+        </div>
+        <div class="col-sm-6">
+            <%= f.label :estado_civil_id %>
+            <%= f.select :estado_civil_id, options_for_select(@socioeduk_jovem.tipos_estado_civil), {}, class: 'form-control' %>
+        </div>
+        <div class="col-sm-6" id="data_providencia_documento">
+            <%= f.label :data_providencia_documento %>
+            <%= f.text_field :data_providencia_documento, class: 'form-control datepicker' %>
+        </div>
+    </div>
+
+    <div class="bloco_separador">
+        <div class="titulo_bloco_separador">
+            Outros Documentos
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <section id="form_outros_nomes">
+                    <div class="col-sm-12">
+                        <div class="form-group table-nested-title titulo_nested">
+                            <div class="col-sm-5">Tipo de Documento</div>
+                            <div class="col-sm-2">Data Emissão</div>
+                            <div class="col-sm-4">Número</div>
+                            <div class="col-sm-1">Ação</div>
+                        </div>
+                        <%= f.nested_fields_for :jovem_documentos do |ff| %>
+                        <div id="documento<%= ff.object.id %>" class="form-group table-nested-identify linha_nested">
+                            <div class="col-sm-5">
+                                <%= ff.collection_select :socioeduk_tipo_documento_id, Socioeduk::TipoDocumento.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control select2' %>
+                            </div>
+                            <div class="col-sm-2">
+                                <%= ff.text_field :data_emissao,  class: 'form-control maskdata', required: "true" %>
+                            </div>
+                            <div class="col-sm-4">
+                                <%= ff.text_field :numero, class: 'form-control', placeholder: 'Número' %>
+                            </div>
+                            <div class="col-sm-1">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <a class="btn btn-xs btn-primary" title="Editar" style="float:left"
+                                                href="javascript: void(0);"
+                                                onclick="editarLinhaNested('documento<%= ff.object.id %>')"><i
+                                                    class="fas fa-edit"></i></a>
+                                        </td>
+                                        <td>
+                                            <%= ff.hidden_field :id %>
+                                            <%= ff.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px; margin-bottom: 8px;'%>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <% end %>
+                        <%= f.add_nested_fields_link :jovem_documentos, '<i class="fas fa-plus-circle"></i>'.html_safe, class:"btn btn-success" %>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <h2>Dados do Jovem</h2>
+    <div class="form-group">
+        <div class="col-sm-3">
+            <%= f.label :responsavel %>
+            <%= f.text_field :responsavel, class: 'form-control' %>
+        </div>
+        <div class="col-sm-3">
+            <%= label_tag(:mora_com, "Reside com") %>
+            <%= f.text_field :mora_com, class: 'form-control' %>
+        </div>
+        <div class="col-sm-2">
+            <%= f.label :numero_filhos%>
+            <%= f.number_field :numero_filhos,in: 0.0..20.0, :value => 0, class: 'form-control' %>
+        </div>
+        <div class="col-sm-4">
+            <%= f.label :responsavel_filhos %>
+            <%= f.text_field :responsavel_filhos, class: 'form-control' %>
+        </div>
+    </div>
+    <div class="form-group" id="gestacao">
+        <div class="col-sm-4">
+            <%= f.label :amamentando %>
+            <%= f.check_box :amamentando %>
+        </div>
+        <div class="col-sm-6">
+            <%= f.label :tempo_gestacao %>
+            <%= f.text_field :tempo_gestacao, class: 'form-control' %>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-6">
+            <%= f.label :uf_naturalidade_id, class: 'required' %>
+            <%= f.collection_select :uf_naturalidade_id, Estado.all, :id, :nome, {include_blank: '--selecione--'}, class: 'form-control', data: {remote: true, url: socioeduk_jovens_cidades_por_estado_path} %>
+        </div>
+        <div class="col-sm-6">
+            <%= f.label :cidade_naturalidade_id %>
+            <% if @socioeduk_jovem.new_record? %>
+            <%= f.select :cidade_naturalidade_id, options_for_select([]), {include_blank: '--selecione--'}, class: 'form-control' %>
+            <% else %>
+            <%= f.collection_select :cidade_naturalidade_id, Cidade.where(estado_id: @socioeduk_jovem.uf_naturalidade_id).order(:nome), :id, :nome, {include_blank: '--selecione--', selected: @socioeduk_jovem.cidade_naturalidade_id}, class: 'form-control' %>
+            <% end %>
+        </div>
+    </div>
+
+    <h2>Características</h2>
+    <div class="form-group">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <div class="col-sm-4">
+                    <%= f.label :socioeduk_cor_olho_id %>
+                    <%= f.collection_select :socioeduk_cor_olhos_id, Socioeduk::CorOlho.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+                </div>
+                <div class="col-sm-4">
+                    <%= f.label :socioeduk_raca_cor_id %>
+                    <%= f.collection_select :socioeduk_raca_cor_id, Socioeduk::RacaCor.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+                </div>
+                <div class="col-sm-4">
+                    <%= f.label :socioeduk_tipo_cabelo_id %>
+                    <%= f.collection_select :socioeduk_tipo_cabelo_id, Socioeduk::TipoCabelo.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <%= f.label :outras_info_fisica %>
+                    <%= f.text_field :outras_info_fisica, class: 'form-control' %>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="bloco_separador">
+    <div class="titulo_bloco_separador">
+        Apelidos
+    </div>
+    <div class="form-group">
+        <div class="col-sm-12">
+            <section>
+                <div class="col-sm-12">
+                    <div class="form-group table-nested-title titulo_nested">
+                        <div class="col-sm-11">Apelido</div>
+                        <div class="col-sm-1">Ação</div>
+                    </div>
+                    <%= f.nested_fields_for :outros_nomes do |ff| %>
+                    <div id="outros_nomes<%= ff.object.id %>" class="form-group table-nested-identify linha_nested">
+                        <div class="col-sm-11">
+                            <%= ff.text_field :descricao, class: 'form-control', placeholder: 'Apelido' %>
+                        </div>
+                        <div class="col-sm-1">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-xs btn-primary" title="Editar" style="float:left"
+                                            href="javascript: void(0);"
+                                            onclick="editarLinhaNested('outros_nomes<%= ff.object.id %>')"><i
+                                                class="fas fa-edit"></i></a>
+                                    </td>
+                                    <td>
+                                        <%= ff.hidden_field :id %>
+                                        <%= ff.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px; margin-bottom: 8px;'%>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <% end %>
+                    <%= f.add_nested_fields_link :outros_nomes, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-success" %>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<div class="bloco_separador">
+    <div class="titulo_bloco_separador">
+        Endereço completo
+    </div>
+    <div class="form-group">
+        <div class="col-sm-12">
+            <section>
+                <div class="col-sm-12">
+                    <div class="form-group table-nested-title titulo_nested">
+                        <div class="col-sm-4">Logradouro</div>
+                        <div class="col-sm-1">Número</div>
+                        <div class="col-sm-3">Cidade</div>
+                        <div class="col-sm-3">Bairro</div>
+                        <div class="col-sm-1">Ação</div>
+                    </div>
+                    <div id="nested_endereco_jovens">
+                    <%= f.nested_fields_for :endereco_jovens do |ff| %>
+                    <div id="endereco_joven<%= ff.object.id %>" class="form-group table-nested-identify linha_nested">
+                        <div class="col-sm-4">
+                            <%= ff.text_field :rua, class: 'form-control', placeholder: 'Logradouro' %>
+                        </div>
+                        <div class="col-sm-1">
+                            <%= ff.text_field :numero, class: 'form-control', placeholder: 'Nº' %>
+                        </div>
+                        
+                        <div class="col-sm-3">
+                            <%= ff.collection_select :cidade_id, Cidade.where('estado_id = 6').order('nome asc'), :id, :nome, {prompt: 'Cidade'}, class: 'form-control select2', onchange: "carregarBairros(this);", :remote => true %>
+                        </div>
+                        <div class="col-sm-3">
+                            <% if @socioeduk_jovem.new_record? %>
+                            <%= ff.select :bairro_id, [], {prompt: 'Bairro'}, class: 'form-control select2' %>
+                            <% else %>
+                            <%= ff.collection_select :bairro_id, Bairro.where(cidade_id: ff.object.cidade_id), :id, :nome, {selected: ff.object.bairro_id, prompt: 'Bairro'}, class: 'form-control select2' %>
+                            <% end %>
+                        </div>
+                        <div class="col-sm-1">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-xs btn-primary" title="Editar" style="float:left"
+                                            href="javascript: void(0);"
+                                            onclick="editarLinhaNested('endereco_joven<%= ff.object.id %>')"><i
+                                                class="fas fa-edit"></i></a>
+                                    </td>
+                                    <td>
+                                        <%= ff.hidden_field :id %>
+                                        <%= ff.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px; margin-bottom: 8px;'%>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-sm-4">
+                            <%= f.label :complemento %>
+                            <%= ff.text_field :complemento, class: 'form-control', placeholder: 'Complemento', onblur: "liberar_botao_salvar_jovem_endereco()" %>
+                        </div>
+                        <div class="col-sm-4">
+                            <%= f.label :cep %>
+                            <%= ff.text_field :cep, class: 'form-control maskcep', placeholder: 'CEP' %>
+                        </div>
+                        <div class="col-sm-4">
+                            <%= f.label :tipo_endereço %>
+                            <%= ff.collection_select :socioeduk_tipo_enderecos_id, Socioeduk::TipoEndereco.all, :id, :descricao, {prompt: 'Selecione um item'}, class: 'form-control select2', onchange: "liberar_botao_salvar_jovem_endereco()" %>
+                        </div>
+                    </div>
+                    <% end %>
+                    </div>
+                    <label class="validador" id="validar_acolhimento_institucional">Informe o endereço e o nome do "Acolhimento Intitucional" no campo Complemento *</label>
+                    <%= f.add_nested_fields_link :endereco_jovens, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-success" %>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<div class="bloco_separador">
+    <div class="titulo_bloco_separador">
+        Tipos de sinais
+    </div>
+    <div class="form-group">
+        <div class="col-sm-12">
+            <section id="form_jovem_caracteristicas">
+                <div class="col-sm-12">
+                    <div class="form-group table-nested-title titulo_nested">
+                        <div class="col-sm-4">Sinal</div>
+                        <div class="col-sm-3">Local Sinal</div>
+                        <div class="col-sm-4">Descrição</div>
+                        <div class="col-sm-1">Ação</div>
+                    </div>
+                    <%= f.nested_fields_for :jovem_caracteristicas do |fff| %>
+                    <div id="jovem_caracteristicas<%= fff.object.id %>"
+                        class="form-group table-nested-identify linha_nested">
+                        <div class="col-sm-4">
+                            <%= fff.collection_select :socioeduk_tipo_sinal_id, Socioeduk::TipoSinal.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+                        </div>
+                        <div class="col-sm-3">
+                            <%= fff.text_field :local_sinal, class: 'form-control', placeholder: 'Local do Sinal' %>
+                        </div>
+                        <div class="col-sm-4">
+                            <%= fff.text_field :descricao, class: 'form-control', placeholder: 'Descrição do Sinal' %>
+                        </div>
+                        <div class="col-sm-1">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-xs btn-primary" title="Editar" style="float:left"
+                                            href="javascript: void(0);"
+                                            onclick="editarLinhaNested('jovem_caracteristicas<%= fff.object.id %>')"><i
+                                                class="fas fa-edit"></i></a>
+                                    </td>
+                                    <td>
+                                        <%= fff.hidden_field :id %>
+                                        <%= fff.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px; margin-bottom: 8px;'%>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <% end %>
+                    <%= f.add_nested_fields_link :jovem_caracteristicas, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-success" %>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<div class="bloco_separador">
+    <div class="titulo_bloco_separador">
+        Contatos
+    </div>
+    <div class="form-group">
+        <div class="col-sm-12">
+            <section id="form_outros_nomes">
+                <div class="col-sm-12">
+                    <div class="form-group table-nested-title titulo_nested">
+                        <div class="col-sm-4">Número</div>
+                        <div class="col-sm-3">Tipo do Contato</div>
+                        <div class="col-sm-4">Tipo Parentesco</div>
+                        <div class="col-sm-1">Ação</div>
+                    </div>
+                    <%= f.nested_fields_for :jovem_contatos do |ff| %>
+                    <div id="contato<%= ff.object.id %>" class="form-group table-nested-identify linha_nested">
+                        <div class="col-sm-4">
+                            <%= ff.text_field :numero, class: 'form-control numero-contato maskphonecelular', placeholder: 'Nº Telefone' %>
+                        </div>
+                        <div class="col-sm-4">
+                            <%= ff.collection_select :socioeduk_tipo_contato_id, Socioeduk::TipoContato.all, :id, :descricao, {prompt: 'Selecione'}, class: 'form-control' %>
+                        </div>
+                        <div class="col-sm-3">
+                            <%= ff.collection_select :socioeduk_tipo_parentescos_id, Socioeduk::TipoParentesco.all, :id, :descricao, {prompt: 'Selecione'}, class: 'form-control' %>
+                        </div>
+                        <div class="col-sm-1">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-xs btn-primary" title="Editar" style="float:left"
+                                            href="javascript: void(0);"
+                                            onclick="editarLinhaNested('contato<%= ff.object.id %>')"><i
+                                                class="fas fa-edit"></i></a>
+                                    </td>
+                                    <td>
+                                        <%= ff.hidden_field :id %>
+                                        <%= ff.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px; margin-bottom: 8px;'%>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <% end %>
+                    <%= f.add_nested_fields_link :jovem_contatos, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-success" %>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <div class="col-sm-12">
+        <hr>
+        <%= f.label :foto%>
+        <%= f.file_field :foto, class: 'form-control' %>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-sm-12 demo3">
+        <%= f.submit nil, class: 'btn btn-primary btn-aguardar-salvar', id: 'botao_salvar', data: { disable_with: disable_with } %>
+        <%= link_to I18n.t('helpers.links.cancel'), socioeduk_jovens_path, class: 'btn btn-warning'%>
+    </div>
+</div>
+<% end %>
+
+<script>
+    $(document).ready(function () {
+        $(".numero-contato").mask("(99) 9999?9-9999");
+
+        $(".numero-contato").on("blur", function () {
+            var last = $(this).val().substr($(this).val().indexOf("-") + 1);
+
+            if (last.length == 3) {
+                var move = $(this).val().substr($(this).val().indexOf("-") - 1, 1);
+                var lastfour = move + last;
+                var first = $(this).val().substr(0, 9);
+
+                $(this).val(first + '-' + lastfour);
+            }
+        });
+
+    });
+
+
+    var niver = $("#socioeduk_jovem_data_nascimento").val();
+    if (!niver == null || !niver == '') {
+        calcularIdade(niver);
+    }
+
+    function verificar_existencia_nome() {
+        nome = retira_acentos($('#socioeduk_jovem_nome').val());
+        retorno = buscar_jovem_por_nome(nome);
+    }
+
+    function verificar_data_nascimento(campo) {
+        anos = calcular_qtd_de_anos_relacionado_data_atual(campo);
+        //DESLIGA BOTÃO SALVAR SE DATA INFORMATA FOR MAIOR QUE DATA ATUAL
+        if (anos <= 0) {
+            $('.validador_data_nascimento').css('display', 'block');
+            $('.validador_data_nascimento').empty().html(
+                'ERRO: A data de nascimento não<br> pode ser maior que a data atual.');
+            $('#botao_salvar').prop("disabled", true);
+        }
+        //QUANDO A DATA FOR 25 ANOA A MENOS O SISTEMA DEVE INFORMAR
+        else if (anos > 24) {
+            $('.validador_data_nascimento').css('display', 'block');
+            $('.validador_data_nascimento').empty().html('ERRO: Não é permitido salvar jovem com ' + anos + ' anos de idade');
+            $('#botao_salvar').prop("disabled", true);
+        } else {
+            $('.validador_data_nascimento').css('display', 'none');
+            $('.validador_data_nascimento').empty().html('');
+            $('#botao_salvar').prop("disabled", false);
+        }
+    }
+
+    function verificar_data_apresentacao(campo) {
+        var hoje = new Date();
+        str = $(campo).val();
+        data = str.substring(0, 10);
+
+        var partes_data = data.split('/');
+        var data_formatada = (partes_data[1] + '-' + partes_data[0] + '-' + partes_data[2]);
+        var data = new Date(data_formatada);
+
+        result = Math.floor((hoje - data) / (24 * 60 * 60 * 1000));
+
+        valor_linha = campo.id;
+        valor_linha = valor_linha.replace("socioeduk_jovem_jovem_recepcoes_attributes_", "");
+        valor_linha = valor_linha.replace("_datahora_apresentacao", "");
+        elementoIdInfracao = "#socioeduk_jovem_jovem_recepcoes_attributes_" + valor_linha +
+            "_dias_para_efetuar_cadastro";
+
+        $(elementoIdInfracao).val(result);
+
+        //DESLIGA BOTÃO SALVAR SE DATA INFORMATA FOR MAIOR QUE DATA ATUAL
+        if (result < 0) {
+            $('.validador_data_apresentacao').css('display', 'block');
+            $('.validador_data_apresentacao').empty().html(
+                'ERRO: A data da recepção não<br> pode ser maior que a data atual.');
+            $('#botao_salvar').prop("disabled", true);
+        } else if (result > 2) {
+            $('.validador_data_apresentacao').css('display', 'block');
+            $('.validador_data_apresentacao').empty().html('OBS: Certeza em recepcionar <br>jovem com ' + result +
+                ' dias de atrazo?');
+            $('#botao_salvar').prop("disabled", false);
+        } else {
+            $('.validador_data_apresentacao').css('display', 'none');
+            $('.validador_data_apresentacao').empty().html('');
+            $('#botao_salvar').prop("disabled", false);
+        }
+    }
+
+    $("#socioeduk_jovem_nome").keyup(function () {
+        $("#socioeduk_jovem_nome").val(retira_acentos($("#socioeduk_jovem_nome").val()));
+    });
+
+    // AUTOCOMPLETE NO CAMPO "NOME" DO JOVEM
+    $(function () {
+        var nome = $("#socioeduk_jovem_nome").val();
+        console.log(nome);
+        if (($(location).attr('host').indexOf('sigi.seas.ce.gov.br') >= 0))
+            var url_path = 'https://sigi.seas.ce.gov.br/socioeduk/jovens/autocomplete';
+        else if (($(location).attr('host').indexOf('homologacao.seas.ce.gov.br') >= 0))
+            var url_path = 'http://homologacao.seas.ce.gov.br/socioeduk/jovens/autocomplete';
+        else
+            var url_path = '/socioeduk/jovens/autocomplete';
+
+        $.ajax({
+            method: 'GET',
+            url: url_path,
+            async: true,
+            data: {
+                nome: nome
+            },
+            success: function (data, status, xhr) {
+                if (data != null) {
+                    // console.log(data);
+                    var availableTags = data;
+                    $("#socioeduk_jovem_nome").autocomplete({
+                        source: availableTags
+                    });
+                }
+            }
+        });
+    });
+
+    function liberar_botao_salvar_jovem_endereco() {
+        tipo_endereco = false;
+        if ($('#nested_endereco_jovens fieldset select').length > 0) {
+            $('#nested_endereco_jovens fieldset select').each(function () {
+                //PROCURA PELO CAMPO TIPO ENDEREÇO
+                if (this.id.indexOf('socioeduk_tipo_enderecos_id') > 0) {
+                    if ($("#" + this.id + " option:selected").val() == 6){
+                        valor_linha = this.id;
+                        valor_linha = valor_linha.replace("socioeduk_jovem_endereco_jovens_attributes_", "");
+                        valor_linha = valor_linha.replace("_socioeduk_tipo_enderecos_id", "");
+                        if ($("#socioeduk_jovem_endereco_jovens_attributes_"+valor_linha+"_complemento").val() == "")
+                            tipo_endereco = true;
+                        else
+                            tipo_endereco = false;
+
+                        //LIBERAR MENSAGEM DO TIPO NATUREZA
+                        if (tipo_endereco)
+                            $('#validar_acolhimento_institucional').fadeIn().css('display', 'block');
+                        else
+                            $('#validar_acolhimento_institucional').fadeOut().removeClass('displaytype');
+                        
+                    }
+                }
+            });
+        }
+    }
+
+    // $( "#socioeduk_jovem_nome" ).keypress(function() {
+    //   console.log('teste: ');
+    // });
+
+    $('.btn-aguardar-salvar').click(function () {
+        swal({
+            title: "Salvando...",
+            text: "Aguarde, os dados estão sendo salvos.",
+            type: "warning",
+            showCancelButton: false,
+            //confirmButtonColor: "#DD6B55",
+            //confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        }, function () {
+            swal("Deleted!", "Your imaginary file has been deleted.", "success");
+        });
+    });
+
+</script>

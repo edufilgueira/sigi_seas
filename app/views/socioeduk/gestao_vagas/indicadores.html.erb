@@ -1,0 +1,26 @@
+<%- model_class = Socioeduk::GestaoVaga -%>
+
+
+<div class="ibox-content">
+  <h1><%= I18n.t('titles.socioeduk_gestao_vagas_indicadores') %></h1>
+</div>
+<div class="row">
+  <div class="col-lg-3">
+    <div class="ibox ">
+        <div class="ibox-title">
+            <div class="ibox-tools">
+              <h5>Jovens Trans</h5>
+              <span class="label label-info"><%= @jovens_trans.qtd %></span>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <h1 class="no-margins"><%= @jovens_trans_percentual %>%</h1>
+            <div class="stat-percent font-bold text-success"><%= @jovens_trans.total %> <i class="fa fa-bolt"></i></div>
+            <small>Total</small>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+

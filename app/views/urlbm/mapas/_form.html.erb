@@ -1,0 +1,80 @@
+<%= form_with(model: @urlbm_mapa, html: { class: 'form-horizontal' }, local: false) do |f| %>
+<%= render 'layouts/error_messages', model_name: @urlbm_mapa %>
+<%= render 'layouts/message_required' %>
+    <div class="form-group">
+        <div class="col-sm-4 col-offset-1">
+            <%= f.label :socioeduk_jovem_recepcao_id %>
+            <%= f.select :socioeduk_jovem_recepcao_id, Socioeduk::JovemRecepcao.where('deleted_at is null' && 'status is true').collect {|r| [r.socioeduk_jovem&.nome, r.id]}, :selected => @urlbm_mapa.socioeduk_jovem_recepcao_id, :include_blank =>'-- Selecione --', class: 'form-control' %>
+        </div>
+        <div class="col-sm-4 col-offset-1">
+            <%= f.label :urlbm_status_map_id %>
+            <%= f.select :urlbm_status_map_id, Urlbm::StatusMap.where('deleted_at is null').collect {|s| [s.nome_status, s.id]}, :selected => @urlbm_mapa.urlbm_status_map_id, :include_blank =>'-- Selecione --', class: 'form-control' %>
+        </div>
+        <div class="col-sm-2 col-offset-1">
+                <%= f.label :data_judicial %>
+                <%= f.text_field :data_judicial, class: 'form-control maskdatahora' %>
+            </div>
+        </div>
+        <div >
+            <div class="col-sm-2 col-offset-1">
+                <%= f.label :num_processo %>
+                <%= f.text_field :num_processo, class: 'form-control' %>
+            </div>
+        </div>
+        <div>
+            <div class="col-sm-2 col-offset-1>
+                <%= f.label :telcontato %>
+                <%= f.text_field :telcontato, class: 'form-control maskphonecelular' %>
+            </div>
+        </div>
+        <div>
+            <div class="col-sm-2 col-offset-1">
+                <%= f.label :data_ocorrencia %>
+                <%= f.text_field :data_ocorrencia, class: 'form-control maskdatahora' %>
+            </div>
+        </div>
+        <div>
+            <div class="col-sm-2 col-offset-1">
+                <%= f.label :reincidente %>
+                <%= f.check_box :reincidente, class: 'form-control' %>
+            </div>
+        </div>
+        <div>
+            <div class="col-sm-1 col-offset-1">
+                <%= f.label :idade %>
+                <%= f.text_field :idade, class: 'form-control' %>
+            </div>
+        </div>
+        <div class="col-sm-2 col-offset-1">
+            <div>
+                <%= f.label :bo_mapa %>
+                <%= f.text_field :bo_mapa, class: 'form-control' %>
+            </div>
+        </div>
+        <div>
+            <div class="col-lg-2 col-offset-1">
+                <%= f.label :obs %>
+                <%= f.text_field :obs, class: 'form-control' %>
+            </div>
+        </div>
+        <div>
+            <div class="col-sm-3 col-offset-1">
+                <%= f.label :urlbm_ato_infracional_id %>
+                <%= f.select :urlbm_ato_infracional_id, Urlbm::AtoInfracional.all.collect {|ato| [ato.tipo, ato.id]}, :selected => @urlbm_mapa.urlbm_ato_infracional_id, :include_blank =>'-- Selecione --', class: 'form-control' %>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 col-offset-1">
+                <%= f.label :cidade_id %>
+                <%= f.select :cidade_id, Cidade.where('estado_id' == 6).collect {|c| [c.nome, c.id]}, :selected => @urlbm_mapa.cidade_id, :include_blank =>'-- Selecione --', class: 'form-control' %>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-4">
+                <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+                <%= link_to I18n.t('helpers.links.cancel'), urlbm_mapas_path, class: 'btn btn-warning' %>
+            </div>
+        </div>
+    </div>
+
+<% end %>

@@ -1,0 +1,1 @@
+json.array! @socioeduk_tipo_medida_socioeducativas, partial: 'socioeduk_tipo_medida_socioeducativas/socioeduk_tipo_medida_socioeducativa', as: :socioeduk_tipo_medida_socioeducativa

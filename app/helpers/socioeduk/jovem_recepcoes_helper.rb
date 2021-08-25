@@ -1,0 +1,2 @@
+module Socioeduk::JovemRecepcoesHelper
+end

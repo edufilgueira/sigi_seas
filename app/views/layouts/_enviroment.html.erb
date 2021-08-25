@@ -1,0 +1,7 @@
+<div class="text-center" style="background-color: red; color: white; font-weight: bold;">
+  <% if request.host == "homologacao.seas.ce.gov.br" %>
+    HOMOLOGAÇÃO
+  <% elsif request.host == "localhost" %>
+    DESENVOLVIMENTO
+  <% end %>
+</div>

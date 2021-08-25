@@ -1,0 +1,1 @@
+json.array! @socioeduk_tecnico_jovem_ultimo_relatorios, partial: 'socioeduk_tecnico_jovem_ultimo_relatorios/socioeduk_tecnico_jovem_ultimo_relatorio', as: :socioeduk_tecnico_jovem_ultimo_relatorio

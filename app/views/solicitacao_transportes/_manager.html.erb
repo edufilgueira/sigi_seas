@@ -1,0 +1,121 @@
+<% if current_usuario.try(:pessoa).try(:possui_funcao?, 'Gestor de transporte') %>
+    <div class="row">
+        <div class="col-xs-2 col-xs-offset-1">
+          <div class="thumbnail">
+            <div>
+              <span class=" label label-info pull-right">
+                <%= link_to '<i class="fa fa-inbox fa-2x"></i>'.html_safe, {controller: :solicitacao_transportes, action: :index}, style:"color: white" %>
+              </span>
+            </div>
+            <h4>Em analise</h4>
+            <div class="caption">
+              <div class="ibox-content">
+                <h1 class="no-margins">
+                  <%= @solicitacoes_aguardando.count %>
+                </h1>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="thumbnail">
+            <div>
+              <span class=" label label-primary pull-right">
+                <%= link_to '<i class="fa fa-inbox fa-2x"></i> '.html_safe, {controller: :solicitacao_transportes, action: :index, status: 'autorizado'}, style:"color: white" %>
+              </span>
+            </div>
+            <h4>Autorizado</h4>
+            <div class="caption">
+              <div class="ibox-content">
+                <h1 class="no-margins">
+                  <%= @solicitacoes_autorizadas.count %>
+                </h1>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="thumbnail">
+            <div>
+              <span class="label label-warning pull-right">
+                <%= link_to '<i class="fa fa-inbox fa-2x"></i> '.html_safe, {controller: :solicitacao_transportes, action: :index, status: 'andamento'}, style:"color: white" %>
+              </span>
+            </div>
+            <h4>Em andamento</h4>
+            <div class="caption">
+              <div class="ibox-content">
+                <h1 class="no-margins">
+                  <%= @solicitacoes_em_andamento.count %>
+                </h1>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="thumbnail">
+            <div>
+              <span class="label label-success pull-right">
+                <%= link_to '<i class="fa fa-inbox fa-2x"></i> '.html_safe, {controller: :solicitacao_transportes, action: :index, status: 'finalizado'}, style:"color: white" %>
+              </span>
+            </div>
+            <h4>Finalizado</h4>
+            <div class="caption">
+              <div class="ibox-content">
+                <h1 class="no-margins">
+                  <%= @solicitacoes_finalizadas.count %>
+                </h1>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="thumbnail">
+            <div>
+              <span class="label label-danger pull-right">
+                <%= link_to '<i class="fa fa-inbox fa-2x"></i> '.html_safe, {controller: :solicitacao_transportes, action: :index, status: 'cancelado'}, style:"color: white" %>
+              </span>
+            </div>
+            <h4>Cancelado</h4>
+            <div class="caption">
+              <div class="ibox-content">
+                <h1 class="no-margins">
+                  <%= @solicitacoes_canceladas.count %>
+                </h1>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <%= search_form_for @q do |f| %>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-3">
+          <%= f.search_field :destino_or_origem_cont, placeholder: "Local", class: "form-control" %>
+        </div>
+        <div class="col-sm-3">
+          <%= f.collection_select :destinado_para_id_eq, Pessoa.all, :id, :nome, {include_blank: true, prompt: "Destinado para"}, class: "form-control" %>
+        </div>
+        <div class="col-sm-3">
+          <%= f.collection_select :area_id_eq, Area.all, :id, :nome, {include_blank: true, prompt: "Área"}, class:"form-control" %>
+        </div>
+        <div class="col-sm-3">
+          <%= f.select :status_eq, options_for_select(["autorizado", "cancelado", "andamento", "finalizado"]), {include_blank: true, prompt: "Status"}, class:"form-control" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <%= f.text_field :data_transporte_gteq, placeholder: "Data Inicial", class: "form-control maskdata" %>
+        </div>
+        <div class="col-sm-2">
+          <%= f.text_field :data_transporte_lteq, placeholder: "Data Final", class: "form-control maskdata" %>
+        </div>
+        <!--<div class="col-sm-3">
+            <%#= f.check_box :urgente_eq, class: "form-control" %>
+            <%#= f.label :urgente %>
+        </div>-->
+        <%= f.submit 'Buscar', class: "btn btn-primary" %>
+        <%= link_to "Limpar", solicitacao_transportes_path, class:"btn btn-warning" %>
+      </div>
+    </div>
+    <% end %>
+<% end %>

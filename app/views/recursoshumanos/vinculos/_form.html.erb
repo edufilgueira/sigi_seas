@@ -1,0 +1,94 @@
+<%= form_for(@recursoshumanos_vinculo, html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @recursoshumanos_vinculo %>
+  <%= render 'layouts/message_required' %>
+  <div class="form-group">
+    <div class="col-sm-5 col-offset-1">
+      <%= f.label :pessoas %>
+      <%= f.collection_select :pessoas_id, @lista_de_pessoas , :id , :to_s , {prompt: "selecione"} ,{class: "form-control"} %>
+    </div>
+    <div class="col-sm-5 col-offset-1">
+      <%= f.label :data_inicio %>
+      <%= f.text_field :data_inicio, class: 'form-control datepicker' %>
+    </div>
+  </div>
+  <% unless @recursoshumanos_vinculo.new_record? %>
+  <!--  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :data_fim %>
+      <%= f.date_select :data_fim, class: 'form-control' %>
+    </div>
+  </div> -->
+  <% end %>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :recursoshumanos_cargo %>
+      <%= f.collection_select :recursoshumanos_cargo_id , @lista_de_cargos, :id , :to_s , {prompt: "selecione"} ,{class: "form-control"} %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-5">
+      <%= f.label :unidade_socioeducativa %>
+      <% if @recursoshumanos_vinculo.new_record? %>
+        <%= select_tag :unidade_socioeducativa_id, options_from_collection_for_select(UnidadeSocioeducativa.all, :id, :nome), prompt: '--Selecione--', class: 'form-control select2', data: {remote: true, url: recursoshumanos_vinculos_areas_por_unidade_path} %>
+      <% else %>
+        <%= select_tag :unidade_socioeducativa_id, options_from_collection_for_select(UnidadeSocioeducativa.all, :id, :nome), prompt: '--Selecione--', class: 'form-control select2', data: {remote: true, url: recursoshumanos_vinculos_areas_por_unidade_path} %>
+
+        <%#= f.collection_select :unidade_socioeducativa_id, UnidadeSocioeducativa.all, :id, :nome, {include_blank: '--selecione--', selected: @recursoshumanos_vinculo.unidade_socioeducativa_area.unidade_socioeducativa_id}, class: 'form-control', data: {remote: true, url: recursoshumanos_vinculos_areas_por_unidade_path} %>
+      <% end %>
+    </div>
+    <div class="col-sm-5">
+      <%= f.label :Area %>
+      <% if @recursoshumanos_vinculo.new_record? %>
+        <%= f.select :unidade_socioeducativa_area_id, options_for_select([]), {include_blank: '--selecione--'}, class: 'form-control' %>
+      <% else %>
+        <%= f.collection_select :unidade_socioeducativa_area_id, @UnidadeSocioeducativaAreas, :id, :nome, {include_blank: '--selecione--', selected: @recursoshumanos_vinculo.unidade_socioeducativa_area_id}, class: 'form-control' %>
+      <% end %>
+
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <div class="col-sm-10">
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+      <%= link_to I18n.t('helpers.links.cancel'), recursoshumanos_vinculos_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+
+
+  <% if !@recursoshumanos_vinculo.new_record? %>
+    <% @funcao_pessoas = FuncaoPessoa.joins(:funcao).where(pessoa_id: @recursoshumanos_vinculo.pessoas_id) %>
+    <% if !@funcao_pessoas.blank? %>
+
+      <div class="form-group">
+        <div class="col-sm-10 col-offset-1">
+          
+          <table class="table table-hover">
+            <thead class="thead-dark">
+              <tr style="background-color: #ececec">
+                <th style="text-align: -webkit-auto;">Atribuições</th>
+                <th style="text-align: -webkit-auto;">Data</th>
+                <th style="text-align: -webkit-auto;" width="50px">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @funcao_pessoas.each do |funcao_pessoa| %>
+                <tr>
+                  <td style="text-align: -webkit-auto;"><%= funcao_pessoa.funcao.nome %></td>
+                  <td style="text-align: -webkit-auto;"><%= funcao_pessoa.created_at %></td>
+                  <td style="text-align: -webkit-auto;">
+                    <% if funcao_pessoa.status %>
+                      <span class="label label-primary">Ativo</span>
+                    <% else %>
+                      <span class="label label-danger">Inativo</span>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    <% end %>
+  <% end %>
+<% end %>

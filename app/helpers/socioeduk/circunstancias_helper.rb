@@ -1,0 +1,2 @@
+module Socioeduk::CircunstanciasHelper
+end

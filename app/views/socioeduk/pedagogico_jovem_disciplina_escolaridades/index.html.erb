@@ -1,0 +1,57 @@
+<%- model_class = Socioeduk::PedagogicoJovemDisciplinaEscolaridade -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_pedagogico_jovem_disciplina_escolaridade', default: Socioeduk::PedagogicoJovemDisciplinaEscolaridade.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.socioeduk_pedagogico_jovem_disciplina_escolaridade', default: Socioeduk::PedagogicoJovemDisciplinaEscolaridade.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= link_to_new new_socioeduk_pedagogico_jovem_disciplina_escolaridade_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_pedagogico_jovem) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_disciplina_escolaridade) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_situacao_disciplina) %></th>
+                                    <th><%= model_class.human_attribute_name(:data_conclusao) %></th>
+                                    <th><%= model_class.human_attribute_name(:observacao) %></th>
+                                    <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @socioeduk_pedagogico_jovem_disciplina_escolaridades.each do |socioeduk_pedagogico_jovem_disciplina_escolaridade| %>
+                <tr>
+                                    <td><%= socioeduk_pedagogico_jovem_disciplina_escolaridade.pedagogico_jovem.id %></td>
+                                    <td><%= socioeduk_pedagogico_jovem_disciplina_escolaridade.socioeduk_disciplina_escolaridade.descricao %></td>
+                                    <td><%= socioeduk_pedagogico_jovem_disciplina_escolaridade.socioeduk_situacao_disciplina.descricao  %></td>
+                                    <td><%= socioeduk_pedagogico_jovem_disciplina_escolaridade.data_conclusao %></td>
+                                    <td><%= socioeduk_pedagogico_jovem_disciplina_escolaridade.observacao %></td>
+                                    <td>
+                    <%= link_to_show(socioeduk_pedagogico_jovem_disciplina_escolaridade) %>
+                    <%= link_to_edit(edit_socioeduk_pedagogico_jovem_disciplina_escolaridade_path(socioeduk_pedagogico_jovem_disciplina_escolaridade)) %>
+                    <%= link_to_delete(socioeduk_pedagogico_jovem_disciplina_escolaridade) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

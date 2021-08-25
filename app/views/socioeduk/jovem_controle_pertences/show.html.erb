@@ -1,0 +1,69 @@
+<% content_for :title do %>
+  <%= t('.title', default: @socioeduk_jovem_controle_pertence.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t('.title', default: @socioeduk_jovem_controle_pertence.class.model_name.human ) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <div class="bloco_separador">
+              <div class="titulo_bloco_separador"
+                  style="font-size:18px;text-align: -webkit-center; border-top: 1px solid #ebe8e8;">
+                  <b style="font-size: 1em;">TERMO DE ENTREGA DOS PERTENSES DO ADOLESCENTE</b><br>
+                  <h2><%= @socioeduk_jovem_controle_pertence.socioeduk_jovem_recepcao.socioeduk_jovem.nome %></h2>
+              </div>
+              <div class="row">
+                <div>
+                    <center><%= image_tag @socioeduk_jovem_controle_pertence.socioeduk_jovem_recepcao.socioeduk_jovem.foto.url, size: '160x120', class: "foto-jovem fullscreen", id: "theImage", onClick: "makeFullScreen();" %></center>
+                </div>
+                <br>
+                <p>Segue a lista dos itens que foram capturados na recepção do adolescente. É necessário que o responsavél que esta recebendo os pertences assine cada item que esta capturando.
+                <br>
+                <% @itens = Socioeduk::JovemItemPertence.where('data_entrega is not null and socioeduk_jovem_controle_pertence_id = ?', @socioeduk_jovem_controle_pertence.id) %>
+                <% if !@itens.blank? %>
+                  <table class="table table-hover" style="border: 1px solid #e5e6e7;">
+                      <thead class="thead-dark">
+                          <tr style="background-color: #ececec">
+                              <th>Nome do Pertence</th>
+                              <th>Data Entrega</th>
+                              <th>Recebido por...</th>
+                              <th>Entregue por...</th>
+                              <th>Assinatura</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <% @itens.each do |item| %>
+                            <tr>
+                                <td style="vertical-align: middle;"><%= item.nome %></td>
+                                <td style="vertical-align: middle;"><%= item.data_entrega %></td>
+                                <td style="vertical-align: middle;"><%= item.recebente %></td>
+                                <td style="vertical-align: middle;"><%= item.entregador %></td>
+                                <td style="vertical-align: middle;"></td>
+                            </tr>
+                          <% end %>
+                      </tbody>
+                  </table>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', socioeduk_jovem_controle_pertences_path, class: 'btn btn-default') %>
+<%= link_to 'Editar', edit_socioeduk_jovem_controle_pertence_path(@socioeduk_jovem_controle_pertence), class: 'btn btn-success' %>

@@ -1,0 +1,2 @@
+module Urlbm::AtoInfracionaisHelper
+end

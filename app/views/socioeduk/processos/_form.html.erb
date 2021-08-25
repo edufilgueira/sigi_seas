@@ -1,0 +1,495 @@
+
+<%= form_for(@socioeduk_processo, html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @socioeduk_processo %>
+  <%= render 'layouts/message_required' %>
+  <% if (params[:notice] == "create") %>
+    <div class="alert alert-success">Registro criado com sucesso</div>
+  <% elsif (params[:notice] == "update") %>
+    <div class="alert alert-success">Registro alterado com sucesso</div>
+  <% elsif (params[:notice] == "comarca") %>
+    <div class="alert alert-danger">É necessário informar a comarca para poder alterar<b>STATUS DO PROCESSO</b></div>
+  <% end %>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_jovem_recepcao %>
+      <% if @socioeduk_processo.new_record? %>
+        <%= f.collection_select :socioeduk_jovem_recepcao_id,  Socioeduk::Jovem.jovens_recepcao_admitidos_sem_processo, :id, :nome , {include_blank: '--selecione--'}, class: 'form-control', required: "true" %>
+      <% else %>
+        <%= f.collection_select :socioeduk_jovem_recepcao_id,  Socioeduk::Jovem.jovem_do_processo(@socioeduk_processo.socioeduk_jovem_recepcao.id), :id, :nome , {include_blank: '--selecione--'}, class: 'form-control', required: "true" %>
+      <% end %>
+    </div>
+    <div class="col-sm-2 col-offset-1">
+      <%= f.label :socioeduk_status_processo %>
+      <%= f.collection_select :socioeduk_status_processo_id, Socioeduk::StatusProcesso.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control', disabled: true %> 
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-6 col-offset-1">
+      <%= f.label :cidade_cumprimento_medida %>
+      <%= f.collection_select :cidade_cumprimento_medida, UnidadeSocioeducativa.joins(:cidade).select('cidades.id', 'cidades.nome').uniq, :id, :nome, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+    <div class="col-sm-6 col-offset-1">
+      <%= f.label :cidade_comarca %>
+      <%= f.collection_select :cidade_comarca, Cidade.where(estado_id: 6).order(:nome), :id, :nome, {include_blank: '--selecione--'}, class: 'form-control select2' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-3">
+      <%= f.label :data_hora_infracao %>
+      <div class='input-group date'>
+        <%= f.text_field :data_hora_infracao, class: 'form-control maskdata', placeholder: "dd/mm/aaaa" %>
+      </div>
+    </div>
+    <div class="col-sm-3 col-offset-1">
+      <%= f.label :data_hora_apreensao %>
+      <div class='input-group date'>
+        <%= f.text_field :data_hora_apreensao, class: 'form-control maskdata', placeholder: "dd/mm/aaaa", required: "true" %>
+      </div>
+    </div>
+    <div class="col-sm-3 col-offset-1">
+      <%= f.label :data_representacao %>
+      <div class='input-group date'>
+        <%= f.text_field :data_representacao,class: 'form-control maskdata', placeholder: "dd/mm/aaaa" %>
+      </div>        
+    </div>
+    <div class="col-sm-3 col-offset-1">
+      <%= f.label :data_decisao %>
+      <div class='input-group date'>
+        <%= f.text_field :data_decisao,class: 'form-control maskdata', placeholder: "dd/mm/aaaa" %>
+      </div>
+    </div>
+  </div>
+  <br><br>
+  <% if(!@id.nil?) %>
+    <div class="form-group">
+      <div class="col-sm-12 col-offset-1">
+        <h2>Números de Processos</h2>
+        <div class="col-sm-12 b-r nested-row" id="lista_numero_processo">
+          <div class="form-group table-nested-title titulo_nested">
+            <div class="col-sm-1">Principal</div>
+            <div class="col-sm-2">Número</div>
+            <div class="col-sm-3">Vara</div>
+            <div class="col-sm-2">Comarca</div>
+            <div class="col-sm-1">Descump. Med</div>
+            <div class="col-sm-1">Organiz. Crim.</div>
+            <div class="col-sm-1">Status</div>
+            <div class="col-sm-1">Edit/Del</div>
+          </div>  
+          <%= f.nested_fields_for :socioeduk_numero_processos do |form| %>
+            <div id="numero_processo<%= form.object.id %>" class="form-group table-nested-identify linha_nested">
+              <div class="col-sm-1">
+                <%= form.check_box :principal, class: 'deletar-nested', style: 'margin-left: 5px;margin-bottom: 8px;', principal: true, onclick: "exibir_apenas_um_principal(this)" %>
+              </div>
+              <div class="col-sm-2">
+                <%= form.text_field :numero, class: 'form-control maskprocesso', numero: "SIM" %>
+              </div>
+              <div class="col-sm-3">
+                <%= form.collection_select :socioeduk_comarca_id, Socioeduk::Comarca.all, :id , :nome, {prompt: "selecione"} ,{class: "form-control select2"} %>
+              </div>
+              <div class="col-sm-2">
+                <%= form.collection_select :cidade_id, Cidade.where(estado_id: 6).order(:nome), :id, :nome, {include_blank: '--selecione--'}, class: 'form-control select2' %>
+              </div>
+              <div class="col-sm-1">
+                <%= form.check_box :pontuacao_descumprimento_medida, class: 'deletar-nested', onclick: 'carregarCalculo()'%>
+              </div>
+              <div class="col-sm-1">
+                <%= form.check_box :pontuacao_organizacao_criminosa, class: 'deletar-nested', onclick: 'carregarCalculo()' %>
+              </div>
+              <div class="col-sm-1">
+                <%= form.check_box :status, class: 'deletar-nested', onclick: 'carregarCalculo()', style: 'margin-left: 5px;margin-bottom: 8px;'%>
+              </div>
+              <div class="col-sm-1">
+                <table>
+                  <tr>
+                    <td>
+                      <a class="btn btn-xs btn-primary" title="Editar" href="javascript: void(0);" onclick="editarLinhaNested('numero_processo<%= form.object.id %>'); aplicar_mascara()"><i class="fas fa-edit"></i></a>
+                    </td>
+                    <td>
+                      <%= form.hidden_field :id%>
+                      <%= form.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px;margin-bottom: 8px;'%>
+                    </td>
+                  </tr>
+                </table>
+                
+              </div>
+            </div> 
+          <% end %>
+          <label class="validador" id="validar_principal">Selecione um Nº Principal *</label>		
+          <%= f.add_nested_fields_link :socioeduk_numero_processos, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-success" %>	
+        </div>
+      </div>
+    </div>
+  
+  <h2>Critérios de Incidencia da Pontuação</h2>
+  <div style="border: solid 1px #C0C0C0; padding: 18px; border-radius: 8px; text-align: center;">
+    <div class="form-group">
+      <div class="col-sm-3 col-offset-1", data-toggle='tooltip', data-placement='top', title='Aplicar quando houver registro de mais de um ato infracional em nome do jovem.'>
+        <table width="100%">
+          <tr>
+            <td>
+              <%= f.label :pontuacao_certidao_positiva %>
+            </td>
+            <td>
+              <%= f.check_box :pontuacao_certidao_positiva, class: 'form-control', onclick: 'atualizar_certidao_positiva()', style:"width: 35px;float: left;"%>
+              <%= f.number_field :pontuacao_quantidade_certidao_positiva, onblur:"atualizar_qtd_certidao_positiva()", class: 'form-control', style:"float: left;width: 100px;margin-top: 4px;" %>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-sm-3 col-offset-1", data-toggle='tooltip', data-placement='top', title='Aplicar sempre que o jovem encontrar-se apreendido.'>
+        <%= f.label :pontuacao_apreendido %>
+        <%= f.check_box :pontuacao_apreendido, class: 'form-control', onclick: 'carregarCalculo()' %>
+      </div>
+      <!--<div class="col-sm-3 col-offset-1", data-toggle='tooltip', data-placement='top', title='Aplicar sempre que a medida for decretada
+      em razão de descumprimento de medida anterior, como nos casos de Internação Sanção ou "Internação Regressão (Substituição de Medida)"'>
+        <%= f.label :pontuacao_descumprimento_medida %>
+        <%= f.check_box :pontuacao_descumprimento_medida, class: 'form-control', onclick: 'carregarCalculo()' %>
+      </div>
+      <div class="col-sm-3 col-offset-1", data-toggle='tooltip', data-placement='top', title='Aplicar sempre que houver enquadamento legal na Lei 12.850/2013.'>
+        <%= f.label :pontuacao_organizacao_criminosa %>.
+        <%= f.check_box :pontuacao_organizacao_criminosa, class: 'form-control', onclick: 'carregarCalculo()' %>
+      </div>-->
+    </div>
+  </div>
+
+    <% if @socioeduk_processo.socioeduk_numero_processos.any? %> 
+      <div class="form-group">
+        <div class="col-sm-12 col-offset-1">
+          <h2>Natureza do Ato Infracional</h2>
+          <div class="col-sm-12 b-r nested-row" id="lista_processo_natureza">
+            <div class="form-group table-nested-title titulo_nested">
+              <div class="col-sm-1">Natureza</div>
+              <div class="col-sm-2">Processo</div>
+              <div class="col-sm-3">Infração</div>
+              <div class="col-sm-1">Paragrafo</div>
+              <div class="col-sm-1">Inciso</div>
+              <div class="col-sm-1" data-toggle='tooltip' data-placement='top' title='Aplicar sempre que houver registro da prático de mais de um ato infracional do mesmo tipo. Cada reiteração gera um número maior de pontos para o jovem. Identificar o número de reiterações (Ex: 4 Roubos = 3 Reiterações em roubo).'><a title="Ato com reiteração" data-toggle="tooltip"><i class="fas fa-undo-alt"></i> Reiterado</a></div>
+              <div class="col-sm-1" data-toggle='tooltip' data-placement='top' title='Aplicar sempre que o ato infracional for equivalente a Crime Continuado. Crime continuado é o nome jurídico dado à prática de dois ou mais crimes que estão ligados entre si, determinando o seu processamento e julgamento conjunto, bem como fórmulas especiais para a sua "punição" em conjunto.'><a title="Ato continuado" data-toggle="tooltip"><i class="fas fa-angle-double-right"></i> Continuado</a></div>
+              <div class="col-sm-1"><a title="Estupro de vulnerável correlatas até 2 anos" data-toggle="tooltip"><i class="fas fa-female"></i></i> Estupro</a></div>
+              <div class="col-sm-1" style="padding-left: 0px;text-align: -webkit-right;">
+                <table style="width: 60px;margin-left: 5px;">
+                  <tr>
+                    <td style="width: 30px;">
+                      <a title="Editar ato infracional" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                    </td>
+                    <td style="width: 30px;">
+                      <a title="Deletar ato infracional" data-toggle="tooltip"><i class="far fa-trash-alt"></i></a>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <%= f.nested_fields_for :socioeduk_processo_naturezas do |form| %>
+              <div id="processo_natureza<%= form.object.id %>" class="form-group table-nested-identify linha_nested">
+                <div class="col-sm-1">
+                  <div class='exibe_nested_radio'>
+                    <%= form.radio_button :tipo_natureza, 'Tentada', class: 'rbutton', onclick: 'atualizar_tipo_natureza(this)' %>
+                    <%= form.label :tipo_natureza, "Tentada", :value => "true" %><br>
+                    <%= form.radio_button :tipo_natureza, 'Consumada', class: 'rbutton', onclick: 'atualizar_tipo_natureza(this)' %>
+                    <%= form.label :tipo_natureza, "Consumada", :value => "false" %> 
+                  </div>
+                  <div class='exibe_nested_campo'>
+                    <%= form.object.tipo_natureza %>
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <%= form.collection_select :socioeduk_numero_processo_id, Socioeduk::NumeroProcesso.where(socioeduk_processo_id: @id), :id, :numero, {prompt: "selecione"}, {class: "form-control"} %>  
+                </div>
+                <div class="col-sm-3">
+                  <% if (form.object.id.nil?)%>
+                    <%= form.collection_select :socioeduk_artigo_infracao_id, Socioeduk::ArtigoInfracao.order(:descricao), :id, :descricao, {prompt: 'Selecione'}, class: 'form-control select2 ponderacao', onclick: "listarParagrafo(this)", onchange: 'carregarCalculo()', remote: true, ponderacao: 'SIM', qtd_reiteracao: '', continuado: form.object.pontuacao_continuado, tipo_natureza: "Consumada", processo_natureza_id: form.object.id %>
+                  <% else %>
+                    <%= form.collection_select :socioeduk_artigo_infracao_id, Socioeduk::ArtigoInfracao.order(:descricao), :id, :descricao, {prompt: 'Selecione'}, class: 'form-control select2 ponderacao', onclick: "listarParagrafo(this)", onchange: 'carregarCalculo()', remote: true, ponderacao: 'SIM', qtd_reiteracao: form.object.pontuacao_quantidade_reinteracao, continuado: form.object.pontuacao_continuado, tipo_natureza: form.object.tipo_natureza, processo_natureza_id: form.object.id %>
+                  <% end %>
+                </div>
+                <div class="col-sm-1">
+                  <% if @socioeduk_processo.new_record? %>
+                    <%= form.collection_select :socioeduk_artigo_paragrafo_id, [], :id , :descricao, {prompt: "selecione"}, class: 'form-control select2', onchange: "listarInciso(this)", :remote => true %>
+                  <% else %>
+                    <%= form.collection_select :socioeduk_artigo_paragrafo_id, Socioeduk::ArtigoParagrafo.where(socioeduk_artigo_infracao_id: form.object.socioeduk_artigo_infracao_id).order(:descricao), :id , :descricao, {prompt: "selecione", selected: form.object.socioeduk_artigo_paragrafo_id}, class: 'form-control select2', onchange: "listarInciso(this)", :remote => true %>
+                  <% end %>
+                </div>
+                <div class="col-sm-1">
+                  <%= form.text_field :incisos, class: 'form-control' %>
+                </div>
+                <div class="col-sm-1">
+                  <table>
+                    <tr>
+                      <td style="width: 30px;padding-bottom: 6px;">
+                        <%= form.check_box :pontuacao_reinteracao, class: 'acao-nested', onclick: 'atualizar_reiteracao(this)', style:"float: left;" %>
+                      </td>
+                      <td>
+                        <%= form.number_field :pontuacao_quantidade_reinteracao, onblur:"atualizar_qtd_reiteracao(this)", class: 'form-control', style:"float: left;" %>
+                      </td>
+                    </tr> 
+                  </table>
+                </div>
+                <div class="col-sm-1">
+                  <%= form.check_box :pontuacao_continuado, class: 'acao-nested', onclick: 'atualizar_infracao_continuado(this)', style: 'margin-top: 6px' %>
+                </div>
+                <div class="col-sm-1">
+                  <%= form.check_box :estupro_vulneravel, class: 'acao-nested', onclick: 'atualizar_infracao_estupro_vulneravel(this)', readonly: true, vulneravel: "SIM",  style: 'margin-top: 6px' %>
+                </div>
+                <div class="col-sm-1" style="padding-left: 0px;text-align: -webkit-right;">
+                  <table style="width: 60px;">
+                    <tr>
+                      <td style="width: 30px;">
+                        <a class="btn btn-xs btn-primary" title="Editar", href="javascript: void(0);" onclick="editarLinhaNested('processo_natureza<%= form.object.id %>')"><i class="fas fa-edit"></i></a>
+                      </td>
+                      <td style="width: 30px;">
+                        <%= form.hidden_field :id %>
+                        <%= form.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px;margin-bottom: 8px;'%>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div> 
+            <% end %>
+            <label class="validador" id="validar_tipo_natureza">Selecione um tipo de natureza (Tentada ou Consumada) *</label>
+            <label class="validador" id="validar_natureza_numero_processo">Selecione o número processo do ato infracional *</label>
+            <label class="validador" id="validar_natureza_infracao_processo">Selecione a infração do ato infracional *</label>
+            <%= f.add_nested_fields_link :socioeduk_processo_naturezas, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-success", id:"natureza-ato-infracional-id", onclick: "btn_desabilita_medida_socioeducativa(); ativar_desativar_estupro_vulneravel(); " %>			
+          </div>
+
+        </div>
+      </div>
+    <% end %>
+
+    <% if @socioeduk_processo.socioeduk_numero_processos.any? %>
+      <h2>Medida Socioeducativa</h2>
+      <% medida_socioeducativas = Socioeduk::MedidaSocioeducativa.where(socioeduk_processo_id: @id) %>
+      <% if !medida_socioeducativas.blank? %>
+        <table class="table table-hover" id="medida_socioeducativas">
+          <thead class="thead-dark">
+            <tr style="background-color: #E1F0F8">
+              <th>Processo</th>
+              <th>Medida</th>
+              <th>Situação</th>
+              <th>Inicio</th>
+              <th>Fim Previsto</th>
+              <th>Dias</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% medida_socioeducativas.each do |medida_socioeducativa| %>
+              <tr>
+                <td style="vertical-align: middle;"><%= medida_socioeducativa&.socioeduk_numero_processo&.numero %></td>
+                <td style="vertical-align: middle;"><%= medida_socioeducativa.socioeduk_tipo_medida_socioeducativa.descricao %></td>
+                <td style="vertical-align: middle;"><div situacao="<%= medida_socioeducativa.socioeduk_situacao_cumprimento.descricao %>"><%= medida_socioeducativa.socioeduk_situacao_cumprimento.descricao %></div></td>
+                <td style="vertical-align: middle;"><%= medida_socioeducativa.inicio %></td>
+                <td style="vertical-align: middle;"><%= medida_socioeducativa.fim_previsto %></td>
+                <td style="vertical-align: middle;"><%= medida_socioeducativa.periodo_dias %></td>
+                <!-- <td style="vertical-align: middle;"><%#= link_to content_tag(:i, nil, class: 'fas fa-edit'), editar_medida_socioeduk_processos_path(id: medida_socioeducativa.id), class: "btn btn-xs btn-primary" %></td> -->
+                <td style="vertical-align: middle;">
+                  <%= link_to content_tag(:i, nil, class: 'fas fa-edit'), editar_medida_socioeduk_processos_path(id: medida_socioeducativa.id), :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', class: "btn btn-xs btn-primary", title: "Editar Medida", onclick: "concluirMedidaIndex()" %>
+                  <%= link_to content_tag(:i, nil, class: 'fas fa-trash'), deletar_medida_socioeduk_processos_path(id: medida_socioeducativa.id), class: "btn btn-xs btn-danger", title: "Deletar Medida" %>
+                  <%#= link_to content_tag(:i, nil, class: 'fas fa-trash'), socioeduk_medida_socioeducativas_path(socioeduk_medida_socioeducativa: {id: medida_socioeducativa.id}), method: :delete, class: "btn btn-xs btn-danger", title: "Deletar Medida" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+      <%= link_to('<i class="fas fa-plus-circle"></i>'.html_safe, {controller: :processos, action: :adicionar_medida, id_processo: @id}, :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', class:"btn btn-success", title: "Adicionar Medida", id: "medida_socioeducativa_id") %>
+      <br>
+    <% end %>  
+
+    <h2>Audiências</h2>
+    <div class="form-group">
+      <div class="col-sm-12 col-offset-1">
+        <section>
+          <div class="col-sm-12">
+            <div class="form-group table-nested-title titulo_nested">
+              <div class="col-sm-2">Nº Processo</div>
+              <div class="col-sm-4">Comarca</div>
+              <div class="col-sm-2">Data Hora</div>
+              <div class="col-sm-3">Observação</div>
+              <div class="col-sm-1">Edit/Del</div>
+            </div>
+            <%= f.nested_fields_for :socioeduk_audiencias do |ff| %>
+              <div id="audiencia<%= ff.object.id %>" class="form-group table-nested-identify linha_nested">
+              
+                <div class="col-sm-2">
+                  <%= ff.text_field :numero_processo, class: 'form-control' %>
+                </div>
+                <div class="col-sm-4">
+                  <%= ff.collection_select :socioeduk_comarca_id, Socioeduk::Comarca.all, :id , :nome, {prompt: "selecione"} ,{class: "form-control select2"} %>  
+                </div>
+                <div class="col-sm-2">
+                  <%= ff.text_field :datahora, class: 'form-control maskdatahora' %>
+                </div>
+                <div class="col-sm-3">
+                  <%= ff.text_area :observacao, class: 'form-control' %>
+                </div>
+              <div class="col-sm-1">
+                <table>
+                  <tr>
+                    <td>
+                      <a class="btn btn-xs btn-primary" title="Editar" style="float:left" href="javascript: void(0);" onclick="editarLinhaNested('audiencia<%= ff.object.id %>')"><i class="fas fa-edit"></i></a>
+                    </td>
+                    <td>
+                      <%= ff.hidden_field :id %>
+                      <%= ff.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px; margin-bottom: 8px;'%>  
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <% end %>
+            <%= f.add_nested_fields_link :socioeduk_audiencias, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-success" %>
+          </div>   
+        </section>
+      </div>
+    </div>
+    <h2>Observações</h2>
+    <div class="form-group">
+      <div class="col-sm-12 col-offset-1">
+        <section>
+          <div class="col-sm-12">
+            <div class="form-group table-nested-title titulo_nested">
+              <div class="col-sm-11">Observação</div>
+              <div class="col-sm-1">Edit/Del</div>
+            </div>
+            <%= f.nested_fields_for :socioeduk_processo_observacoes do |ff| %>
+              <div id="audiencia<%= ff.object.id %>" class="form-group table-nested-identify linha_nested">
+                <div class="col-sm-11">
+                  <%= ff.text_area :observacao, class: 'form-control', rows: 10 %>
+                </div>
+              <div class="col-sm-1">
+                <table>
+                  <tr>
+                    <td>
+                      <a class="btn btn-xs btn-primary" title="Editar" style="float:left" href="javascript: void(0);" onclick="editarLinhaNested('audiencia<%= ff.object.id %>')"><i class="fas fa-edit"></i></a>
+                    </td>
+                    <td>
+                      <%= ff.hidden_field :id %>
+                      <%= ff.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px; margin-bottom: 8px;'%>  
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <% end %>
+            <%= f.add_nested_fields_link :socioeduk_processo_observacoes, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-success" %>
+          </div>   
+        </section>
+      </div>
+    </div>
+  <% end %>
+  <div class="col-sm-12 col-offset-1" style="text-align: center; border: solid 1px #2f4050; background-color: #f3f3f4;margin-bottom: 10px;padding: 5px 0px 10px 0px;">
+    <%= f.label :Aguardando_Vaga? %>
+    <%= f.check_box :aguardando_vaga, class: 'form-control' %>
+    
+    <%= f.label :data_espera %>
+    <%= f.date_field :data_espera, class: 'form-control col-sm' %>
+
+  </div>
+  
+  <div class="form-group">
+    <div class="col-sm-12 col-offset-1">
+      <% if @socioeduk_processo.new_record? %>
+        <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with }, id:"botao_salvar", disabled: false %>
+      <% else %>
+        <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with }, id:"botao_salvar", disabled: true %>
+        <script>
+          //Monitorar as ações dos componentes para ligar o botão
+          $(".form-horizontal input,select,textarea").change(function(){
+              liberar_botao_salvar_processo();
+          });
+          $(".form-horizontal input,select,textarea,a,body").click(function(){
+            setTimeout(function(){
+              liberar_botao_salvar_processo();
+            },100);
+          });
+          $(".form-horizontal input,textarea").blur(function(){
+              liberar_botao_salvar_processo();
+          });
+          liberar_botao_salvar_processo();
+        </script>
+      <% end %>
+      <%= link_to "Voltar", socioeduk_processos_path, class: 'btn btn-warning', id: "voltar" %>
+      <% if !@socioeduk_processo.new_record? %>
+        <%= link_to "Ir para Jovem", socioeduk_jovem_path(@socioeduk_processo.socioeduk_jovem_recepcao.socioeduk_jovem.id), class: 'btn btn-success', id: "voltar" %>
+      <% end %>
+      <%= link_to 'FINALIZAR PROCESSO', finalizar_processo_socioeduk_processos_path(id: @id),  id:"finalizar_processo", method: :get, class: 'btn btn-danger btn-lg', style:"display: none; float: right;" %>
+      <%= link_to 'EVASÃO PROCESSO', evadir_processo_socioeduk_processos_path(id: @id),  id:"evadir_processo", method: :get, class: 'btn btn-dark btn-lg', style:"display: none; background-color: #333333; color: #FFF; float: right;" %>
+      <%= link_to 'FUGA PROCESSO', fuga_processo_socioeduk_processos_path(id: @id),  id:"fuga_processo", method: :get, class: 'btn btn-dark btn-lg', style:"display: none; background-color: #333333; color: #FFF; float: right;" %>
+      <%= link_to 'REATIVAR PROCESSO', reverter_processo_finalizado_socioeduk_processos_path(id: @id),  id:"reverter_processo_finalizado", method: :get, class: 'btn btn-primary btn-lg', style:"display: none; float: right;" %>
+    </div>
+  </div>
+<% end %>
+
+<script>
+
+  if($('#socioeduk_processo_socioeduk_status_processo_id').val() == 3 || $('#socioeduk_processo_socioeduk_status_processo_id').val() == 2){
+    $('.form-horizontal input,select,textarea').each(function(){
+      $(this).prop("disabled", true);
+    });
+    $('.form-horizontal a').each(function(){
+      $(this).attr("disabled", true);
+    });
+    $("#voltar").attr("disabled", false);
+    $("#finalizar_processo").attr("disabled", false);
+    $("#reverter_processo_finalizado").attr("disabled", false);
+  }
+
+  carregarCalculo();
+  $('#display_pontuacao_jovem').css("display", "block");
+
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+  });
+  
+  liberar_finalizar();
+
+  existe_principal_selecionado();
+
+  $(".form-horizontal input,select,textarea,a,body").click(function(){
+    setTimeout(function(){
+      existe_principal_selecionado();
+    },100);
+  });
+
+  function existe_principal_selecionado(){
+    if ($('#lista_numero_processo fieldset input').length > 0) {
+      var status = false;
+      $("#lista_numero_processo fieldset input").each(function () {
+        var principal = $(this).attr('principal');
+        if (principal) {
+          if ($(this).prop("checked")) {
+            status = true;
+            return;
+          }
+        }
+      });
+      if (!status){
+        $('#validar_principal').fadeIn().css('display', 'block');
+        $('#botao_salvar').prop("disabled", true);
+      }
+      else{
+        $('#validar_principal').fadeOut().removeClass('displaytype');
+        $('#botao_salvar').prop("disabled", false);
+      }
+    }
+  }
+
+  function exibir_apenas_um_principal(elemento){
+    $("#lista_numero_processo fieldset input").each(function () {
+      var principal = $(this).attr('principal');
+      if (principal) {
+        if (this.id != elemento.id) {
+          $(this).prop("checked",false);
+        }
+      }
+    });
+  }
+
+  function aplicar_mascara(){
+    setTimeout(function(){
+      $('#socioeduk_processo_socioeduk_numero_processos_attributes_0_numero').addClass('maskprocesso')
+      $('.maskprocesso').mask('9999999-99.9999.9.99.9999');
+    },800);
+  }
+
+</script>

@@ -1,0 +1,1 @@
+json.partial! "socioeduk_medida_socioeducativas/socioeduk_medida_socioeducativa", socioeduk_medida_socioeducativa: @socioeduk_medida_socioeducativa

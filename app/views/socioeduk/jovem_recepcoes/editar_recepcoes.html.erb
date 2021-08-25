@@ -1,0 +1,57 @@
+<%- model_class = Socioeduk::JovemRecepcao -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_jovem_recepcao', default: Socioeduk::JovemRecepcao.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.socioeduk_jovem_recepcao', default: Socioeduk::JovemRecepcao.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th><%= model_class.human_attribute_name(:datahora_apresentacao) %></th>
+                  <th><%= model_class.human_attribute_name(:bo) %></th>
+                  <th>Ativo</th>
+                  <th><%= model_class.human_attribute_name(:status) %></th>
+                  <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @recepcoes.each_with_index do |recepcao, i| %>
+                  <tr>
+                    <td><%= 1+i %>º</td>
+                    <td><%= recepcao.datahora_apresentacao %></td>
+                    <td><%= recepcao.bo %></td>
+                    <td><%= recepcao.status %></td>
+                    <td><%= recepcao.status? ? content_tag(:i, nil, class: "fas fa-check", title: "Ativo", style: "color: green; font-size: 20px;") : "" %></td>
+                    <% if recepcao.status? %>
+                      <td><%= link_to content_tag(:i, nil, class: "fas fa-arrow-right"), {controller: :jovem_recepcoes, action: :medida_meio_aberto, jovem_recepcao_id: recepcao.id}, remote: true, 'data-toggle' => "modal", 'data-target' => '#modal-window', class: "btn btn-sm btn-primary btn-circle", onclick:"executar_mascaras_campos()", title: "Informar medida meio aberto" %></td>
+                    <% else %>
+                      <td><%= link_to content_tag(:i, nil, class: "fas fa-arrow-right"), {controller: :jovem_recepcoes, action: :editar_meio_aberto, jovem_recepcao_id: recepcao.id}, remote: true, 'data-toggle' => "modal", 'data-target' => '#modal-window', class: "btn btn-sm btn-primary btn-circle", onclick:"executar_mascaras_campos()", title: "Editar medida meio aberto" %></td>
+                    <% end %>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <%= link_to "Voltar", socioeduk_jovem_recepcoes_path, class: "btn btn-success btn-sm" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

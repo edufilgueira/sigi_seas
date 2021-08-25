@@ -1,0 +1,61 @@
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="padding-top: 10px;">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h5 class="panel-title">
+        <a class="accordion-toggle collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOutrosNomes" aria-expanded="true" aria-controls="collapseOutrosNomes">
+          Apelidos
+        </a>
+      </h5>
+    </div>
+    <div id="collapseOutrosNomes" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+        <%= render template: 'socioeduk/outro_nomes/index', locals: { socioeduk_outro_nomes: @socioeduk_jovem.outros_nomes } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h5 class="panel-title">
+        <a class="accordion-toggle collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseCaracteristicas" aria-expanded="true" aria-controls="collapseCaracteristicas">
+          Características
+        </a>
+      </h5>
+    </div>
+    <div id="collapseCaracteristicas" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+        <%= render template: 'socioeduk/jovem_caracteristicas/index', locals: { socioeduk_jovem_caracteristicas: @socioeduk_jovem.jovem_caracteristicas } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h5 class="panel-title">
+        <a class="accordion-toggle collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEnderecos" aria-expanded="true" aria-controls="collapseEnderecos">
+          Endereços
+        </a>
+      </h5>
+    </div>
+    <div id="collapseEnderecos" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+        <%= render template: 'socioeduk/endereco_jovens/index', locals: { socioeduk_endereco_jovens: @socioeduk_jovem.endereco_jovens } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h5 class="panel-title">
+        <a class="accordion-toggle collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseContatos" aria-expanded="true" aria-controls="collapseContatos">
+          Contatos
+        </a>
+      </h5>
+    </div>
+    <div id="collapseContatos" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+        <%= render template: 'socioeduk/jovem_contatos/index', locals: { socioeduk_jovem_contatos: @socioeduk_jovem.jovem_contatos } %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,3 @@
+$('#modalAuxiliarTitle').html('Aplicar Medida')
+$('#modalAuxiliar').find('.modal-body').html("<%= escape_javascript( render partial: 'aplicar_medida_meio_aberto', locals: { disable_with: 'Salvando...' } ) %>");
+$('#modalAuxiliar').modal('show')

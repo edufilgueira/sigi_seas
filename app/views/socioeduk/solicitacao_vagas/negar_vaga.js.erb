@@ -1,0 +1,7 @@
+
+
+$('#modalAuxiliarTitle').html('Aguardar Vaga');
+$('#modalAuxiliar').find('.modal-body').html("<%= escape_javascript( render partial: 'form_negar_vaga', locals: { disable_with: 'Atualizando...' } ) %>");
+$('#modalAuxiliar').modal('show');
+
+

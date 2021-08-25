@@ -1,0 +1,51 @@
+<% content_for :title do %>
+  <%= t('.title', default: @socioeduk_processo_natureza.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t('.title', default: @socioeduk_processo_natureza.class.model_name.human ) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                                    
+                  
+                  <th><%= Socioeduk::ProcessoNatureza.human_attribute_name :socioeduk_processo %></th>
+                                    
+                  
+                  <th><%= Socioeduk::ProcessoNatureza.human_attribute_name :tipo_natureza %></th>
+                                    
+                  
+                  <th><%= Socioeduk::ProcessoNatureza.human_attribute_name :artigo %></th>
+                                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_processo_natureza.socioeduk_processo %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_processo_natureza.tipo_natureza %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_processo_natureza.artigo %></td>
+                                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', socioeduk_processo_naturezas_path, class: 'btn btn-default') %>
+<%= link_to 'Editar', edit_socioeduk_processo_natureza_path(@socioeduk_processo_natureza), class: 'btn btn-success' %>

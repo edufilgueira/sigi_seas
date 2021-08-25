@@ -1,0 +1,120 @@
+<%= form_for(@pessoa, html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @pessoa %>
+  <%= render 'layouts/message_required' %>
+  
+  <div class="form-group">
+    <div class="col-sm-8">
+      <%= f.label :nome, class: 'required' %>
+      <%= f.text_field :nome, class: 'form-control', required: true  %>
+    </div>
+    <div class="col-sm-4">
+      <%= f.label :tipo_pessoa, class: 'required'  %>
+      <%= f.collection_select :tipo_pessoa_id, TipoPessoa.where("id not in (1)"), :id ,:descricao, {class: 'form-control'}, required: true %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-6">
+      <%= f.label :sexo, class: 'required'%>
+      <%= f.select :sexo, Pessoa.opcoes_sexo, { prompt: 'Selecione' }, class: 'form-control', required: true %>
+    </div>
+    <div class="col-sm-3">
+      <%= f.label :Comarca, class: 'required'%>
+      <%= f.collection_select :cidade_id, Cidade.where(estado_id: 6).order(:nome), :id, :nome, {include_blank: '--selecione--'}, class: 'form-control', data: {remote: true, url: juizes_cidade_pessoa_juizes_path}, required: true %>
+    </div>
+    <div class="col-sm-3">
+      <%= f.label :Varas, class: 'required'%>
+      <%= f.collection_select :socioeduk_comarca_id, Socioeduk::Comarca.all, :id , :nome, {prompt: "selecione"} ,{class: "form-control select2", required: true}  %>
+    </div>
+  </div>
+    <div id="select_juiz" class="form-group">
+      <div class="col-sm-12">
+        <% if f.object.new_record? %>
+          <%= f.label :juiz, class: 'required'%>
+          <%= f.select :juiz_id, options_for_select([]), {include_blank: '--selecione--'}, class: 'form-control', required: true %>
+        <% else %>
+          <% if !f.object.juiz_id.nil? %>
+            <%= f.label :juiz, class: 'required'%>
+            <%= f.collection_select :juiz_id, Pessoa.where(tipo_pessoa_id: 2, cidade_id: f.object.cidade_id).order(:nome), :id, :nome, {include_blank: '--selecione--'}, class: 'form-control', required: true %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <div  style="width:100%">
+  </div>
+  <div class="form-group">
+    <div class="col-sm-6">
+      <%= f.label :cpf, class: 'required' %>
+      <%= f.text_field :cpf, class: 'form-control maskcpf', required: true %>
+    </div>
+    <div class="col-sm-6" >
+      <%= f.label :email_pessoal %> <span id="val_email_pessoal" class="validador"></span>
+      <%= f.email_field :email_pessoal, class: 'form-control', required: true %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-12">
+      <%= f.hidden_field :id, value: f.object.id%>
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with }, id: "bt_salvar" %>
+      <%= link_to I18n.t('helpers.links.cancel'), pessoa_juizes_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+
+  <% if (!f.object.new_record? and f.object.tipo_pessoa&.id == 2) %>
+    <% pessoa_juizes = PessoaJuiz.where(juiz_id: f.object.id) %>
+    <h3>Lista de Apoio</h3><hr>
+    <table class="table table-hover table-sm sortable">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Sexo</th>
+          <th>Email</th>
+          <th>Comarca</th>
+          <th width="18%"><%= I18n.t('helpers.actions') %></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% pessoa_juizes.each do |pessoa| %>
+        <tr>
+          <td><%= pessoa.nome %></td>
+          <td><%= pessoa&.sexo %></td>
+          <td><%= pessoa.email_pessoal %></td>
+          <td><%= pessoa&.cidade&.nome %></td>
+          <td>
+            <%= link_to_edit(edit_pessoa_juiz_path(pessoa), target: "_blank") %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+<% end %>
+
+<script>
+
+  $("#pessoa_juiz_tipo_pessoa_id").on('change', function () {
+    tipo_pessoa_id = $(this).val();
+    if(tipo_pessoa_id == 3){
+      $("#select_juiz").show();
+      $("#pessoa_juiz_juiz_id").prop("disabled", false);
+    }
+    else{
+      $("#select_juiz").hide();
+      $("#pessoa_juiz_juiz_id").prop("disabled", true);
+    }
+  });
+
+  $(document).ready(function(e) {
+    setTimeout(function(){
+      if($('#pessoa_juiz_id').val() == ""){
+        $("#select_juiz").hide();
+        $("#pessoa_juiz_juiz_id").prop("disabled", true);
+      }
+      else{
+        $("#pessoa_juiz_tipo_pessoa_id").prop("disabled", true);
+      }
+    },150);
+  });
+
+</script>

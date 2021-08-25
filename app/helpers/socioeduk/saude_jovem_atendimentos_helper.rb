@@ -1,0 +1,2 @@
+module Socioeduk::SaudeJovemAtendimentosHelper
+end

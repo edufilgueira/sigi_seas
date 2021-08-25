@@ -1,0 +1,124 @@
+<%- model_class = SolicitacaoTransporte -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.solicitacao_transporte', default: SolicitacaoTransporte.model_name.human.pluralize.titleize) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= I18n.t('activerecord.models.solicitacao_transporte', default: SolicitacaoTransporte.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= render  "manager" %>
+            <!-- <hr> -->
+            <!-- <label class="label label-<%#= @class %> float-center" style="font-size:12px;"><%#= @status %></label> -->
+            <!-- <hr> -->
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                  <% if current_usuario.pessoa&.funcoes&.last&.nome == "Gestor de transporte" %>
+                    <th></th>
+                  <% end %>
+                  <th><%= model_class.human_attribute_name(:data_hora_saida) %></th>
+                  <!-- <th><%#= model_class.human_attribute_name(:prazo) %></th> -->
+                  <th><%= model_class.human_attribute_name(:data_hora_retorno) %></th>
+                  <th><%= model_class.human_attribute_name(:tipo_solicitacao_transporte) %></th>
+                  <th><%= model_class.human_attribute_name(:origem) %></th>
+                  <th><%= model_class.human_attribute_name(:destino) %></th>
+                  <th><%= model_class.human_attribute_name(:area) %></th>
+                  <th><%= model_class.human_attribute_name(:destinado_para) %></th>
+                  <th><%= model_class.human_attribute_name(:justificativa) %></th>
+                  <th><%= model_class.human_attribute_name(:urgente) %></th>
+                  <th><%= model_class.human_attribute_name(:status) %></th>
+                  <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if !@resultado_busca.nil? %>
+                  <%= render partial: 'resultado_busca' %>
+                <% else %>
+                  <% @solicitacoes.each do |solicitacao| %>
+                    <tr>
+                      <% if current_usuario.pessoa&.funcoes&.last&.nome == "Gestor de transporte" %>
+                        <td>
+                          <% if !solicitacao&.data_transporte.blank? and solicitacao&.data_transporte&.to_date == Time.current.to_date %>
+                            <small class="label label-danger"><i class="fa fa-clock-o"></i>Hoje</small>
+                          <% elsif !solicitacao&.data_transporte.blank? and solicitacao&.data_transporte&.to_date == (Time.current.to_date + 1) %>
+                            <small class="label label-warning"><i class="fa fa-clock-o"></i>1 dia</small>
+                          <% elsif !solicitacao&.data_transporte.blank? and solicitacao&.data_transporte&.to_date == (Time.current.to_date + 2) %>
+                            <small class="label label-primary"><i class="fa fa-clock-o"></i>2 dias</small>
+                          <% elsif !solicitacao&.data_transporte.blank? and solicitacao&.data_transporte&.to_date == (Time.current.to_date + 3 ) %>
+                            <small class="label label-info"><i class="fa fa-clock-o"></i>3 dias</small>
+                          <% elsif !solicitacao&.data_transporte.blank? and solicitacao&.data_transporte&.to_date <= (Time.current.to_date   ) %>
+                            <small class="label label-info"><i class="fa fa-clock-o"></i>Vencida</small>
+                          <% end %>
+                        </td>
+                      <% end %>
+                      <td><%= link_to "#{solicitacao.data_transporte} #{solicitacao.hora_solicitada&.strftime('%H:%M')}", 'javascript:void(0)', title: "Criado em: #{solicitacao.created_at.strftime('%d/%m/%Y %H:%M')}" %></td>
+                      <!--
+                      <%# if !solicitacao.data_transporte.nil? and !solicitacao.hora_solicitada.nil? and !solicitacao.data_retorno.nil? and !solicitacao.hora_prevista_retorno.nil? %>
+                        <td><%#= translater_datetime(TimeDifference.between(Time.parse("#{solicitacao&.data_transporte} #{solicitacao&.hora_solicitada&.strftime('%H:%M')}"), Time.parse("#{solicitacao&.data_retorno} #{solicitacao&.hora_prevista_retorno&.strftime('%H:%M')}")).humanize) %></td>
+                      <%# else %>
+                        <td></td>
+                      <%# end %>
+                      -->
+                      <td><%= "#{solicitacao.data_retorno} #{solicitacao.hora_prevista_retorno&.strftime('%H:%M')}" %></td>
+                      <td><%= solicitacao.tipo_solicitacao_transporte %></td>
+                      <td><%= solicitacao.origem %></td>
+                      <td><%= solicitacao.destino %></td>
+                      <td><%= solicitacao.area.sigla %></td>
+                      <td><%= solicitacao&.destinado_para&.nome %></td> 
+                      <td><%= solicitacao.justificativa %></td>
+                      <td><%= boolean_convert(solicitacao.urgente) %></td>
+                      <% if solicitacao.status == "autorizado" %>
+                        <td><span class="label label-primary ">Autorizado</span></td>
+                      <% elsif solicitacao.status == "andamento" %>
+                      <td><span class="label label-warning">Em andamento</span></td>
+                      <% elsif solicitacao.status == "finalizado" %>
+                      <td><span class="label label-success float-right">Finalizado</span></td>
+                      <% elsif solicitacao.status == "cancelado" %>
+                      <td><span class="label label-danger float-right">Cancelado</span></td>
+                      <% else %>
+                      <td><span class="label label-info float-right">Em analise</span></td>
+                      <% end %>
+                      <td>
+                        <%= link_to_show(solicitacao) %>
+                        <%= link_to_edit(edit_solicitacao_transporte_path(solicitacao)) if ["autorizado", "andamento", "finalizado", "cancelado"].exclude?(solicitacao.status) %>
+                        <%#= link_to_delete(solicitacao) if ["andamento", "finalizado", "cancelado"].exclude?(solicitacao.status) %>
+                        <%#= raise solicitacao.status.inspect %>
+                        <% if ["andamento", "finalizado", "cancelado"].exclude?(solicitacao.status) %>
+                          <%= link_to '<i class="fa fa-times"></i> '.html_safe, {controller: :solicitacao_transportes, action: :justificar_cancelamento, id: solicitacao.id}, {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', class: "btn btn-outline btn-danger btn-sm", title: "Cancelar"} if ["finalizado", "cancelado"].exclude?(solicitacao.status) %>
+                        <% end%>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <% if current_usuario.pessoa&.funcoes&.last&.nome == "Gestor de transporte" %>
+                          <%= link_to '<i class="fa fa-check"></i> '.html_safe, autorizar_solicitacao_transporte_path(solicitacao.id), class: "btn btn-outline btn-primary btn-sm", title: "Autorizar" if solicitacao.status.nil? %>
+                          <%= link_to '<i class="fas fa-location-arrow"></i> '.html_safe, dar_andamento_solicitacao_transporte_path(solicitacao.id), class: "btn btn-outline btn-warning btn-sm", title: "Dar andamento" if solicitacao.status.eql?("autorizado") %>
+                          <%= link_to '<i class="far fa-calendar-check"></i> '.html_safe, finalizar_solicitacao_transporte_path(solicitacao.id), class: "btn btn-outline btn-success btn-sm", title: "Finalizar" if solicitacao.status.eql?("andamento") %>
+                        <% end %>
+                      </td>  
+                    </tr>
+                  <% end %>
+                <% end %>
+              </tbody>
+            </table>
+            <nav class="center">
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-window" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>

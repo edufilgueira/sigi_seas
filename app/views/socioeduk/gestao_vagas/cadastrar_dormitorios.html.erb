@@ -1,0 +1,69 @@
+<% content_for :ibox_content do %>
+  <%= form_for(@unidade_bloco_dormitorio, html: { class: 'form-horizontal' }) do |f| %>
+    <%#= render 'layouts/error_messages', model_name: @unidade_bloco_dormitorio %>
+    <%= render 'layouts/message_required' %>
+    
+    <%= f.hidden_field :unidade_socioeducativa_bloco_id, value: @id_bloco, class: 'form-control' %>
+
+    <div class="form-group">
+      <div class="col-sm-6 col-offset-1">
+        <%= f.label :descricao, class: 'required' %>
+        <%= f.text_field :descricao, value: @unidade_bloco_dormitorio.descricao, class: 'form-control', placeholder: 'Informe a descrição' %>
+      </div>
+      <div class="col-sm-3 col-offset-1">
+        <%= f.label :capacidade_base, class: 'required' %>
+        <%= f.number_field :capacidade_base, value: @unidade_bloco_dormitorio.capacidade_base, class: 'form-control', placeholder: 'Informe a capacidade' %>
+      </div>
+      <div class="col-sm-1">
+        <%= f.check_box :status %>
+        <%= f.label :status %>
+      </div>
+    </div>
+
+  <h2>Histórico de Capacidades</h2>
+    <section id="form_capacidades">
+        <div class="col-sm-10">
+          <div class="form-group table-nested-title">
+            <div class="col-sm-1">#</div>
+            <div class="col-sm-2">Quantidade</div>
+            <div class="col-sm-5">Solicitante</div>
+            <div class="col-sm-2">Data</div>
+          </div>
+          <% cont = 0 %>
+          <%= f.nested_fields_for :unidade_bloco_dormitorio_capacidades do |ff| %>
+          <% cont +=1 %>
+            <%= ff.hidden_field :usuario_id, value: current_usuario.id %>
+            <div id="capacidade<%= ff.object.id %>" class="form-group table-nested-identify">
+              <div class="col-sm-1">
+                <% if ff.object.quantidade_alteracao.to_i > 0 %>
+                  <div class="btn btn-sm btn-primary" style="border-radius: 40px;"><i class="fas fa-plus"></i></div>
+                <% elsif ff.object.quantidade_alteracao.to_i < 0 %>
+                  <div class="btn btn-sm btn-danger"  style="border-radius: 40px;"><i class="fas fa-minus"></i></div>
+                <% end %>
+              </div>
+              <div class="col-sm-2">
+                <%= ff.number_field :quantidade_alteracao, class: 'form-control' %>
+              </div>
+              <div class="col-sm-5">
+                <%= ff.text_field :responsavel, class: 'form-control' %>
+              </div>
+              <div class="col-sm-2">
+                <%= ff.object.created_at %>
+              </div>
+          </div>
+          <% end %>
+          
+      </div>   
+    </section>
+
+    <div class="form-group">
+      <div class="col-sm-10">
+        <input type="hidden" id="id_bloco" name="id_bloco" value="<%= @id_bloco %>" />
+        <%= f.add_nested_fields_link :unidade_bloco_dormitorio_capacidades, 'Nova Capacidade' , class:"btn btn-success" %>
+        <%= f.submit nil, class: 'btn btn-primary' %>
+        <%= link_to I18n.t('helpers.links.cancel'), cadastrar_blocos_socioeduk_gestao_vagas_path(id: @unidade_socioeducativa_bloco.unidade_socioeducativa.id), class: 'btn btn-warning' %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+<%= render partial: 'common/box', locals: { title: I18n.t('activerecord.models.unidade_socioeducativa', default: UnidadeSocioeducativa.model_name.plural.humanize.upcase) } %>

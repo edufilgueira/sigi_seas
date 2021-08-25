@@ -1,0 +1,2 @@
+json.extract! socioeduk_saude_jovens_substancias_utilizada, :id, :socioeduk_saude_jovens_id, :socioeduk_entorpecente_id, :iniciou_com_idade, :parou_com_idade, :frequencia, :socioeduk_tipo_auto_consideracao_id, :realizou_tratamento, :socioeduk_tipo_tratamento_id, :created_at, :updated_at
+json.url socioeduk_saude_jovens_substancias_utilizada_url(socioeduk_saude_jovens_substancias_utilizada, format: :json)

@@ -1,0 +1,92 @@
+<% content_for :title do %>
+  <%= t('.title', default: @socioeduk_relatorio_diario.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t('.title', default: @socioeduk_relatorio_diario.class.model_name.human ) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <p>
+              <strong>PREENCHIDO POR:</strong>
+              <%= @socioeduk_relatorio_diario&.usuario&.pessoa&.nome&.upcase %>
+            </p>
+            <p>
+              <strong>UNIDADE:</strong>
+              <%= @socioeduk_relatorio_diario.unidade_socioeducativa.nome&.upcase %> - <%= @socioeduk_relatorio_diario.unidade_socioeducativa.sigla.upcase %>
+            </p>
+            <br>
+            <table class="table table-holver">
+              <tr>
+                <th><%= Socioeduk::RelatorioDiario.human_attribute_name :m_int_mas %></th>
+                <th><%= Socioeduk::RelatorioDiario.human_attribute_name :m_int_fem %></th>
+              </tr>
+              <tr>
+                <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_relatorio_diario.int_mas %></td>
+                <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_relatorio_diario.int_fem %></td>
+              </tr>
+              <tr>
+                <th><%= Socioeduk::RelatorioDiario.human_attribute_name :m_ip_mas %></th>
+                <th><%= Socioeduk::RelatorioDiario.human_attribute_name :m_ip_fem %></th>
+              </tr>
+              <tr>
+                <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_relatorio_diario.ip_mas %></td>
+                <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_relatorio_diario.ip_fem %></td>
+              </tr>
+              <tr>
+                <th><%= Socioeduk::RelatorioDiario.human_attribute_name :m_sl_mas %></th>
+                <th><%= Socioeduk::RelatorioDiario.human_attribute_name :m_sl_fem %></th>
+              </tr>
+              <tr>
+                <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_relatorio_diario.sl_mas %></td>
+                <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_relatorio_diario.sl_fem %></td>
+              </tr>
+              <tr>
+                <th><%= Socioeduk::RelatorioDiario.human_attribute_name :m_san_fem %></th>
+                <th><%= Socioeduk::RelatorioDiario.human_attribute_name :m_san_mas %></th>
+              </tr>
+              <tr>
+                <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_relatorio_diario.san_mas %></td>
+                <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_relatorio_diario.san_fem %></td>
+              </tr>
+              <tr>
+                <th><%= Socioeduk::RelatorioDiario.human_attribute_name :m_capacidade_nominal %></th>
+                <th><%= Socioeduk::RelatorioDiario.human_attribute_name :m_capacidade_real %></th>
+              </tr>
+              <tr>
+                <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_relatorio_diario.capacidade_nominal %></td>
+                <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_relatorio_diario.capacidade_real %></td>
+              </tr>
+              <tr>
+                <th><%= Socioeduk::RelatorioDiario.human_attribute_name :m_socioeducador_homem %></th>
+                <th><%= Socioeduk::RelatorioDiario.human_attribute_name :m_socioeducador_mulher %></th>
+              </tr>
+              <tr>
+                <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_relatorio_diario.socioeducador_homem %></td>
+                <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_relatorio_diario.socioeducador_mulher %></td>
+              </tr>
+            </table>
+            <p>
+              <strong>RESUMO:</strong>
+              <%= @socioeduk_relatorio_diario.resumo&.upcase %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', socioeduk_relatorio_diarios_path, class: 'btn btn-default') %>
+<%= link_to 'Editar', edit_socioeduk_relatorio_diario_path(@socioeduk_relatorio_diario), class: 'btn btn-success' %>

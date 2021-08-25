@@ -1,0 +1,429 @@
+<%- model_class = Socioeduk::GestaoVaga -%>
+<% content_for :ibox_content do %>
+<div>
+  <h1><%= I18n.t('titles.painel_gerencial') %></h1>
+</div>
+<div class="row">
+  <div class="form-group">
+    <div class="col-sm-6">
+      <div class="widget navy-bg p-lg text-center">
+          <div class="m-b-md">
+              <i class="fa fa-bell fa-4x"></i>
+              <h1 class="m-xs"><%= @total_alertas %></h1>
+              <h3 class="font-bold no-margins">
+                  Notificações
+              </h3>
+              <small>Alertas Encontrados.</small>
+          </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <%= pie_chart @grafico, height: "240px", legend: "right" %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="form-group">
+    <div class="col-sm-6">
+      <div class="thumbnail">
+        <div>
+          <div>
+            <a class="btn btn-primary btn-circle pull-right" id="click_jovem_admitido_mas_sem_processo"><i class="fa fa-list"></i></a>
+          </div>
+        </div>
+        <h4>Jovens Recepcionados Aguardando Definição da Central de Vagas</h4>
+        <div class="caption">
+          <div class="ibox-content">
+            <h1 class="no-margins">
+              <%= @qtd_jovem_admitido_mas_sem_processo %>
+            </h1>
+            <!--<div class="stat-percent font-bold text-info">10<br>ocupados</div>-->
+            <small>QTDE</small>
+            <div id="jovem_admitido_mas_sem_processo" style="display:none">
+              <br>
+              <table width="100%" class="table">
+                <tr>
+                  <td><b>JOVEM</b></td>
+                </tr>
+                <% @jovem_admitido_mas_sem_processo.each do | j | %>
+                    <tr>
+                      <td><%= link_to j.nome, edit_socioeduk_jovem_path(j.jovem_id) %></td>
+                    </tr>
+                <% end %>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="thumbnail">
+        <div>
+          <div>
+            <a class="btn btn-primary btn-circle pull-right" id="click_jovem_sem_endereco"><i class="fa fa-list"></i></a>
+          </div>
+        </div>
+        <h4>Cadastro de Jovem sem Informação de Endereço</h4>
+        <div class="caption">
+          <div class="ibox-content">
+            <h1 class="no-margins">
+              <%= @qtd_jovem_sem_endereco %>
+            </h1>
+            <!--<div class="stat-percent font-bold text-info">10<br>ocupados</div>-->
+            <small>QTDE</small>
+            <div id="jovem_sem_endereco" style="display:none">
+              <br>
+              <table width="100%" class="table">
+                <tr>
+                  <td><b>JOVEM</b></td>
+                </tr>
+                <% @jovem_sem_endereco.each do | j | %>
+                    <tr>
+                      <td><%= link_to j.nome, edit_socioeduk_jovem_path(j.jovem_id) %></td>
+                    </tr>
+                <% end %>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-6">
+      <div class="thumbnail">
+        <div>
+          <div>
+            <a class="btn btn-primary btn-circle pull-right" id="click_jovem_bairro_nulo"><i class="fa fa-list"></i></a>
+          </div>
+        </div>
+        <h4>Cadastro de Jovem com Erro na Informação Referente ao Bairro</h4>
+        <div class="caption">
+          <div class="ibox-content">
+            <h1 class="no-margins">
+              <%= @qtd_jovem_bairro_nulo %>
+            </h1>
+            <!--<div class="stat-percent font-bold text-info">10<br>ocupados</div>-->
+            <small>QTDE</small>
+            <div id="jovem_bairro_nulo" style="display:none">
+              <br>
+              <table width="100%" class="table">
+                <tr>
+                  <td><b>JOVEM</b></td>
+                </tr>
+                <% @jovem_bairro_nulo.each do | j | %>
+                    <tr>
+                      <td><%= link_to j.nome, edit_socioeduk_jovem_path(j.jovem_id) %></td>
+                    </tr>
+                <% end %>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="thumbnail">
+        <div>
+          <div>
+            <a class="btn btn-primary btn-circle pull-right" id="click_jovem_idade_errada"><i class="fa fa-list"></i></a>
+          </div>
+        </div>
+        <h4>Cadastro de Jovem com Idade Incorreta</h4>
+        <div class="caption">
+          <div class="ibox-content">
+            <h1 class="no-margins">
+              <%= @qtd_jovem_idade_errada %>
+            </h1>
+            <!--<div class="stat-percent font-bold text-info">10<br>ocupados</div>-->
+            <small>QTDE</small>
+            <div id="jovem_idade_errada" style="display:none">
+              <br>
+              <table width="100%" class="table">
+                <tr>
+                  <td><b>JOVEM</b></td>
+                  <td><b>Idade</b></td>
+                </tr>
+                <% @jovem_idade_errada.each do | j | %>
+                    <tr>
+                      <td><%= link_to j.nome, edit_socioeduk_jovem_path(j.jovem_id) %></td>
+                      <td><%= j.idade %></td>
+                    </tr>
+                <% end %>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-sm-6">
+      <div class="thumbnail">
+        <div>
+          <div>
+            <a class="btn btn-primary btn-circle pull-right" id="click_jovem_aguardando_crv"><i class="fa fa-list"></i></a>
+          </div>
+        </div>
+        <h4>Jovens Recepcionados Aguardando CRV</h4>
+        <div class="caption">
+          <div class="ibox-content">
+            <h1 class="no-margins">
+              <%= @qtd_jovem_aguardando_crv %>
+            </h1>
+            <!--<div class="stat-percent font-bold text-info">10<br>ocupados</div>-->
+            <small>QTDE</small>
+            <div id="jovem_aguardando_crv" style="display:none">
+              <br>
+              <table width="100%" class="table">
+                <tr>
+                  <td><b>JOVEM</b></td>
+                </tr>
+                <% @aguardando_crv.each do | j | %>
+                    <tr>
+                      <td><%= j.socioeduk_jovem_recepcao.socioeduk_jovem.nome%>
+                      </td>
+                    </tr>
+                <% end %>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        
+    <div class="col-sm-6">
+      <div class="thumbnail">
+        <div>
+          <div>
+            <a class="btn btn-primary btn-circle pull-right" id="click_jovem_aguardando_comarca"><i class="fa fa-list"></i></a>
+          </div>
+        </div>
+        <h4>Jovens Recepcionados Aguardando Comarca</h4>
+        <div class="caption">
+          <div class="ibox-content">
+            <h1 class="no-margins">
+              <%= @qtd_jovem_aguardando_comarca %>
+            </h1>
+            <!--<div class="stat-percent font-bold text-info">10<br>ocupados</div>-->
+            <small>QTDE</small>
+            <div id="jovem_aguardando_comarca" style="display:none">
+              <br>
+              <table width="100%" class="table">
+                <tr>
+                  <td><b>JOVEM</b></td>
+                  <td><b>COMARCA</b></td>
+                </tr>
+                <% @aguardando_comarca.each do | j | %>
+                    <tr>
+                      <td><%= j.socioeduk_jovem_recepcao.socioeduk_jovem.nome%>
+                      </td>
+                      <td><%= j.cidade&.nome%>
+                      </td>
+                    </tr>
+                <% end %>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="thumbnail">
+          <div>
+            <div>
+              <a class="btn btn-primary btn-circle pull-right" id="click_indisponibilidade_vagas"><i class="fa fa-list"></i></a>
+            </div>
+          </div>
+          <h4>Jovens com Indisponibilidade de Vaga</h4>
+          <div class="caption">
+            <div class="ibox-content">
+              <h1 class="no-margins">
+                <%= @qtd_indisponibilidade_vagas %>
+              </h1>
+              <!--<div class="stat-percent font-bold text-info">10<br>ocupados</div>-->
+              <small>QTDE</small>
+              <div id="indisponibilidade_vagas" style="display:none">
+                <br>
+                <table width="100%" class="table">
+                  <tr>
+                    <td><b>JOVEM</b></td>
+                  </tr>
+                  <% @indisponibilidade_vagas.each do | j | %>
+                      <tr>
+                        <td><%= j.socioeduk_jovem_recepcao.socioeduk_jovem.nome%>
+                        </td>
+                      </tr>
+                  <% end %>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="thumbnail">
+          <div>
+            <div>
+              <a class="btn btn-primary btn-circle pull-right" id="click_aguardando_familia"><i class="fa fa-list"></i></a>
+            </div>
+          </div>
+          <h4>Jovens Aguardadando Família</h4>
+          <div class="caption">
+            <div class="ibox-content">
+              <h1 class="no-margins">
+                <%= @qtd_jovem_aguardando_familia %>
+              </h1>
+              <!--<div class="stat-percent font-bold text-info">10<br>ocupados</div>-->
+              <small>QTDE</small>
+              <div id="aguardando_familia" style="display:none">
+                <br>
+                <table width="100%" class="table">
+                  <tr>
+                    <td><b>JOVEM</b></td>
+                  </tr>
+                  <% @aguardando_familia.each do | j | %>
+                      <tr>
+                        <td><%= j.socioeduk_jovem_recepcao.socioeduk_jovem.nome%>
+                        </td>
+                      </tr>
+                  <% end %>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="thumbnail">
+          <div>
+            <div>
+              <a class="btn btn-primary btn-circle pull-right" id="click_projetoJusticaJa"><i class="fa fa-list"></i></a>
+            </div>
+          </div>
+          <h4>Jovens Projeto Justiça Já</h4>
+          <div class="caption">
+            <div class="ibox-content">
+              <h1 class="no-margins">
+                <%= @qtd_jovem_projeto_justica_ja %>
+              </h1>
+              <!--<div class="stat-percent font-bold text-info">10<br>ocupados</div>-->
+              <small>QTDE</small>
+              <div id="projetoJusticaJa" style="display:none">
+                <br>
+                <table width="100%" class="table">
+                  <tr>
+                    <td><b>JOVEM</b></td>
+                  </tr>
+                  <% @projetoJusticaJa.each do | j | %>
+                      <tr>
+                        <td><%= j.socioeduk_jovem_recepcao.socioeduk_jovem.nome%>
+                        </td>
+                      </tr>
+                  <% end %>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        <!-- Div do footer -->
+  </div>
+</div>
+
+
+<% end -%>
+<%= render partial: 'common/box', locals: { title: I18n.t('activerecord.models.unidade_socioeducativa', default: UnidadeSocioeducativa.model_name.plural.humanize.upcase) } %>
+
+<script>
+
+
+
+$("#click_jovem_admitido_mas_sem_processo").click(function(){
+  if($('#jovem_admitido_mas_sem_processo').fadeIn().css('display') == "none"){
+    $('#jovem_admitido_mas_sem_processo').fadeIn().css('display', 'block');
+    $('#jovem_admitido_mas_sem_processo').css('display', 'block');
+  }
+  else
+    $('#jovem_admitido_mas_sem_processo').fadeIn().css('display', 'none');
+});
+
+$("#click_jovem_sem_endereco").click(function(){
+  if($('#jovem_sem_endereco').fadeIn().css('display') == "none"){
+    $('#jovem_sem_endereco').fadeIn().css('display', 'block');
+    $('#jovem_sem_endereco').css('display', 'block');
+  }
+  else
+    $('#jovem_sem_endereco').fadeIn().css('display', 'none');
+});
+
+$("#click_jovem_bairro_nulo").click(function(){
+  if($('#jovem_bairro_nulo').fadeIn().css('display') == "none"){
+    $('#jovem_bairro_nulo').fadeIn().css('display', 'block');
+    $('#jovem_bairro_nulo').css('display', 'block');
+  }
+  else
+    $('#jovem_bairro_nulo').fadeIn().css('display', 'none');
+});
+
+$("#click_jovem_idade_errada").click(function(){
+  if($('#jovem_idade_errada').fadeIn().css('display') == "none"){
+    $('#jovem_idade_errada').fadeIn().css('display', 'block');
+    $('#jovem_idade_errada').css('display', 'block');
+  }
+  else
+    $('#jovem_idade_errada').fadeIn().css('display', 'none');
+});
+
+$("#click_jovem_aguardando_crv").click(function(){
+  if($('#jovem_aguardando_crv').fadeIn().css('display') == "none"){
+    $('#jovem_aguardando_crv').fadeIn().css('display', 'block');
+    $('#jovem_aguardando_crv').css('display', 'block');
+  }
+  else
+    $('#jovem_aguardando_crv').fadeIn().css('display', 'none');
+});
+
+$("#click_jovem_aguardando_comarca").click(function(){
+  if($('#jovem_aguardando_comarca').fadeIn().css('display') == "none"){
+    $('#jovem_aguardando_comarca').fadeIn().css('display', 'block');
+    $('#jovem_aguardando_comarca').css('display', 'block');
+  }
+  else
+    $('#jovem_aguardando_comarca').fadeIn().css('display', 'none');
+});
+
+$("#click_indisponibilidade_vagas").click(function(){
+  if($('#indisponibilidade_vagas').fadeIn().css('display') == "none"){
+    $('#indisponibilidade_vagas').fadeIn().css('display', 'block');
+    $('#indisponibilidade_vagas').css('display', 'block');
+  }
+  else
+    $('#indisponibilidade_vagas').fadeIn().css('display', 'none');
+});
+
+$("#click_aguardando_familia").click(function(){
+  if($('#aguardando_familia').fadeIn().css('display') == "none"){
+    $('#aguardando_familia').fadeIn().css('display', 'block');
+    $('#aguardando_familia').css('display', 'block');
+  }
+  else
+    $('#aguardando_familia').fadeIn().css('display', 'none');
+});
+
+$("#click_projetoJusticaJa").click(function(){
+  if($('#projetoJusticaJa').fadeIn().css('display') == "none"){
+    $('#projetoJusticaJa').fadeIn().css('display', 'block');
+    $('#projetoJusticaJa').css('display', 'block');
+  }
+  else
+    $('#projetoJusticaJa').fadeIn().css('display', 'none');
+});
+
+
+</script>

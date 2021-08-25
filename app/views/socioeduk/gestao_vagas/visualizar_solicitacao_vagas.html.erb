@@ -1,0 +1,211 @@
+<% content_for :title do %>
+<%= t('.title', default: @socioeduk_solicitacao_vaga.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+
+  
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= Socioeduk::SolicitacaoVaga.human_attribute_name :nome %>:
+          <b><%= @socioeduk_solicitacao_vaga.nome.upcase %></b></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+
+          <div class="div-dot-display" id="display_pontuacao_jovem" style="display: block;">
+            <div id="resultado_pontuacao" style="margin-right: 1em;"><%= @socioeduk_solicitacao_vaga.pontuacao %></div>
+          </div>
+          <div class="col-sm-12 b-r">
+            <h2>Situação da Solicitação</h2>
+            <p>
+              <strong>Vaga:</strong>
+              <span class="label label-success">
+                <%= @socioeduk_solicitacao_vaga.status.nil? ? 'AGUARDANDO RESPOSTA' : @socioeduk_solicitacao_vaga.status.upcase %>
+                <span>
+            </p>
+            <p>
+              <strong>Observação:</strong>
+              <%= @socioeduk_solicitacao_vaga.motivo_negacao? ? @socioeduk_solicitacao_vaga&.motivo_negacao&.upcase : @socioeduk_solicitacao_vaga&.observacao&.upcase %>
+            </p>
+
+            <br>
+
+            <div class="bloco_separador">
+              <div class="titulo_bloco_separador" style="border-top: 1px solid #e5e6e7;">
+                Dados Pessoais
+              </div>
+              <p>
+                <strong><%= Socioeduk::SolicitacaoVaga.human_attribute_name :sexo %>:</strong>
+                <%= @socioeduk_solicitacao_vaga.sexo %>
+              </p>
+              <p>
+                <strong><%= Socioeduk::SolicitacaoVaga.human_attribute_name :data_infracao %>:</strong>
+                <%= @socioeduk_solicitacao_vaga.data_infracao %>
+              </p>
+              <p>
+                <strong><%= Socioeduk::SolicitacaoVaga.human_attribute_name :socioeduk_tipo_medida_socioeducativa_id %>:</strong>
+                <span class="label label-info">
+                  <%= @socioeduk_solicitacao_vaga&.tipo_medida_socioeducativa&.descricao&.upcase %>
+                </span>
+              </p>
+            </div>
+
+            <div class="bloco_separador">
+              <div class="titulo_bloco_separador" style="border-top: 1px solid #e5e6e7;">
+                Ato Infracional
+              </div>
+              <table class="table table-condensed">
+                <thead>
+                  <tr>
+                    <th>Tipo Natureza</th>
+                    <th>Infração</th>
+                    <th class="text-center">Continuado?</th>
+                    <th class="text-center" data-toggle="tooltip" data-placement="top"
+                      title="Estupro de vulnerável com correlatas até 2 anos">Vulnerável?</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @socioeduk_solicitacao_vaga.socioeduk_solicitacao_vaga_infracoes.each do |infracao| %>
+                  <tr>
+                    <td style="min-width: 90px; word-break: break-all;"><%= infracao&.tipo_natureza&.upcase %></td>
+                    <td style="min-width: 90px; word-break: break-all;">
+                      <%= infracao&.artigo_infracao&.descricao&.upcase %></td>
+                    <td class="text-center" style="min-width: 90px; word-break: break-all;">
+                      <%= infracao&.estupro_vulneravel? ? content_tag(:i, nil, {class: 'fas fa-check', style: "color:green"}) : content_tag(:i, nil, {class: 'fas fa-times', style: "color:red"}) %>
+                    </td>
+                    <td class="text-center" style="min-width: 90px; word-break: break-all;">
+                      <%= infracao&.pontuacao_continuado? ? content_tag(:i, nil, {class: 'fas fa-check', style: "color:green"}) : content_tag(:i, nil, {class: 'fas fa-times', style: "color:red"}) %>
+                    </td>
+                  </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+
+            <% unless @socioeduk_solicitacao_vaga.doc_unico_file_name %>
+              <div class="bloco_separador">
+                <div class="titulo_bloco_separador" style="border-top: 1px solid #e5e6e7;">
+                  Documentos
+                </div>
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>
+                          <%= link_to @socioeduk_solicitacao_vaga.doc_guia_cnj? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #adadad
+                          ;'}), @socioeduk_solicitacao_vaga.doc_guia_cnj.url(:original, false), target: '_blank' %>
+                          <strong><%= Socioeduk::SolicitacaoVaga.human_attribute_name :doc_guia_cnj %></strong>
+                        </p>
+                      </td>
+                      <td>
+                        <p>
+                          <%= link_to @socioeduk_solicitacao_vaga.doc_pessoais? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #adadad;'}), @socioeduk_solicitacao_vaga.doc_pessoais.url(:original, false), target: '_blank' %>
+                          <strong><%= Socioeduk::SolicitacaoVaga.human_attribute_name :doc_pessoais %></strong>
+                        </p>
+                      </td>
+                      <td>
+                        <p>
+                          <%= link_to @socioeduk_solicitacao_vaga.doc_pedido_internacao_provisoria? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #adadad;'}), @socioeduk_solicitacao_vaga.doc_pedido_internacao_provisoria.url(:original, false), target: '_blank' %>
+                          <strong><%= Socioeduk::SolicitacaoVaga.human_attribute_name :doc_pedido_internacao_provisoria %></strong>
+                        </p>
+                      </td>
+                      <td>
+                        <p>
+                          <%= link_to @socioeduk_solicitacao_vaga.doc_certidao_antecedentes? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #adadad;'}), @socioeduk_solicitacao_vaga.doc_certidao_antecedentes.url(:original, false), target: '_blank' %>
+                          <strong><%= Socioeduk::SolicitacaoVaga.human_attribute_name :doc_certidao_antecedentes %></strong>
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>
+                          <%= link_to @socioeduk_solicitacao_vaga.doc_decisao_interlocutoria? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #adadad;'}), @socioeduk_solicitacao_vaga.doc_decisao_interlocutoria.url(:original, false), target: '_blank' %>
+                          <strong><%= Socioeduk::SolicitacaoVaga.human_attribute_name :doc_decisao_interlocutoria %></strong>
+                        </p>
+                      </td>
+                      <td>
+                        <p>
+                          <%= link_to @socioeduk_solicitacao_vaga.doc_estudos_tecnicos? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #adadad;'}), @socioeduk_solicitacao_vaga.doc_estudos_tecnicos.url(:original, false), target: '_blank' %>
+                          <strong><%= Socioeduk::SolicitacaoVaga.human_attribute_name :doc_estudos_tecnicos %></strong>
+                        </p>
+                      </td>
+                      <td>
+                        <p>
+                          <%= link_to @socioeduk_solicitacao_vaga.doc_historico_escolar? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #adadad;'}), @socioeduk_solicitacao_vaga.doc_historico_escolar.url(:original, false), target: '_blank' %>
+                          <strong><%= Socioeduk::SolicitacaoVaga.human_attribute_name :doc_historico_escolar %></strong>
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>
+                          <%= link_to @socioeduk_solicitacao_vaga.doc_historico_saude? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #adadad;'}), @socioeduk_solicitacao_vaga.doc_historico_saude.url(:original, false), target: '_blank' %>
+                          <strong><%= Socioeduk::SolicitacaoVaga.human_attribute_name :doc_historico_saude %></strong>
+                        </p>
+                      </td>
+                      <td>
+                        <p>
+                          <%= link_to @socioeduk_solicitacao_vaga.doc_comprovante_envio_malote_digital? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #adadad;'}), @socioeduk_solicitacao_vaga.doc_comprovante_envio_malote_digital.url(:original, false), target: '_blank' %>
+                          <strong><%= Socioeduk::SolicitacaoVaga.human_attribute_name :doc_comprovante_envio_malote_digital %></strong>
+                        </p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            <% else %>
+              <div class="bloco_separador">
+                <div class="titulo_bloco_separador" style="border-top: 1px solid #e5e6e7;">
+                  Documento Único
+                </div>
+                <table class="table">
+                  <tbody>
+                    <td>
+                      <p>
+                        <%= link_to @socioeduk_solicitacao_vaga.doc_unico? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #adadad;'}), @socioeduk_solicitacao_vaga.doc_unico.url(:original, false), target: '_blank' %>
+                        <strong><%= Socioeduk::SolicitacaoVaga.human_attribute_name :doc_unico %></strong>
+                      </p>
+                    </td>
+                    <td>
+                      <strong>Lista de Documentos Inclusos no Anexo:</strong>
+                      <% @socioeduk_solicitacao_vaga.doc_unico_array.each do |tipo_documento| %>
+                        <% unless tipo_documento == "" %>
+                        <li>
+                          <%= Socioeduk::SolicitacaoVaga.tipos_documentos.key(tipo_documento.to_i).gsub('_', ' ') %>
+                        </li>
+                        <% end %>
+                      <% end %>
+                    </td>
+                  </tbody>
+                </table>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', acompanhar_solicitacao_vagas_socioeduk_gestao_vagas_path, class: 'btn btn-default') %>
+<%#= link_to 'Analisar', edit_socioeduk_solicitacao_vaga_path(@socioeduk_solicitacao_vaga), class: 'btn btn-success' %>
+<%# pessoa = Pessoa.where(usuario_id: current_usuario.id).first %>
+<%# if pessoa.tipo_pessoa_id != 2 %>
+  <%#= link_to 'Solicitações', acompanhar_solicitacao_vagas_socioeduk_gestao_vagas_path, class: 'btn btn-info' %>
+  <%#= link_to 'Documentação', informar_dados_ausente_socioeduk_solicitacao_vagas_path(id: @socioeduk_solicitacao_vaga.id), :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', class: 'btn btn-warning' %>
+<%# end %>
+
+<script>
+  $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>

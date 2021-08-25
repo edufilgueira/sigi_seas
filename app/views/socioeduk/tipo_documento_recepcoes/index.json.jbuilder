@@ -1,0 +1,1 @@
+json.array! @socioeduk_tipo_documento_recepcoes, partial: "socioeduk_tipo_documento_recepcoes/socioeduk_tipo_documento_recepcao", as: :socioeduk_tipo_documento_recepcao

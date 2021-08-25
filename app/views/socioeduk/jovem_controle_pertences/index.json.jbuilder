@@ -1,0 +1,1 @@
+json.array! @socioeduk_jovem_controle_pertences, partial: "socioeduk_jovem_controle_pertences/socioeduk_jovem_controle_pertence", as: :socioeduk_jovem_controle_pertence

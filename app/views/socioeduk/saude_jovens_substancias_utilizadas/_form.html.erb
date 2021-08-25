@@ -1,0 +1,59 @@
+<%= form_for(@socioeduk_saude_jovens_substancias_utilizada, html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @socioeduk_saude_jovens_substancias_utilizada %>
+  <%= render 'layouts/message_required' %>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :saude_jovem %>
+      <%= f.text_field :saude_jovem_id, class: 'form-control' %>
+      
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_entorpecente %>
+      <%= f.collection_select :socioeduk_entorpecente_id, Socioeduk::Entorpecente.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :iniciou_com_idade %>
+      <%= f.number_field :iniciou_com_idade, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :parou_com_idade %>
+      <%= f.number_field :parou_com_idade, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :frequencia %>
+      <%= f.number_field :frequencia, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_tipo_auto_consideracao %>
+      <%= f.collection_select :socioeduk_tipo_auto_consideracao_id, Socioeduk::TipoAutoConsideracao.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :realizou_tratamento %>
+      <%= f.check_box :realizou_tratamento %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_tipo_tratamento %>
+      <%= f.collection_select :socioeduk_tipo_tratamento_id, Socioeduk::TipoTratamento.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10">
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+      <%= link_to I18n.t('helpers.links.cancel'), socioeduk_saude_jovens_substancias_utilizadas_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+<% end %>

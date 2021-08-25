@@ -1,0 +1,1 @@
+json.partial! "socioeduk_processo_recepcao_jovem_infracoes/socioeduk_processo_recepcao_jovem_infracao", socioeduk_processo_recepcao_jovem_infracao: @socioeduk_processo_recepcao_jovem_infracao

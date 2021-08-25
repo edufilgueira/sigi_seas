@@ -1,0 +1,49 @@
+<%#= form_for(@socioeduk_gestao_vaga, :url => {controller: :gestao_vagas, action: :update}, html: { class: 'form-horizontal' }) do |f| %>
+<%#= form_for(@socioeduk_gestao_vaga, :url => {controller: :jovens, action: :editar_historico_transferencia}, html: { class: 'form-horizontal' }) do |f| %>
+<%= form_for(@socioeduk_gestao_vaga, :url => (@socioeduk_gestao_vaga.new_record? ? socioeduk_gestao_vagas_path : socioeduk_gestao_vaga_path(@socioeduk_gestao_vaga)), html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @socioeduk_gestao_vaga %>
+  <%= render 'layouts/message_required' %>
+  
+  <div class="form-group">
+    <div class="col-sm-12 col-offset-1">
+      <%= f.label :de_unidade_socioeducativa, class: 'required' %>
+      <% if ((@socioeduk_gestao_vaga.status == "Admissão Direta") | (@socioeduk_gestao_vaga.status == "Recepcionado")) %>
+        <%= f.collection_select :de_unidade_socioeducativa_id, UnidadeSocioeducativa.all, :id, :sigla_nome, {include_blank: '--selecione--'}, class: 'form-control', disabled: true %>
+      <% else %>
+        <%= f.collection_select :de_unidade_socioeducativa_id, UnidadeSocioeducativa.all, :id, :sigla_nome, {include_blank: '--selecione--'}, class: 'form-control', disabled: false %>
+      <% end %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12 col-offset-1">
+      <%= f.label :para_unidade_socioeducativa, class: 'required' %>
+        <%= f.collection_select :para_unidade_socioeducativa_id, UnidadeSocioeducativa.all, :id, :sigla_nome, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12 col-offset-1">
+      <%= f.label :data_movimentacao, class: 'required' %>
+      <%= f.text_field :data_movimentacao, class: 'form-control datepicker maskdata'  %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12 col-offset-1">
+      <%= f.label :motivo_transferencia, required: true, class: 'required' %>
+      <%= f.text_area :motivo_transferencia, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-12">
+      <%= f.hidden_field :id, value: @id %>
+      <%= f.hidden_field :recepcao_id, value: @recepcao_id %>
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+      <div class="btn btn-warning" href="#" onclick="close_modal_auxiliar()">Cancelar</div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+  $('.maskdata').mask('00/00/0000', {reverse: false});
+  $('.concluir').hide();
+</script>

@@ -1,0 +1,65 @@
+<%= form_for(@socioeduk_jovem_controle_pertence, html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @socioeduk_jovem_controle_pertence %>
+  <%= render 'layouts/message_required' %>
+  <div class="form-group">
+    <div class="col-sm-12 col-offset-1">
+      <%= f.label :socioeduk_jovem_recepcao %>
+      <% if @socioeduk_jovem_controle_pertence.new_record? %>
+        <%= f.collection_select :socioeduk_jovem_recepcao_id, Socioeduk::Jovem.jovens_recepcao_admitidos_sem_processo, :id, :nome, {include_blank: '--selecione--'}, class: 'form-control' %>
+      <% else %>
+        <%= f.collection_select :socioeduk_jovem_recepcao_id, Socioeduk::JovemControlePertence.jovens_do_controle_pertence(@socioeduk_jovem_controle_pertence.socioeduk_jovem_recepcao_id), :id, :nome, {include_blank: '--selecione--'}, class: 'form-control' %>
+      <% end %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12">
+      <section>
+        <div class="col-sm-12">
+          <div class="form-group table-nested-title titulo_nested">
+            <div class="col-sm-3">Nome Pertence</div>
+            <div class="col-sm-2">Data Entrega</div>
+            <div class="col-sm-3">Recebido por ...</div>
+            <div class="col-sm-3">Entregue por ...</div>
+            <div class="col-sm-1">Ação</div>
+          </div>
+          <%= f.nested_fields_for :jovem_item_pertences do |ff| %>
+            <div id="jovem_item_pertence<%= ff.object.id %>" class="form-group table-nested-identify linha_nested">
+              <div class="col-sm-3">
+                <%= ff.text_field :nome, class: 'form-control' %>
+              </div>
+              <div class="col-sm-2">
+                <%= ff.text_field :data_entrega, class: 'form-control maskdata' %>
+              </div>
+              <div class="col-sm-3">
+                <%= ff.text_field :recebente, class: 'form-control' %>
+              </div>
+              <div class="col-sm-3">
+                <%= ff.text_field :entregador, class: 'form-control' %>
+              </div>
+            <div class="col-sm-1">
+              <table>
+                <tr>
+                  <td>
+                    <a class="btn btn-xs btn-primary" title="Editar" style="float:left" href="javascript: void(0);" onclick="editarLinhaNested('jovem_item_pertence<%= ff.object.id %>')"><i class="fas fa-edit"></i></a>
+                  </td>
+                  <td>
+                    <%= ff.hidden_field :id %>
+                    <%= ff.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px; margin-bottom: 8px;'%>  
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <% end %>
+          <%= f.add_nested_fields_link :jovem_item_pertences, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-success" %>
+        </div>   
+      </section>
+    </div> 
+  </div> 
+  <div class="form-group">
+    <div class="col-sm-10">
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+      <%= link_to I18n.t('helpers.links.cancel'), socioeduk_jovem_controle_pertences_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,59 @@
+<% content_for :title do %>
+  <%= t('.title', default: @biblioteca_livro.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t('.title', default: @biblioteca_livro.class.model_name.human ) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                                    
+                  
+                  <th><%= Biblioteca::Livro.human_attribute_name :titulo %></th>
+                                    
+                  
+                  <th><%= Biblioteca::Livro.human_attribute_name :sinopse %></th>
+                                    
+                  
+                  <th><%= Biblioteca::Livro.human_attribute_name :biblioteca_autor %></th>
+                                    
+                  
+                  <th><%= Biblioteca::Livro.human_attribute_name :biblioteca_local %></th>
+                                    
+                  
+                  <th><%= Biblioteca::Livro.human_attribute_name :status %></th>
+                                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @biblioteca_livro.titulo %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @biblioteca_livro.sinopse %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @biblioteca_livro.biblioteca_autor %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @biblioteca_livro.biblioteca_local %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @biblioteca_livro.status %></td>
+                                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', biblioteca_livros_path, class: 'btn btn-default') %>
+<%= link_to 'Editar', edit_biblioteca_livro_path(@biblioteca_livro), class: 'btn btn-success' %>

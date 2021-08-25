@@ -1,0 +1,68 @@
+<% content_for :title do %>
+  <%= t('.title', default: @socioeduk_processo.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t('.title', default: @socioeduk_processo.class.model_name.human ) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <th><%= Socioeduk::Processo.human_attribute_name :numero_processo %></th>
+                  
+                  <th><%= Socioeduk::Processo.human_attribute_name :socioeduk_tipo_processo %></th>
+
+                  <th><%= Socioeduk::Processo.human_attribute_name :cidade_comarca %></th>
+                  
+                  <th><%= Socioeduk::Processo.human_attribute_name :data_representacao %></th>
+                  
+                  <th><%= Socioeduk::Processo.human_attribute_name :data_decisao %></th>
+                  
+                  <th><%= Socioeduk::Processo.human_attribute_name :numero_oficio %></th>
+                  
+                  <th><%= Socioeduk::Processo.human_attribute_name :data_oficio %></th>
+                  
+                  <th><%= Socioeduk::Processo.human_attribute_name :socioeduk_status_processo %></th>
+                  
+                  <th><%= Socioeduk::Processo.human_attribute_name :data_hora_infracao %></th>
+                  
+                  <th><%= Socioeduk::Processo.human_attribute_name :data_hora_apreensao %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_processo.numero_processo %></td>
+                  <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_processo.socioeduk_tipo_processo %></td>
+                  <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_processo.comarca&.nome %></td>
+                  <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_processo.data_representacao %></td>
+                  <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_processo.data_decisao %></td>
+                  <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_processo.numero_oficio %></td>
+                  <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_processo.data_oficio %></td>
+                  <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_processo.socioeduk_status_processo&.descricao %></td>
+                  <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_processo.data_hora_infracao %></td>
+                  <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_processo.data_hora_apreensao %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', socioeduk_processos_path, class: 'btn btn-default') %>
+<%= link_to 'Editar', edit_socioeduk_processo_path(@socioeduk_processo), class: 'btn btn-success' %>

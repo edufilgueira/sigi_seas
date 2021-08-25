@@ -1,0 +1,3 @@
+$('#modalAuxiliarTitle').html('Desligar Colaborador')
+$('#modalAuxiliar').find('.modal-body').html("<%= escape_javascript( render partial: 'form_desligar_colaborador', locals: { vinculo_id: @vinculo_id, disable_with: 'Salvando...' } ) %>");
+$('#modalAuxiliar').modal('show')

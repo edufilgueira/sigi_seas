@@ -1,0 +1,14 @@
+<%= form_for(:frm, :url => aguardar_solicitacao_vaga_socioeduk_solicitacao_vagas_path) do |f| %>
+  <%= f.hidden_field :id, value: @solicitacao_vaga_id %>
+
+  <div class="row">
+    <div class="col-sm-12 col-offset-1">
+      <%= f.label :motivo_negacao, "Motivo", class: 'required' %>
+      <%= f.text_area :motivo_negacao, class: 'form-control', required: true %>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= f.submit 'Enviar', class: 'btn btn-primary' %>
+  </div>
+<% end %>

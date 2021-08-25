@@ -1,0 +1,40 @@
+<%= form_for(@socioeduk_tecnico_jovem_familia, html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @socioeduk_tecnico_jovem_familia %>
+  <%= render 'layouts/message_required' %>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_tecnico_jovem %>
+      <%= f.collection_select :socioeduk_tecnico_jovem_id, Socioeduk::TecnicoJovem.all, :id, :id, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :nome %>
+      <%= f.text_field :nome, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_escolaridade %>
+      <%= f.collection_select :socioeduk_escolaridade_id, Socioeduk::Escolaridade.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :profissao %>
+      <%= f.text_field :profissao, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_tipo_parentesco %>
+      <%= f.collection_select :socioeduk_escolaridade_id, Socioeduk::TipoParentesco.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10">
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+      <%= link_to I18n.t('helpers.links.cancel'), socioeduk_tecnico_jovem_familias_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,54 @@
+<div>
+  <label for="">Busca Rápida por Medida</label>
+</div>
+<div>
+    <button id="semiliberdade" onclick="semiliberdade_btn()" type="button" class="btn btn-w-m btn-success" value="SEMILIBERDADE">Semiliberdade</button>
+    <button id="internacao" onclick="internacao_btn()" type="button" class="btn btn-w-m btn-success" value="INTERNAÇÃO">Internação</button>
+    <button id="internacaoProvisoria" onclick="internacaoProvisoria_btn()" type="button" class="btn btn-w-m btn-success" value="INTERNAÇÃO PROVISÓRIA">Internação Provisória</button>
+</div>
+<div>
+  <label for="">Busca Rápida por Sexo</label>
+</div>
+<div>
+    <button id="masculino" onclick="masculino_btn()" type="button" class="btn btn-w-m btn-success" value="MASCULINO">Masculino</button>
+    <button id="feminino" onclick="feminino_btn()" type="button" class="btn btn-w-m btn-success" value="FEMININO">Feminino</button>
+</div>
+<table class="table table-holver" id="tabela">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>Jovem</th>
+      <th>Sexo</th>
+      <th>Data da Apreensão</th>
+      <th>Tempo em Cumprimento</th>
+      <th>Medida</th>
+      <th>Pontuação</th>
+    <tr>
+      <th><input type="text" id="txtColuna1"/></th>
+      <th><input type="text" id="txtColuna2"/></th>
+      <th><input type="text" id="txtColuna7"/></th>
+      <th><input type="text" id="txtColuna3"/></th>
+      <th><input type="text" id="txtColuna4"/></th>
+      <th><input type="text" id="txtColuna5"/></th>
+      <th><input type="text" id="txtColuna6"/></th>
+    </tr>
+    </tr>
+  </thead>
+  <tbody>
+    <% unless @jovens_cumprindo_medida.nil?  %>
+      <% count = 0 %>
+      <% @jovens_cumprindo_medida.each do |jovem| %>
+        <% count += 1 %>
+        <tr>
+          <td ><%= count %></td>
+          <td><%= jovem[:nome] %></td>
+          <td><%= jovem[:sexo] %></td>
+          <td><%= jovem[:data_hora_apreensao] %></td>
+          <td><%= time_diff_in_natural_language((Date.today + 1), (jovem[:data_hora_apreensao].strftime('%d-%m-%Y'))) %></td>
+          <td id="medida"><%= jovem[:medida_socioeducativa] %>  </td>
+          <td><%= number_with_precision(Socioeduk::Processo.find(jovem[:processo_id]).pontuacao, separator: '.', precision: 2) %></td>
+        </tr>
+        <% end %>
+        <% end %>
+    </tbody>
+</table>

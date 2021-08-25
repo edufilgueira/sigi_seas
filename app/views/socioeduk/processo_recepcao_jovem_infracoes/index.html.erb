@@ -1,0 +1,57 @@
+<%- model_class = SocioedukProcessoRecepcaoJovemInfracao -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_processo_recepcao_jovem_infracao', default: SocioedukProcessoRecepcaoJovemInfracao.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.socioeduk_processo_recepcao_jovem_infracao', default: SocioedukProcessoRecepcaoJovemInfracao.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= link_to_new new_socioeduk_processo_recepcao_jovem_infracao_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_processo_recepcao_jovem) %></th>
+                                    <th><%= model_class.human_attribute_name(:reincidente) %></th>
+                                    <th><%= model_class.human_attribute_name(:cumpre_medida) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_medida_socioeducativa) %></th>
+                                    <th><%= model_class.human_attribute_name(:mandato_apreencao) %></th>
+                                    <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @socioeduk_processo_recepcao_jovem_infracoes.each do |socioeduk_processo_recepcao_jovem_infracao| %>
+                <tr>
+                                    <td><%= socioeduk_processo_recepcao_jovem_infracao.socioeduk_processo_recepcao_jovem %></td>
+                                    <td><%= socioeduk_processo_recepcao_jovem_infracao.reincidente %></td>
+                                    <td><%= socioeduk_processo_recepcao_jovem_infracao.cumpre_medida %></td>
+                                    <td><%= socioeduk_processo_recepcao_jovem_infracao.socioeduk_medida_socioeducativa %></td>
+                                    <td><%= socioeduk_processo_recepcao_jovem_infracao.mandato_apreencao %></td>
+                                    <td>
+                    <%= link_to_show(socioeduk_processo_recepcao_jovem_infracao) %>
+                    <%= link_to_edit(edit_socioeduk_processo_recepcao_jovem_infracao_path(socioeduk_processo_recepcao_jovem_infracao)) %>
+                    <%= link_to_delete(socioeduk_processo_recepcao_jovem_infracao) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

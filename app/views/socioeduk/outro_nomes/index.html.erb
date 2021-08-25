@@ -1,0 +1,16 @@
+<%- model_class = Socioeduk::OutroNome -%>
+
+<table class="table table-hover table-sm">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:descricao) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% socioeduk_outro_nomes.each do |socioeduk_outro_nome| %>
+    <tr>
+      <td><%= socioeduk_outro_nome.descricao %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,2 @@
+module Socioeduk::LocalTratamentosHelper
+end

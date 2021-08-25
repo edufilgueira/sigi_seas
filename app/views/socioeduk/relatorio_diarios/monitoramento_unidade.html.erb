@@ -1,0 +1,63 @@
+<%- model_class = Socioeduk::RelatorioDiario -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_relatorio_diario', default: Socioeduk::RelatorioDiario.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.socioeduk_relatorio_diario', default: Socioeduk::RelatorioDiario.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <!--
+        <div class="search">
+          <%#= form_for(:frm, url: monitoramento_unidade_socioeduk_relatorio_diarios_path, html: { class: 'form-horizontal' }) do |f| %>
+            <h3>Buscar</h3>
+            <div class="form-group">
+              <div class="col-sm-2 col-offset-1">
+                <%#= f.text_field :data, class: 'form-control datepicker' %>
+              </div>
+              <div class="actions">
+                <%#= f.submit "Buscar", class: "btn btn-primary" %>
+              </div>
+            </div>
+          <%# end %>
+          <br>
+        </div>
+        -->
+        <h3 class="center">Data Referência: <small style="font-size: 100%;"><%= @data_referencia %> (<%= I18n.l(@data_referencia, format: '%A') %>)</small></h3>
+        <div class="row tableFixHead" style="overflow-x:scroll;">
+          <div class="col-sm-12 b-r">
+            <table class="table table-bordered table-sm">
+              <thead>
+                <tr class="table-center">
+                  <th>#</th>
+                  <th style="text-align:left;">Unidade</th>
+                  <th>Quantidade</th>
+                </tr>
+              </thead>
+              <tbody style="overflow:scroll;">
+                <% @relatorio_unidade.each do |unidade| %>
+                  <tr>
+                    <td><%= unidade.quantidade.eql?(0) ? content_tag(:i, nil, {style: 'color: red;', class: 'fas fa-circle'}) : content_tag(:i, nil, {style: 'color: green;', class: 'fas fa-circle'}) %></td>
+                    <td style="text-align:left;"><%= unidade.sigla.concat(' - ', unidade.nome) %></td>
+                    <td><%= unidade.quantidade %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,1 @@
+json.array! @socioeduk_saude_jovem_saude_clinicas, partial: 'socioeduk_saude_jovem_saude_clinicas/socioeduk_saude_jovem_saude_clinica', as: :socioeduk_saude_jovem_saude_clinica

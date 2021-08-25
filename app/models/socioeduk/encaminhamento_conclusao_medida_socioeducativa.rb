@@ -1,0 +1,2 @@
+class Socioeduk::EncaminhamentoConclusaoMedidaSocioeducativa < ApplicationRecord
+end

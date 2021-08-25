@@ -1,0 +1,87 @@
+<div class="row">
+    <div class="col-sm-2">
+        <div class="thumbnail">
+            <div>
+                <span class=" label label-success pull-right">
+                    <%= link_to '<i class="fas fa-map fa-2x"></i>'.html_safe, {controller: :veiculos, action: :index, status: 'disponivel'}, style:"color: white" %>
+                </span>
+            </div>
+            <h4>Disponível</h4>
+            <div class="caption">
+                <div class="ibox-content">
+                    <h1 class="no-margins">
+                        <%= @veiculos[:disponiveis].count %>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <div class="thumbnail">
+            <div>
+                <span class=" label label-info pull-right">
+                    <%= link_to '<i class="fas fa-road fa-2x"></i>'.html_safe, {controller: :veiculos, action: :index, status: 'ativos'}, style:"color: white" %>
+                </span>
+            </div>
+            <h4>Em Serviço</h4>
+            <div class="caption">
+                <div class="ibox-content">
+                    <h1 class="no-margins">
+                        <%= @veiculos[:ativos].count %>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <div class="thumbnail">
+            <div>   
+                <span class=" label label-warning  pull-right">
+                    <%= link_to '<i class="fas fa-shipping-fast fa-2x"></i> '.html_safe, {controller: :veiculos, action: :index, status: 'ocupado'}, style:"color: white" %>
+                </span>
+            </div>
+            <h4>Em viagem</h4>
+            <div class="caption">
+                <div class="ibox-content">
+                    <h1 class="no-margins">
+                        <%= @veiculos[:ocupado].count %>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>  
+     <div class="col-sm-2">
+        <div class="thumbnail">
+            <div>   
+                <span class=" label label-danger pull-right">
+                    <%= link_to '<i class="fas fa-wrench fa-2x"></i> '.html_safe, {controller: :veiculos, action: :index, status: 'manutencao'}, style:"color: white" %>
+                </span>
+            </div>
+            <h4>Em Manutenção</h4>
+            <div class="caption">
+                <div class="ibox-content">
+                    <h1 class="no-margins">
+                        <%= @veiculos[:manutencao].count %>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>  
+    <div class="col-sm-2">
+        <div class="thumbnail">
+            <div>   
+                <span class=" label label-primary  pull-right">
+                    <%= link_to '<i class="fas fa-warehouse fa-2x"></i> '.html_safe, {controller: :veiculos, action: :index, status: 'externo'}, style:"color: white" %>
+                </span>
+            </div>
+            <h4>Lotação Externa</h4>
+            <div class="caption">
+                <div class="ibox-content">
+                    <h1 class="no-margins">
+                        <%= @veiculos[:externo].count %>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>

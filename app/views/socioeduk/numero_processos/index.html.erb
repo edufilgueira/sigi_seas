@@ -1,0 +1,51 @@
+<%- model_class = SocioedukNumeroProcesso -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_numero_processo', default: SocioedukNumeroProcesso.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.socioeduk_numero_processo', default: SocioedukNumeroProcesso.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= link_to_new new_socioeduk_numero_processo_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_processo) %></th>
+                                    <th><%= model_class.human_attribute_name(:numero) %></th>
+                                    <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @socioeduk_numero_processos.each do |socioeduk_numero_processo| %>
+                <tr>
+                                    <td><%= socioeduk_numero_processo.socioeduk_processo %></td>
+                                    <td><%= socioeduk_numero_processo.numero %></td>
+                                    <td>
+                    <%= link_to_show(socioeduk_numero_processo) %>
+                    <%= link_to_edit(edit_socioeduk_numero_processo_path(socioeduk_numero_processo)) %>
+                    <%= link_to_delete(socioeduk_numero_processo) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

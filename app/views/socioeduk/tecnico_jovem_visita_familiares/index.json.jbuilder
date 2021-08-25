@@ -1,0 +1,1 @@
+json.array! @socioeduk_tecnico_jovem_visita_familiares, partial: 'socioeduk_tecnico_jovem_visita_familiares/socioeduk_tecnico_jovem_visita_familiar', as: :socioeduk_tecnico_jovem_visita_familiar

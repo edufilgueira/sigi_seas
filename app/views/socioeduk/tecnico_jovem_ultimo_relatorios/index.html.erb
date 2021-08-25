@@ -1,0 +1,57 @@
+<%- model_class = Socioeduk::TecnicoJovemUltimoRelatorio -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_tecnico_jovem_ultimo_relatorio', default: Socioeduk::TecnicoJovemUltimoRelatorio.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.socioeduk_tecnico_jovem_ultimo_relatorio', default: Socioeduk::TecnicoJovemUltimoRelatorio.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= link_to_new new_socioeduk_tecnico_jovem_ultimo_relatorio_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_tecnico_jovem) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_sugestao_relatorio) %></th>
+                                    <th><%= model_class.human_attribute_name(:data_inclusao) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_tipo_retorno) %></th>
+                                    <th><%= model_class.human_attribute_name(:unidade_socioeducativa_inclusao_id) %></th>
+                                    <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @socioeduk_tecnico_jovem_ultimo_relatorios.each do |socioeduk_tecnico_jovem_ultimo_relatorio| %>
+                <tr>
+                                    <td><%= socioeduk_tecnico_jovem_ultimo_relatorio.socioeduk_tecnico_jovem %></td>
+                                    <td><%= socioeduk_tecnico_jovem_ultimo_relatorio.socioeduk_sugestao_relatorio %></td>
+                                    <td><%= socioeduk_tecnico_jovem_ultimo_relatorio.data_inclusao %></td>
+                                    <td><%= socioeduk_tecnico_jovem_ultimo_relatorio.socioeduk_tipo_retorno %></td>
+                                    <td><%= socioeduk_tecnico_jovem_ultimo_relatorio.unidade_socioeducativa_inclusao_id %></td>
+                                    <td>
+                    <%= link_to_show(socioeduk_tecnico_jovem_ultimo_relatorio) %>
+                    <%= link_to_edit(edit_socioeduk_tecnico_jovem_ultimo_relatorio_path(socioeduk_tecnico_jovem_ultimo_relatorio)) %>
+                    <%= link_to_delete(socioeduk_tecnico_jovem_ultimo_relatorio) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

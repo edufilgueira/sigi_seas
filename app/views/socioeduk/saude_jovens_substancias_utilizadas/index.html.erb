@@ -1,0 +1,63 @@
+<%- model_class = Socioeduk::SaudeJovensSubstanciasUtilizada -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_saude_jovens_substancias_utilizada', default: Socioeduk::SaudeJovensSubstanciasUtilizada.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.socioeduk_saude_jovens_substancias_utilizada', default: Socioeduk::SaudeJovensSubstanciasUtilizada.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= link_to_new new_socioeduk_saude_jovens_substancias_utilizada_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_saude_jovens) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_entorpecente) %></th>
+                                    <th><%= model_class.human_attribute_name(:iniciou_com_idade) %></th>
+                                    <th><%= model_class.human_attribute_name(:parou_com_idade) %></th>
+                                    <th><%= model_class.human_attribute_name(:frequencia) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_tipo_auto_consideracao) %></th>
+                                    <th><%= model_class.human_attribute_name(:realizou_tratamento) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_tipo_tratamento) %></th>
+                                    <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @socioeduk_saude_jovens_substancias_utilizadas.each do |socioeduk_saude_jovens_substancias_utilizada| %>
+                <tr>
+                                    <td><%= socioeduk_saude_jovens_substancias_utilizada.socioeduk_saude_jovens %></td>
+                                    <td><%= socioeduk_saude_jovens_substancias_utilizada.socioeduk_entorpecente %></td>
+                                    <td><%= socioeduk_saude_jovens_substancias_utilizada.iniciou_com_idade %></td>
+                                    <td><%= socioeduk_saude_jovens_substancias_utilizada.parou_com_idade %></td>
+                                    <td><%= socioeduk_saude_jovens_substancias_utilizada.frequencia %></td>
+                                    <td><%= socioeduk_saude_jovens_substancias_utilizada.socioeduk_tipo_auto_consideracao %></td>
+                                    <td><%= socioeduk_saude_jovens_substancias_utilizada.realizou_tratamento %></td>
+                                    <td><%= socioeduk_saude_jovens_substancias_utilizada.socioeduk_tipo_tratamento %></td>
+                                    <td>
+                    <%= link_to_show(socioeduk_saude_jovens_substancias_utilizada) %>
+                    <%= link_to_edit(edit_socioeduk_saude_jovens_substancias_utilizada_path(socioeduk_saude_jovens_substancias_utilizada)) %>
+                    <%= link_to_delete(socioeduk_saude_jovens_substancias_utilizada) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

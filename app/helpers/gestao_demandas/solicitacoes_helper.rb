@@ -1,0 +1,2 @@
+module GestaoDemandas::SolicitacoesHelper
+end

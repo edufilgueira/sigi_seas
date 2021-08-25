@@ -1,0 +1,2 @@
+module Urlbm::MapasHelper
+end

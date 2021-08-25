@@ -1,0 +1,65 @@
+<div class="ibox float-e-margins">
+	<div class="ibox-content">
+		<div class="row">
+			<div class="col-lg-8">
+				<h2>
+					Seja bem-vindo(a) ao módulo Socioeduk, <b><%= (current_usuario.pessoa.nil? ? '' : current_usuario&.pessoa&.nome) %></b>.
+				</h2>
+				<div class="col-lg-8" style="text-align:justify;">
+					<p>
+						O Socioeduk busca como ferramenta tecnológica, apoiar na gestão efetiva do sistema socioeducativo do Estado do Ceará, buscando desenvolver políticas públicas de acompanhamento dos jovens que cumprem medidas socioeducativas. Com a ferramenta é possível realizar o acompanhamento do prontuário do jovem em conflito com a lei, durante o cumprimento da medida socioeducativa, contendo informações de caráter pessoal, saúde, psicosocial, processual, gestão de vagas e dentre outros.
+					</p>
+					<% pessoa = Pessoa.where(usuario_id: current_usuario.id).first %>
+					<% if pessoa.tipo_pessoa_id == 2 %>
+						<p>
+							Durante esse acesso é possível visualizar o Panorama de Vagas dos Centros Socioeducativos da sua região de abrangência. E ainda a realização de “Solicitação de Vagas”, considerando o previsto na Portaria 146/2019 que Regulamenta o funcionamento da Central de Regulação de Vagas – CRV do Sistema Socioeducativo do Ceara. <a href="https://www.seas.ce.gov.br/wp-content/uploads/sites/35/2020/06/PORTARIA-146-2019-REGULAMENTA-A-CRV.pdf" target="_blank">ANEXO</a>
+						</p>
+					<% end %>
+					<h3><b>Principais objetivos esperados com a ferramenta:</b></h3>
+					<ul>
+						<li>Padronizar processos;</li>
+						<li>Integrar as informações intersetorias;</li>
+						<li>Eliminar ou reduzir a geração e tramitação de documentos em papel;</li>
+						<li>Possibilitar o acesso a informações de forma rápida;</li>
+						<li>Possibilitar relatório e dados estatísticos para auxiliar na tomada de decisão;</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<%= image_tag("diagram.png", style: "width: 80%;", alt: "Módulos SIGI") %>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col fa fa-check-circle fa-4x" style="color: #3EB395"></div>
+			<div class="col-sm-3">
+				<h2>Otimização</h2>
+				<p>
+					Reduzir os processos manuais e controle através de planilhas.
+				</p>
+			</div>
+			<div class="col fa fa-check-circle fa-4x" style="color: #3EB395"></div>
+			<div class="col-sm-3">
+				<h2>Visibilidade</h2>
+				<p>
+					Reduzir o tempo de resposta as informações, proporcionando maior celeridade.
+				</p>
+			</div>
+			<div class="col fa fa-check-circle fa-4x" style="color: #3EB395"></div>
+			<div class="col-sm-3">
+				<h2>Acessibilidade </h2>
+				<p>
+					Ter visibilidade de todo o negócio, em tempo real e com acesso 24/7.
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12 center">
+				<h2><b>Dados de Contato</b></h2>
+				<p>
+					Av. Oliveira Paiva, 941, Bloco A - Cidade dos Funcionários, Fortaleza, Ce <br> CEP: 60.822.130 <br> Horário de atendimento: 08 às 17 horas.
+				</p>
+			</div>
+		</div>
+	</div>
+</div>

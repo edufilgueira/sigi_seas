@@ -1,0 +1,1 @@
+json.array! @socioeduk_saude_jovens_tipo_parentesco_suicidios, partial: 'socioeduk_saude_jovens_tipo_parentesco_suicidios/socioeduk_saude_jovens_tipo_parentesco_suicidio', as: :socioeduk_saude_jovens_tipo_parentesco_suicidio

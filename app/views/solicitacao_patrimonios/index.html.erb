@@ -1,0 +1,7 @@
+<% if @partial == 'index_solicitante' %>
+  <%= render :partial => 'index_solicitante' %>
+<% elsif @partial == 'index_patrimonio' %>
+  <%= render :partial => 'index_patrimonio' %>
+<% else %>
+  <h1>Você não possui permissão para acessar está tela.</h1>
+<% end %>

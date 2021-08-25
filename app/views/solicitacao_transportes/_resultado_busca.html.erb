@@ -1,0 +1,56 @@
+<% @solicitacoes = @resultado_busca %>
+<h3>Resultado Busca: <span class="label label-default"><%= @resultado_busca.count %></span></h3>
+<% @solicitacoes.each do |solicitacao| %>
+    <tr>
+        <% if current_usuario.pessoa&.funcoes&.last&.nome == "Gestor de transporte" %>
+            <td>
+            <% if !solicitacao&.data_transporte.blank? and solicitacao&.data_transporte&.to_date == Time.current.to_date %>
+                <i class="fas fa-circle" style="color: red;" title="Para hoje"></i>
+            <% elsif !solicitacao&.data_transporte.blank? and solicitacao&.data_transporte&.to_date == (Time.current.to_date + 1) %>
+                <i class="fas fa-circle" style="color: orange;" title="Para amanhã"></i>
+                <% elsif !solicitacao&.data_transporte.blank? and solicitacao&.data_transporte&.to_date >= (Time.current.to_date + 2) %>
+                <i class="fas fa-circle" style="color: green;" title="Para depois de amanhã"></i>
+            <% end %>
+            </td>
+        <% end %>
+        <td><%= link_to "#{solicitacao.data_transporte} #{solicitacao.hora_solicitada&.strftime('%H:%M')}", 'javascript:void(0)', title: "Criado em: #{solicitacao.created_at.strftime('%d/%m/%Y %H:%M')}" %></td>
+        <!--
+        <%# if !solicitacao.data_transporte.nil? and !solicitacao.hora_solicitada.nil? and !solicitacao.data_retorno.nil? and !solicitacao.hora_prevista_retorno.nil? %>
+            <td><%#= translater_datetime(TimeDifference.between(Time.parse("#{solicitacao&.data_transporte} #{solicitacao&.hora_solicitada&.strftime('%H:%M')}"), Time.parse("#{solicitacao&.data_retorno} #{solicitacao&.hora_prevista_retorno&.strftime('%H:%M')}")).humanize) %></td>
+        <%# else %>
+            <td></td>
+        <%# end %>
+        -->
+        <td><%= "#{solicitacao.data_retorno} #{solicitacao.hora_prevista_retorno&.strftime('%H:%M')}" %></td>
+        <td><%= solicitacao.tipo_solicitacao_transporte %></td>
+        <td><%= solicitacao.origem %></td>
+        <td><%= solicitacao.destino %></td>
+        <td><%= solicitacao.area.sigla %></td>
+        <td><%= solicitacao.destinado_para.nome %></td> 
+        <td><%= solicitacao.justificativa %></td>
+        <td><%= boolean_convert(solicitacao.urgente) %></td>
+        <% if solicitacao.status == "autorizado" %>
+            <td>AUTORIZADO</td>
+        <% elsif solicitacao.status == "andamento" %>
+            <td>EM ANDAMENTO</td>
+        <% elsif solicitacao.status == "finalizado" %>
+            <td>FINALIZADO</td>
+        <% elsif solicitacao.status == "cancelado" %>
+            <td>CANCELADO</td>
+        <% else %>
+            <td>EM ANALISE</td>
+        <% end %>
+        <td>
+            <%= link_to_show(solicitacao) %>
+            <%= link_to_edit(edit_solicitacao_transporte_path(solicitacao)) if ["autorizado", "andamento", "finalizado", "cancelado"].exclude?(solicitacao.status) %>
+            <%= link_to_delete(solicitacao) if ["andamento", "finalizado", "cancelado"].exclude?(solicitacao.status) %>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <% if current_usuario.pessoa&.funcoes&.last&.nome == "Gestor de transporte" %>
+            <%= link_to '<i class="fa fa-check"></i> '.html_safe, autorizar_solicitacao_transporte_path(solicitacao.id), class: "btn btn-outline btn-primary btn-sm", title: "Autorizar" if solicitacao.status.nil? %>
+            <%= link_to '<i class="fas fa-location-arrow"></i> '.html_safe, dar_andamento_solicitacao_transporte_path(solicitacao.id), class: "btn btn-outline btn-warning btn-sm", title: "Dar andamento" if solicitacao.status.eql?("autorizado") %>
+            <%= link_to '<i class="far fa-calendar-check"></i> '.html_safe, finalizar_solicitacao_transporte_path(solicitacao.id), class: "btn btn-outline btn-success btn-sm", title: "Finalizar" if solicitacao.status.eql?("andamento") %>
+            <%= link_to '<i class="fa fa-times"></i> '.html_safe, {controller: :solicitacao_transportes, action: :justificar_cancelamento, id: solicitacao.id}, {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', class: "btn btn-outline btn-danger btn-sm", title: "Cancelar"} if ["finalizado", "cancelado"].exclude?(solicitacao.status) %>
+            <% end %>
+        </td> 
+    </tr>
+<% end %>

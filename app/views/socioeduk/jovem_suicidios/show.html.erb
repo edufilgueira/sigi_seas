@@ -1,0 +1,159 @@
+<% content_for :title do %>
+  <%= t('.title', default: @socioeduk_jovem_suicidio.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t('.title', default: @socioeduk_jovem_suicidio.class.model_name.human ) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :jovem %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :unidade_socioeducativa %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :idade %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :filiacao %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :data_entrada_unidade %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :municipio %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :data_evento %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :dia_semana %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :metodo %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :foi_planejado %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :descricao_planejamento %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :ouve_aviso %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :descricao_aviso %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :deixou_mensagem %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :descricao_mensagem %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :estava_acompanhado %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :descricao_acompanhamento %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :onde_ocorreu %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :tempo_socorro_suicidio %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :quem_socorreu %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :procedimento_socorro %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :depressao %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :apatia %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :insonia %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :drogas %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :impulsividade %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :relacionamento %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :isolamento %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :outros %></th>
+                                    
+                  
+                  <th><%= SocioedukJovemSuicidio.human_attribute_name :descrever_outros %></th>
+                                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.jovem %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.unidade_socioeducativa %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.idade %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.filiacao %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.data_entrada_unidade %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.municipio %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.data_evento %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.dia_semana %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.metdo %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.foi_planejado %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.descricao_planejamento %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.ouve_aviso %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.descricao_aviso %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.deixou_mensagem %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.descricao_mensagem %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.estava_acompanhado %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.descricao_acompanhamento %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.onde_ocorreu %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.tempo_socorro_suicidio %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.quem_socorreu %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.procedimento_socorro %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.depressao %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.apatia %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.insonia %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.drogas %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.impulsividade %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.relacionamento %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.isolamento %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.outros %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_suicidio.descrever_outros %></td>
+                                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', socioeduk_jovem_suicidios_path, class: 'btn btn-default') %>
+<%= link_to 'Editar', edit_socioeduk_jovem_suicidio_path(@socioeduk_jovem_suicidio), class: 'btn btn-success' %>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= nome_sistema %></title>
+  <%= favicon_link_tag asset_path('favicon.ico'), :rel => 'icon', :type =>  'image/png' %>
+  <!-- Main css styles -->
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+
+  <!-- Main javascript files -->
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body class="pace-done">
+
+  <!-- Wrapper-->
+  <div id="wrapper">
+
+    <!-- Navigation -->
+    <%= render 'layouts/'+@navigation_partial %>
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="gray-bg">
+
+      <!-- Page wrapper -->
+      <% unless request.host == "sigi.seas.ce.gov.br" %>
+        <%= render 'layouts/enviroment' %>
+      <% end %>
+      <%= render 'layouts/topnavbar' %>
+      <div class="div-floating" id="display_pontuacao_jovem">
+        <div id="resultado_pontuacao" style="margin-right: 1em;"></div>
+      </div>
+      <!-- <%= render partial: 'layouts/breadcrumb' %> -->
+      <%= render partial: 'layouts/flash_messages' %>
+      <!-- Main view  -->
+      <div >
+        <div class="ibox" id="box-loading">
+
+            <%= yield %>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <%= render 'layouts/footer' %>
+      <%= render 'layouts/modal' %>
+
+    </div>
+    <!-- End page wrapper-->
+
+  </div>
+  <!-- End wrapper-->
+
+  <%= yield :javascript %>
+</body>
+</html>
+<script type="text/javascript"> root_path = '<%= root_path %>'; </script>

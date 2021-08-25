@@ -1,0 +1,55 @@
+<% content_for :title do %>
+  <%= t('.title', default: @socioeduk_jovem_ocorrencia.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t('.title', default: @socioeduk_jovem_ocorrencia.class.model_name.human ) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                                    
+                  
+                  <th><%= Socioeduk::JovemOcorrencia.human_attribute_name :socioeduk_jovem %></th>
+                                    
+                  
+                  <th><%= Socioeduk::JovemOcorrencia.human_attribute_name :socioeduk_tipo_ocorrencia %></th>
+                                    
+                  
+                  <th><%= Socioeduk::JovemOcorrencia.human_attribute_name :data_hora %></th>
+                                    
+                  
+                  <th><%= Socioeduk::JovemOcorrencia.human_attribute_name :descricao %></th>
+                                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_ocorrencia.socioeduk_jovem %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_ocorrencia.socioeduk_tipo_ocorrencia %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_ocorrencia.data_hora %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_ocorrencia.descricao %></td>
+                                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', socioeduk_jovem_ocorrencias_path, class: 'btn btn-default') %>
+<%= link_to 'Editar', edit_socioeduk_jovem_ocorrencia_path(@socioeduk_jovem_ocorrencia), class: 'btn btn-success' %>

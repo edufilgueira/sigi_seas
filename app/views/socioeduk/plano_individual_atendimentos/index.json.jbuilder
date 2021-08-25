@@ -1,0 +1,1 @@
+json.array! @socioeduk_plano_individual_atendimentos, partial: 'socioeduk_plano_individual_atendimentos/socioeduk_plano_individual_atendimento', as: :socioeduk_plano_individual_atendimento

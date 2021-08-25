@@ -1,0 +1,65 @@
+<%- model_class = Socioeduk::PedagogicoJovemProfissionalizante -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_pedagogico_jovem_profissionalizante', default: Socioeduk::PedagogicoJovemProfissionalizante.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.socioeduk_pedagogico_jovem_profissionalizante', default: Socioeduk::PedagogicoJovemProfissionalizante.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= link_to_new new_socioeduk_pedagogico_jovem_profissionalizante_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_pedagogico_jovem) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_tipo_local_curso) %></th>
+                                    <th><%= model_class.human_attribute_name(:nome_programa) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_tipo_curso) %></th>
+                                    <th><%= model_class.human_attribute_name(:nome_curso) %></th>
+                                    <th><%= model_class.human_attribute_name(:data_inicio) %></th>
+                                    <th><%= model_class.human_attribute_name(:data_fim) %></th>
+                                    <th><%= model_class.human_attribute_name(:carga_horaria) %></th>
+                                    <th><%= model_class.human_attribute_name(:observacao) %></th>
+                                    <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @socioeduk_pedagogico_jovem_profissionalizantes.each do |socioeduk_pedagogico_jovem_profissionalizante| %>
+                <tr>
+                                    <td><%= socioeduk_pedagogico_jovem_profissionalizante.socioeduk_pedagogico_jovem.id %></td>
+                                    <td><%= socioeduk_pedagogico_jovem_profissionalizante.socioeduk_tipo_local_curso.descricao %></td>
+                                    <td><%= socioeduk_pedagogico_jovem_profissionalizante.nome_programa %></td>
+                                    <td><%= socioeduk_pedagogico_jovem_profissionalizante.socioeduk_tipo_curso.descricao %></td>
+                                    <td><%= socioeduk_pedagogico_jovem_profissionalizante.nome_curso %></td>
+                                    <td><%= socioeduk_pedagogico_jovem_profissionalizante.data_inicio %></td>
+                                    <td><%= socioeduk_pedagogico_jovem_profissionalizante.data_fim %></td>
+                                    <td><%= socioeduk_pedagogico_jovem_profissionalizante.carga_horaria %></td>
+                                    <td><%= socioeduk_pedagogico_jovem_profissionalizante.observacao %></td>
+                                    <td>
+                    <%= link_to_show(socioeduk_pedagogico_jovem_profissionalizante) %>
+                    <%= link_to_edit(edit_socioeduk_pedagogico_jovem_profissionalizante_path(socioeduk_pedagogico_jovem_profissionalizante)) %>
+                    <%= link_to_delete(socioeduk_pedagogico_jovem_profissionalizante) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

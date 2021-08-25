@@ -1,0 +1,52 @@
+<%= form_for(@socioeduk_medida_socioeducativa, html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @socioeduk_medida_socioeducativa %>
+  <%= render 'layouts/message_required' %>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_processo %>
+      <%= f.text_field :socioeduk_processo, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_tipo_medida_socioeducativa %>
+      <%= f.text_field :socioeduk_tipo_medida_socioeducativa, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_situacao_cumprimento %>
+      <%= f.text_field :socioeduk_situacao_cumprimento, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_circunstancia %>
+      <%= f.text_field :socioeduk_circunstancia, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :inicio %>
+      <%= f.date_select :inicio, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :fim_previsto %>
+      <%= f.date_select :fim_previsto, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :periodo_dias %>
+      <%= f.number_field :periodo_dias, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10">
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+      <%= link_to I18n.t('helpers.links.cancel'), socioeduk_medida_socioeducativas_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+<% end %>

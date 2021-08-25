@@ -1,0 +1,1 @@
+json.array! @socioeduk_saude_jovens_tipo_parentesco_doenca_mentais, partial: 'socioeduk_saude_jovens_tipo_parentesco_doenca_mentais/socioeduk_saude_jovens_tipo_parentesco_doenca_mental', as: :socioeduk_saude_jovens_tipo_parentesco_doenca_mental

@@ -1,0 +1,671 @@
+<%= form_for(@socioeduk_solicitacao_vaga, html: { class: 'form-horizontal',  multipart: true }) do |f| %>
+<%#= render 'layouts/error_messages', model_name: @socioeduk_solicitacao_vaga %>
+<%= render 'layouts/message_required' %>
+<% if (params[:notice] == "create") %>
+    <div class="alert alert-success">Registro criado com sucesso</div>
+<% elsif (params[:notice] == "update") %>
+    <div class="alert alert-success">Registro alterado com sucesso</div>
+<% end %>
+<h2>Dados Pessoais</h2>
+<div class="form-group">
+    <div class="col-sm-9 col-offset-1">
+        <%= f.label :nome, class: "required" %>
+        <div class="input-group">
+            <div id="selecionar_jovem_receocao" width='100%'>
+                <%= f.select :id, Socioeduk::JovemRecepcao.listar_jovens_na_recepcao.collect {|p| [ p.nome, p.id ] }, {include_blank: "--Selecione adolescente--"}, onchange: "buscarJovemPorId()", class: 'ajax form-control', disabled:true %>
+            </div>
+            <div id="nome_do_jovem" style='display:block'>
+                <%= f.text_field :nome, class: 'form-control' %>
+            </div>
+            <span class="input-group-btn">
+                <a class="btn btn-info btn" onclick="return ligar_pesquisa()"><i class="fa fa-address-card" aria-hidden="true"></i> Consultar na Recepção</a>
+            </span>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <label class='required'>Sexo</label><br>
+        <label class="radio-inline" for="socioeduk_solicitacao_vaga_sexo_m">
+            <%= f.radio_button :sexo, "M" %> Masculino
+        </label>
+        <label class="radio-inline" for="socioeduk_solicitacao_vaga_sexo_f">
+            <%= f.radio_button :sexo, "F" %> Feminino
+        </label>
+    </div>
+
+</div>
+<div class="form-group">
+    <div class="col-sm-3 col-offset-1">
+        <%= f.label :data_nascimento, class: "required" %>
+        <%= f.text_field :data_nascimento, class: 'form-control maskdata', onchange: "calcularIdadeSolicitacao(this.value);" %>
+    </div>
+    <div class="col-sm-3">
+        <label>Idade</label><br>
+        <span id="idade"></span>
+    </div>
+    <div class="col-sm-3">
+        <label>Data em que completa 21 anos</label><br>
+        <span id="maior_idade" style="font-size: 14px;"></span>
+        <%= f.hidden_field :maior_idade %>
+    </div>
+        <!--
+            <div class="col-sm-3">
+            <%= f.label :opcao_sexual_id, class: "required" %>  
+            <%= f.collection_select :socioeduk_opcao_sexual_id, Socioeduk::OpcaoSexual.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+        </div>
+        -->
+</div>
+<div class="form-group">
+    <div class="col-sm-6 col-offset-1">
+        <%= f.label :nome_mae %>
+        <%= f.text_field :nome_mae, class: 'form-control' %>
+    </div>
+    <div class="col-sm-6 col-offset-1">
+        <%= f.label :nome_pai  %>
+        <%= f.text_field :nome_pai, class: 'form-control' %>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-6">
+        <%= f.label :uf_naturalidade_id, class: 'required' %>
+        <%= f.collection_select :estado_id, Estado.all, :id, :nome, {include_blank: '--selecione--'}, class: 'form-control', data: {remote: true, url: socioeduk_solicitacao_vagas_cidades_por_estado_path} %>
+    </div>
+    <div class="col-sm-6">
+        <%= f.label :cidade_naturalidade_id, class: 'required' %>
+        <% if @socioeduk_solicitacao_vaga.new_record? %>
+            <%= f.select :cidade_naturalidade_id, options_for_select([]), {include_blank: '--selecione--'}, class: 'form-control' %>
+        <% else %>
+            <%= f.collection_select :cidade_naturalidade_id, Cidade.where(estado_id: @socioeduk_solicitacao_vaga.estado_id).order(:nome), :id, :nome, {include_blank: '--selecione--', selected: @socioeduk_solicitacao_vaga.cidade_naturalidade_id}, class: 'form-control' %>
+        <% end %>
+    </div>
+</div>
+<h2>Endereço Completo</h2>
+<div class="form-group">
+    <div class="col-sm-8 col-offset-1">
+        <%= f.label :logradouro, class: "required" %>
+        <%= f.text_field :logradouro, class: 'form-control' %>
+    </div>
+    <div class="col-sm-1">
+        <%= f.label :numero_logradouro, class: "required" %>
+        <%= f.text_field :numero_logradouro, class: 'form-control' %>
+    </div>
+    <div class="col-sm-3 col-offset-1">
+        <%= f.label :complemento %>
+        <%= f.text_field :complemento, class: 'form-control' %>
+    </div>
+    <div class="col-sm-6 col-offset-1">
+        <%= f.label :bairro, class: "required" %>
+        <%= f.text_field :bairro, class: 'form-control' %>
+    </div>
+    <div class="col-sm-2 col-offset-1">
+        <%= f.label :cep %>
+        <%= f.text_field :cep, class: 'form-control maskcep' %>
+    </div>
+    <div class="col-sm-2 col-offset-1">
+        <%= f.label :cidade_id , class: "required"%>
+        <%= f.collection_select :cidade_id, Cidade.where('estado_id = 6').order('nome asc'), :id, :nome, {prompt: 'Selecione'}, class: 'form-control' %>
+    </div>
+    <div class="col-sm-2 col-offset-1">
+        <%= f.label :socioeduk_tipo_endereco , class: "required"%>
+        <%= f.collection_select :socioeduk_tipo_endereco_id, Socioeduk::TipoEndereco.all, :id, :descricao, {prompt: 'Selecione'}, class: 'form-control' %>
+    </div>
+</div>
+<div class="form-group">
+    <!--
+    <div class="col-sm-4 col-offset-1">
+        <%= f.label :cidade_cumprimento_medida %>
+        <%= f.collection_select :cidade_cumprimento_medida, UnidadeSocioeducativa.joins(:cidade).select('cidades.id', 'cidades.nome').uniq, :id, :nome, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+    -->
+</div>
+
+<h2>Medida Socioeducativa</h2>
+<div class="form-group">
+    <div class="col-sm-5 col-offset-1">
+        <%= f.label :socioeduk_tipo_medida_socioeducativa_id, class: "required" %>
+        <%= f.collection_select :socioeduk_tipo_medida_socioeducativa_id, Socioeduk::TipoMedidaSocioeducativa.where(tipo_medida: 'FECHADO'), :id, :descricao, {prompt: '---selecione---'}, class: 'form-control select3' %>
+    </div>
+    <div class="col-sm-2 col-offset-1">
+        <%= f.label :periodo %>
+        <% if @socioeduk_solicitacao_vaga.socioeduk_tipo_medida_socioeducativa_id == 3 %>
+            <%= f.number_field :periodo, class: 'form-control', placeholder: "Digite quantidade de dias", onblur:"validarPeriodo(this)", disabled: false %>
+        <% else %>
+            <%= f.number_field :periodo, class: 'form-control', placeholder: "Digite quantidade de dias", onblur:"validarPeriodo(this)", disabled: true %>
+        <% end %>
+    </div>
+    <div class="col-sm-5 col-offset-1">
+        <%= f.label :cidade_comarca, class: "required" %>
+        <%= f.collection_select :cidade_comarca, Cidade.all, :id, :nome, {include_blank: '--selecione--'}, class: 'form-control select2' %>
+    </div>
+</div>
+
+<div id="documentos"></div>
+
+<br>
+<div>
+    <h2>Natureza do Ato Infracional</h2>
+    <div class="col-sm-12 b-r nested-row" id="lista_processo_natureza">
+        <div class="form-group table-nested-title titulo_nested">
+            <div class="col-sm-2">Natureza</div>
+            <div class="col-sm-5">Infração</div>
+            <div class="col-sm-1">Flagrante?</div>
+            <div class="col-sm-1"><a title="Ato com reiteração" data-toggle="tooltip"><i class="fas fa-undo-alt"></i>
+                    Reiterado</a></div>
+            <div class="col-sm-1"><a title="Ato continuado" data-toggle="tooltip"><i class="fas fa-angle-double-right"></i>
+                    Continuado</a></div>
+            <div class="col-sm-1"><a title="Estupro de vulnerável correlatas até 2 anos" data-toggle="tooltip"><i
+                        class="fas fa-female"></i></i> Estupro</a></div>
+            <div class="col-sm-1" style="padding-left: 0px;text-align: -webkit-right;">
+                <table style="width: 60px;margin-left: 5px;">
+                    <tr>
+                        <td style="width: 30px;">
+                            <a title="Editar ato infracional" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                        </td>
+                        <td style="width: 30px;">
+                            <a title="Deletar ato infracional" data-toggle="tooltip"><i class="far fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <%= f.nested_fields_for :socioeduk_solicitacao_vaga_infracoes do |form| %>
+        <div id="solicitacao_vaga<%= form.object.id %>" class="form-group table-nested-identify linha_nested">
+            <div class="col-sm-2">
+                <div class='exibe_nested_radio'>
+                    <%= form.radio_button :tipo_natureza, 'Tentada', class: 'rbutton', onclick: 'atualizar_tipo_natureza_solicitacao_vaga(this)' %>
+                    <%= form.label :tipo_natureza, "Tentada", :value => "true" %><br>
+                    <%= form.radio_button :tipo_natureza, 'Consumada', class: 'rbutton', onclick: 'atualizar_tipo_natureza_solicitacao_vaga(this)' %>
+                    <%= form.label :tipo_natureza, "Consumada", :value => "false" %>
+                </div>
+                <div class='exibe_nested_campo'>
+                    <%= form.object.tipo_natureza %>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <% if (form.object.id.nil?)%>
+                    <%= form.collection_select :artigo_infracao_id, Socioeduk::ArtigoInfracao.order(:descricao), :id, :descricao, {prompt: 'Selecione'}, class: 'form-control select2 ponderacao', onclick: "ativar_estupro_vulneravel_solicitacao_vaga(this)", onchange: "carregarCalculoSolicitacao()", remote: true, ponderacao: 'SIM', qtd_reiteracao: '', continuado: form.object.pontuacao_continuado, tipo_natureza: "Consumada" %>
+                <% else %>
+                    <%= form.collection_select :artigo_infracao_id, Socioeduk::ArtigoInfracao.order(:descricao), :id, :descricao, {prompt: 'Selecione'}, class: 'form-control select2 ponderacao', onclick: "ativar_estupro_vulneravel_solicitacao_vaga(this)", onchange: "carregarCalculoSolicitacao()", remote: true, ponderacao: 'SIM', qtd_reiteracao: form.object.pontuacao_quantidade_reinteracao, continuado: form.object.pontuacao_continuado, tipo_natureza: form.object.tipo_natureza %>
+                <% end %>
+                <% if (form.object.artigo_infracao&.descricao == "Outros") %>
+                    <%= form.text_field :outra_infracao, class: 'form-control', style:"margin-bottom: 8px; display: block" %>
+                <% else %>
+                    <%= form.text_field :outra_infracao, class: 'form-control', style:"margin-bottom: 8px; display: none" %>
+                <% end %>
+            </div>
+            <div class="col-sm-1">
+                <%= form.check_box :flagrante, class: 'acao-nested' %>
+            </div>
+            <div class="col-sm-1">
+                <table style="margin-top: -5px;">
+                    <tr>
+                        <td style="width: 30px;">
+                            <%= form.check_box :pontuacao_reinteracao, class: 'acao-nested', onclick: 'atualizar_reiteracao_solicitacao_vaga(this)', style:"float: left;" %>
+                        </td>
+                        <td>
+                            <%= form.number_field :pontuacao_quantidade_reinteracao, onblur:"atualizar_qtd_reiteracao_solicitacao_vaga(this)", class: 'form-control', style:"float: left;" %>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-sm-1">
+                <%= form.check_box :pontuacao_continuado, class: 'acao-nested', onclick: 'atualizar_infracao_continuado_solicitacao_vaga(this)' %>
+            </div>
+            <div class="col-sm-1">
+                <%= form.check_box :estupro_vulneravel, class: 'acao-nested', onclick: 'atualizar_infracao_estupro_vulneravel_solicitacao_vaga(this)', readonly: true, vulneravel: "SIM", style: 'margin-bottom: 8px;' %>
+            </div>
+            <div class="col-sm-1" style="padding-left: 0px;text-align: -webkit-right;">
+                <table style="width: 60px;">
+                    <tr>
+                        <td style="width: 30px;">
+                            <a class="btn btn-xs btn-primary" title="Editar" , href="javascript: void(0);"
+                                onclick="editarLinhaNested('solicitacao_vaga<%= form.object.id %>')"><i
+                                    class="fas fa-edit"></i></a>
+                        </td>
+                        <td style="width: 30px;">
+                            <%= form.hidden_field :id %>
+                            <%= form.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px;margin-bottom: 8px;'%>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-sm-12">
+                <table width="100%" cellspacing="2" cellpadding="2">
+                    <tr>
+                        <td width="35%">
+                            <%= f.label :Cidade_da_infração, class: "required" %>
+                            <%= form.collection_select :cidade_id, Cidade.where('estado_id = 6').order('nome asc'), :id, :nome, {prompt: 'Cidade'}, class: 'form-control select2', onchange: "carregaBairros(this);", :remote => true %>
+                        </td>
+                        <td width="35%" style="padding-left: 5px;">
+                            <%= f.label :Bairro_da_infração, class: "required" %>
+                            <% if @socioeduk_solicitacao_vaga.new_record? %>
+                                <%= form.select :bairro_id, [], {prompt: 'Bairro'}, class: 'form-control select2' %>
+                            <% else %>
+                                <%= form.collection_select :bairro_id, Bairro.where(cidade_id: form.object.cidade_id), :id, :nome, {selected: form.object.bairro_id, prompt: 'Bairro'}, class: 'form-control select2' %>
+                            <% end %>
+                        </td>
+                        <td width="15%" style="padding-left: 5px;">
+                            <%= f.label :Data_infração, class: "required" %>
+                            <%= form.text_field :data_ato_infracional, class: 'form-control maskdata', placeholder: "Data da infração" %>
+                        </div>
+                        <td width="15%" style="padding-left: 5px;">
+                            <%= f.label :Data_apreensão %>
+                            <%= form.text_field :data_apreensao, class: 'form-control maskdata', placeholder: "Data da Apreensão" %>
+                        </div>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <% end %>
+        <label class="validador" id="validar_tipo_natureza">Selecione um tipo de natureza (Tentada ou Consumada) *</label>
+        <label class="validador" id="validar_natureza_infracao_processo">Selecione a infração do ato infracional *</label>
+        <%= f.add_nested_fields_link :socioeduk_solicitacao_vaga_infracoes, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-success",  onclick: "ativar_desativar_estupro_vulneravel_solicitacao_vaga()", style: "margin-bottom: 2em;" %>
+    </div>
+    <div>
+
+    <h2>Critérios de Incidencia da Pontuação</h2>
+    </div>
+    <div style="border: solid 1px #C0C0C0; padding: 18px; border-radius: 8px; text-align: center;">
+        <div class="form-group">
+            <div class="col-sm-3 col-offset-1" data-toggle='tooltip' , data-placement='top' ,
+                title='Aplicar quando houver registro de mais de um ato infracional em nome do jovem.'>
+                <table width="100%">
+                    <tr>
+                        <td>
+                            <%= f.label :pontuacao_certidao_positiva %>
+                        </td>
+                        <td>
+                            <%= f.check_box :pontuacao_certidao_positiva, class: 'form-control', onclick: 'atualizar_certidao_positiva_silicitacao()', style:"width: 35px;float: left;"%>
+                            <%= f.number_field :pontuacao_quantidade_certidao_positiva, onblur:"atualizar_qtd_certidao_positiva_silicitacao()", class: 'form-control', style:"float: left;width: 100px;margin-top: 4px;" %>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-sm-3 col-offset-1" data-toggle='tooltip' data-placement='top'
+                title='Aplicar sempre que o jovem encontrar-se apreendido.'>
+                <%= f.label :pontuacao_apreendido, "Apreendido" %>
+                <%= f.check_box :pontuacao_apreendido, class: 'form-control', onclick: 'carregarCalculoSolicitacao()' %>
+            </div>
+            <div class="col-sm-3 col-offset-1" data-toggle='tooltip' data-placement='top'
+                title='Aplicar sempre que a medida for decretada em razão de descumprimento de medida anterior, como nos casos de Internação Sanção ou "Internação Regressão (Substituição de Medida)"'>
+                <%= f.label :pontuacao_descumprimento_medida, "Descumprimento de Medida" %>
+                <%= f.check_box :pontuacao_descumprimento_medida, class: 'form-control', onclick: 'carregarCalculoSolicitacao()' %>
+            </div>
+            <div class="col-sm-3 col-offset-1" data-toggle='tooltip'
+                title='Aplicar sempre que houver enquadamento legal na Lei 12.850/2013.'>
+                <%= f.label :pontuacao_organizacao_criminosa, "Organização Criminosa" %>
+                <%= f.check_box :pontuacao_organizacao_criminosa, class: 'form-control', onclick: 'carregarCalculoSolicitacao()' %>
+            </div>
+        </div>
+    </div>
+    <br>
+    <h2>Documento(s)</h2>
+    <div class="row" style="font-size: 16px;">
+        <%= radio_button("tipo", "documento", "rol", onchange: "renderizar_partial(this)") %> <label
+            for="tipo_documento_rol">Rol de Documentos</label>
+        <%= radio_button("tipo", "documento", "unico", onchange: "renderizar_partial(this)") %> <label
+            for="tipo_documento_unico">Documento Único</label>
+    </div>
+    <br>
+    <div id="doc_rol">
+        <%= render partial: "form_rol_documentos", locals: { f: f } %>
+    </div>
+    <div id="doc_unico">
+        <%= render partial: "form_documento_unico", locals: { f: f } %>
+    </div>
+
+    <% unless @socioeduk_solicitacao_vaga.doc_unico_file_name %>
+        <div class="bloco_separador">
+        <div class="titulo_bloco_separador" style="border-top: 1px solid #e5e6e7;">
+            Documentos
+        </div>
+        <table class="table">
+            <tbody>
+            <tr>
+                <td>
+                <p>
+                    <strong><%= Socioeduk::SolicitacaoVaga.human_attribute_name :doc_guia_cnj %></strong><br>
+                    <%= link_to @socioeduk_solicitacao_vaga.doc_guia_cnj? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #adadad;'}), @socioeduk_solicitacao_vaga.doc_guia_cnj.url(:original, false), target: '_blank' %>
+                    <%= @socioeduk_solicitacao_vaga.doc_guia_cnj? ? @socioeduk_solicitacao_vaga.doc_guia_cnj_file_name : "Não Requerido" %>
+                </p>
+                </td>
+                <td>
+                <p>
+                    <strong><%= Socioeduk::SolicitacaoVaga.human_attribute_name :doc_pessoais %></strong><br>
+                    <%= link_to @socioeduk_solicitacao_vaga.doc_pessoais? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #adadad;'}), @socioeduk_solicitacao_vaga.doc_pessoais.url(:original, false), target: '_blank' %>
+                    <%= @socioeduk_solicitacao_vaga.doc_pessoais? ? @socioeduk_solicitacao_vaga.doc_pessoais_file_name : "Não Requerido" %>
+                </p>
+                </td>
+                <td>
+                <p>
+                    <strong><%= Socioeduk::SolicitacaoVaga.human_attribute_name :doc_pedido_internacao_provisoria %></strong><br>
+                    <%= link_to @socioeduk_solicitacao_vaga.doc_pedido_internacao_provisoria? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #adadad;'}), @socioeduk_solicitacao_vaga.doc_pedido_internacao_provisoria.url(:original, false), target: '_blank' %>
+                    <%= @socioeduk_solicitacao_vaga.doc_pedido_internacao_provisoria? ? @socioeduk_solicitacao_vaga.doc_pedido_internacao_provisoria_file_name : "Não Requerido" %>
+                </p>
+                </td>
+                <td>
+                <p>
+                    <strong><%= Socioeduk::SolicitacaoVaga.human_attribute_name :doc_certidao_antecedentes %></strong><br>
+                    <%= link_to @socioeduk_solicitacao_vaga.doc_certidao_antecedentes? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #adadad;'}), @socioeduk_solicitacao_vaga.doc_certidao_antecedentes.url(:original, false), target: '_blank' %>
+                    <%= @socioeduk_solicitacao_vaga.doc_certidao_antecedentes? ? @socioeduk_solicitacao_vaga.doc_certidao_antecedentes_file_name : "Não Requerido" %>
+                </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                <p>
+                    <strong><%= Socioeduk::SolicitacaoVaga.human_attribute_name :doc_decisao_interlocutoria %></strong><br>
+                    <%= link_to @socioeduk_solicitacao_vaga.doc_decisao_interlocutoria? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #adadad;'}), @socioeduk_solicitacao_vaga.doc_decisao_interlocutoria.url(:original, false), target: '_blank' %>
+                    <%= @socioeduk_solicitacao_vaga.doc_decisao_interlocutoria? ? @socioeduk_solicitacao_vaga.doc_decisao_interlocutoria_file_name : "Não Requerido" %>
+                </p>
+                </td>
+                <td>
+                <p>
+                    <strong><%= Socioeduk::SolicitacaoVaga.human_attribute_name :doc_estudos_tecnicos %></strong><br>
+                    <%= link_to @socioeduk_solicitacao_vaga.doc_estudos_tecnicos? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #adadad;'}), @socioeduk_solicitacao_vaga.doc_estudos_tecnicos.url(:original, false), target: '_blank' %>
+                    <%= @socioeduk_solicitacao_vaga.doc_estudos_tecnicos? ? @socioeduk_solicitacao_vaga.doc_guia_cnj_file_name : "Não Requerido" %>
+                </p>
+                </td>
+                <td>
+                <p>
+                    <strong><%= Socioeduk::SolicitacaoVaga.human_attribute_name :doc_historico_escolar %></strong><br>
+                    <%= link_to @socioeduk_solicitacao_vaga.doc_historico_escolar? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #adadad;'}), @socioeduk_solicitacao_vaga.doc_historico_escolar.url(:original, false), target: '_blank' %>
+                    <%= @socioeduk_solicitacao_vaga.doc_historico_escolar? ? @socioeduk_solicitacao_vaga.doc_historico_escolar_file_name : "Não Requerido" %>
+                </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                <p>
+                    <strong><%= Socioeduk::SolicitacaoVaga.human_attribute_name :doc_historico_saude %></strong><br>
+                    <%= link_to @socioeduk_solicitacao_vaga.doc_historico_saude? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #adadad;'}), @socioeduk_solicitacao_vaga.doc_historico_saude.url(:original, false), target: '_blank' %>
+                    <%= @socioeduk_solicitacao_vaga.doc_historico_saude? ? @socioeduk_solicitacao_vaga.doc_historico_saude_file_name : "Não Requerido" %>
+                </p>
+                </td>
+                <td>
+                <p>
+                    <strong><%= Socioeduk::SolicitacaoVaga.human_attribute_name :doc_comprovante_envio_malote_digital %></strong><br>
+                    <%= link_to @socioeduk_solicitacao_vaga.doc_comprovante_envio_malote_digital? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #adadad;'}), @socioeduk_solicitacao_vaga.doc_comprovante_envio_malote_digital.url(:original, false), target: '_blank' %>
+                    <%= @socioeduk_solicitacao_vaga.doc_comprovante_envio_malote_digital? ? @socioeduk_solicitacao_vaga.doc_comprovante_envio_malote_digital_file_name : "Não Requerido" %>
+                </p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    <% else %>
+        <div class="bloco_separador">
+            <div class="titulo_bloco_separador" style="border-top: 1px solid #e5e6e7;">
+                Documento Único
+            </div>
+            <table class="table">
+                <tbody>
+                <td>
+                    <p>
+                        <%= link_to @socioeduk_solicitacao_vaga.doc_unico? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #adadad;'}), @socioeduk_solicitacao_vaga.doc_unico.url(:original, false), target: '_blank' %>
+                        <strong><%= @socioeduk_solicitacao_vaga.doc_unico_file_name %></strong>
+                    </p>
+                </td>
+                <td>
+                    <strong>Lista de Documentos Inclusos no Anexo:</strong>
+                    <% @socioeduk_solicitacao_vaga.doc_unico_array.each do |tipo_documento| %>
+                    <% unless tipo_documento == "" %>
+                    <li>
+                        <%= Socioeduk::SolicitacaoVaga.tipos_documentos.key(tipo_documento.to_i).gsub('_', ' ') %>
+                    </li>
+                    <% end %>
+                    <% end %>
+                </td>
+                </tbody>
+            </table>
+        </div>
+    <% end %>
+</div>
+<br>
+<div class="form-group">
+    <div class="col-sm-10">
+        <% if (!f.object.id.nil?) %>
+            <%= f.hidden_field :documento_alterado, value: true %>
+        <% end %>
+        <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+        <%= link_to 'Voltar', socioeduk_solicitacao_vagas_path, class: 'btn btn-warning' %>
+    </div>
+</div>
+<% end %>
+
+<script>
+    setTimeout(function () {
+        $("#selecionar_jovem_receocao").hide();
+    }, 100);
+    var nome = 1;
+    function ligar_pesquisa(){
+        if (nome == 1){
+            $("#selecionar_jovem_receocao").show(); 
+            $("#socioeduk_solicitacao_vaga_id").attr("disabled", false);         
+            $("#nome_do_jovem").hide();
+            nome = 2;
+        }
+        else{
+            $("#selecionar_jovem_receocao").hide();
+            $("#socioeduk_solicitacao_vaga_id").attr("disabled", true);
+            $("#nome_do_jovem").show();
+            nome = 1;
+        }
+    }
+    //Monitorar as ações dos componentes para ligar o botãobuscarJovemPorId
+    $(".form-horizontal input,select,textarea,a,body").click(function () {
+        setTimeout(function () {
+            liberar_botao_salvar();
+        }, 100);
+    });
+    $(".form-horizontal input,textarea").blur(function () {
+        liberar_botao_salvar();
+    });
+
+    liberar_botao_salvar();
+
+    if ($('#socioeduk_processo_socioeduk_status_processo_id').val() == 3) {
+        $('.form-horizontal input,select,textarea').each(function () {
+            $(this).prop("disabled", true);
+        });
+        $('.form-horizontal a').each(function () {
+            $(this).attr("disabled", true);
+        });
+        $("#voltar").attr("disabled", false);
+        $("#finalizar_processo").attr("disabled", false);
+        $("#reverter_processo_finalizado").attr("disabled", false);
+    }
+
+    carregarCalculoSolicitacao();
+
+    $('#display_pontuacao_jovem').css("display", "block");
+
+    $('[data-toggle="tooltip"]').tooltip();
+
+    function copyDate(data_infracao) {
+        $('#socioeduk_solicitacao_vaga_data_apreensao').val(data_infracao.value);
+    }
+
+    liberar_finalizar();
+
+    $("#doc_unico").hide();
+    $("#doc_rol").hide();
+
+    // Desabilitando campos de anexo por padrão
+    $(document).ready(function () {
+        $("#doc-estudos-tecnicos").hide();
+        $("#doc-historico-escolar").hide();
+        $("#doc-historico-saude").hide();
+    });
+
+    function renderizar_partial(tipo_documento) {
+        if ($(tipo_documento).attr('value') == 'rol') {
+            $("#doc_rol").show();
+            $("#doc_unico").hide();
+            $(".uniq_doc").prop('required', false);
+            $(".doc").prop('required', true);
+        } else {
+            $("#doc_unico").show();
+            $("#doc_rol").hide();
+            $(".uniq_doc").prop('required', true);
+            $(".doc").prop('required', false);
+        }
+    }
+
+    var niver =  $("#socioeduk_solicitacao_vaga_data_nascimento").val();
+    if(!niver == null || !niver == ''){
+        calcularIdadeSolicitacao(niver);
+    }
+
+    function calcularIdadeSolicitacao(data) {
+        var partes_data_nascimento = data.split('/');
+        var data_nascimento_formatada = (partes_data_nascimento[1] + '-' + partes_data_nascimento[0] + '-' + partes_data_nascimento[2]);
+        var data_nascimento = new Date(data_nascimento_formatada);
+        var hoje = new Date();
+        var idade = Math.floor((hoje - data_nascimento) / (365.25 * 24 * 60 * 60 * 1000));
+        $('#idade').empty().html(''.concat(idade, ' anos'));
+        
+        maior_idade = 21 - idade;
+        console.log("nova_data " + hoje.getFullYear());
+
+        /*var nova_data = new Date(partes_data_nascimento[2]+"-"+partes_data_nascimento[1]+"-"+partes_data_nascimento[0]);
+        var ano = nova_data.getFullYear();
+        var mes = nova_data.getMonth();
+        var dia = nova_data.getDate();
+        console.log(partes_data_nascimento[2]+"/"+partes_data_nascimento[1]+"/"+partes_data_nascimento[0]);*/
+        novo_ano = parseInt(hoje.getFullYear()) + maior_idade;
+        $("#socioeduk_solicitacao_vaga_maior_idade").val(partes_data_nascimento[0]+"/"+partes_data_nascimento[1]+"/"+novo_ano);
+        $('#maior_idade').empty().html(partes_data_nascimento[0]+"/"+partes_data_nascimento[1]+"/"+novo_ano);
+    }
+
+    function carregaBairros(cidade) {
+        element_id = cidade.id;
+        number_element_id = element_id.replace("socioeduk_solicitacao_vaga_socioeduk_solicitacao_vaga_infracoes_attributes_", "");
+        number_element_id = number_element_id.replace("_cidade_id", "");
+
+        if (($(location).attr('host').indexOf('sigi.seas.ce.gov.br') >= 0)) {
+            var url_path = 'https://sigi.seas.ce.gov.br/socioeduk/solicitacao_vagas/bairros_por_cidade';
+        }  else if (($(location).attr('host').indexOf('homologacao.seas.ce.gov.br') >= 0)) {
+            var url_path = 'http://homologacao.seas.ce.gov.br/socioeduk/solicitacao_vagas/bairros_por_cidade';
+        }  else {
+            var url_path = '/socioeduk/solicitacao_vagas/bairros_por_cidade';
+        }
+        $.ajax({
+            method: 'GET',
+            url: url_path,
+            data: { cidade_id: cidade.value, number_element_id: number_element_id }
+        });
+    }
+
+    function validarPeriodo(campo){
+        valor = $("#"+campo.id).val();
+        if(valor<1 || valor>90){
+            $("#"+campo.id).val("");
+            $("#"+campo.id).focus();
+        }
+    }
+
+    $(document).ready(function () {
+        $(document).ready(function () {
+            $("#socioeduk_solicitacao_vaga_socioeduk_tipo_medida_socioeducativa_id").change(function () {
+                var selectedMedida = $(this).children("option:selected").text();
+                if(selectedMedida=="SANÇÃO")
+                    $("#socioeduk_solicitacao_vaga_periodo").attr("disabled", false);
+                else{
+                    $("#socioeduk_solicitacao_vaga_periodo").val("");
+                    $("#socioeduk_solicitacao_vaga_periodo").attr("disabled", true);
+                }
+            });
+        });
+
+        $(".select3 ").change(function () {
+            var selectedMedida = $(this).children("option:selected").val();
+            switch (selectedMedida) {
+                case '1':
+                    $("#doc-guia-cnj").show();
+                    $("#doc-certidao-antecedentes").show();
+                    $("#doc-pessoais").show();
+                    $("#doc-decisao-interlocutoria").show();
+                    $("#doc-pedido-internacao-provisoria").show();
+                    $("#doc-malote-digital").show();
+                    break;
+                case '2':
+                    $("#doc-guia-cnj").show();
+                    $("#doc-certidao-antecedentes").show();
+                    $("#doc-pessoais").show();
+                    $("#doc-decisao-interlocutoria").show();
+                    $("#doc-pedido-internacao-provisoria").show();
+                    $("#doc-malote-digital").hide();
+                    break;
+                case '3':
+                    $("#doc-guia-cnj").show();
+                    $("#doc-certidao-antecedentes").show();
+                    $("#doc-pessoais").show();
+                    $("#doc-decisao-interlocutoria").show();
+                    $("#doc-pedido-internacao-provisoria").show();
+                    $("#doc-malote-digital").hide();
+                    break;
+                case '4':
+                    $("#doc-guia-cnj").show();
+                    $("#doc-certidao-antecedentes").show();
+                    $("#doc-pessoais").show();
+                    $("#doc-decisao-interlocutoria").show();
+                    $("#doc-pedido-internacao-provisoria").show();
+                    $("#doc-malote-digital").show();
+                    break;
+            }
+        });
+    });
+function buscarJovemPorId(){
+
+    if (($(location).attr('host').indexOf('sigi.seas.ce.gov.br') >= 0)) {
+    var url_path = 'https://sigi.seas.ce.gov.br/socioeduk/jovens/buscar_por_id';
+    }  else if (($(location).attr('host').indexOf('homologacao.seas.ce.gov.br') >= 0)) {
+        var url_path = 'http://homologacao.seas.ce.gov.br/socioeduk/jovens/buscar_por_id';
+    }  else {
+        var url_path = '/socioeduk/jovens/buscar_por_id';
+    }
+    var jovem_id = $("#socioeduk_solicitacao_vaga_id option:selected").val();
+
+    $.ajax({
+        url: url_path,
+        type: 'ajax',
+        method: 'GET',
+        data: { id: jovem_id },
+        success: function(data,status,xhr) {
+
+            if(data != null)
+            {
+                if (data.birth_date != null)
+                {
+                    $('#socioeduk_solicitacao_vaga_data_nascimento').val(dateToYMD(data.data_nascimento));
+                }
+                $('#socioeduk_solicitacao_vaga_nome').val(data.nome);
+                $('#socioeduk_solicitacao_vaga_nome_mae').val(data.nome_mae);
+                $('#socioeduk_solicitacao_vaga_nome_pai').val(data.nome_pai);
+                // $('#socioeduk_solicitacao_vaga_data_nascimento').val(data.email);
+                // $('#socioeduk_solicitacao_vaga_data_nascimento').val(data.email);
+                // $('#socioeduk_solicitacao_vaga_data_nascimento').val(data.email);
+                // $('#socioeduk_solicitacao_vaga_data_nascimento').val(data.email);
+                // $('#socioeduk_solicitacao_vaga_data_nascimento').val(data.email);
+                // $('#socioeduk_solicitacao_vaga_data_nascimento').val(data.email);
+                // $('#socioeduk_solicitacao_vaga_data_nascimento').val(data.email);
+                // $('#socioeduk_solicitacao_vaga_data_nascimento').val(data.email);
+                // $('#socioeduk_solicitacao_vaga_data_nascimento').val(data.email);
+                // $('#socioeduk_solicitacao_vaga_data_nascimento').val(data.email);
+                // $('#socioeduk_solicitacao_vaga_data_nascimento').val(data.email);
+                // $('#socioeduk_solicitacao_vaga_data_nascimento').val(data.email);
+                // $('#socioeduk_solicitacao_vaga_data_nascimento').val(data.email);
+                // $('#socioeduk_solicitacao_vaga_data_nascimento').val(data.email);
+                // $('#socioeduk_solicitacao_vaga_data_nascimento').val(data.email);
+                // $('#socioeduk_solicitacao_vaga_data_nascimento').val(data.email);
+                // $('#socioeduk_solicitacao_vaga_data_nascimento').val(data.email);
+                // $('#socioeduk_solicitacao_vaga_data_nascimento').val(data.email);
+                // $('#socioeduk_solicitacao_vaga_data_nascimento').val(data.email);
+            }
+            else
+                $('#val_cpf').html("Colaborador não encontrado no SISRH.");
+        }
+    });
+    ligar_pesquisa();
+}
+</script>

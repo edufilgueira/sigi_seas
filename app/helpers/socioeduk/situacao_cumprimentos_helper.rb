@@ -1,0 +1,2 @@
+module Socioeduk::SituacaoCumprimentosHelper
+end

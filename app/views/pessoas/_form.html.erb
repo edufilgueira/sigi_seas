@@ -1,0 +1,312 @@
+<%= form_for(@pessoa, html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @pessoa %>
+  <%= render 'layouts/message_required' %>
+  
+  <div class="btn-group" role="group" aria-label="Exemplo básico">
+    <button id="button_pessoa_comum" type="button" class="btn btn-primary active">Pessoa Comum</button>
+    <button id="button_pessoa_especial" type="button" class="btn btn-primary">Pessoa com função especial</button>
+  </div>
+  <div id="pessoa_comum">
+    <div class="form-group">
+      <div class="col-sm-8">
+        <%= f.label :nome, class: 'required', required: true %>
+        <%= f.text_field :nome, class: 'form-control'  %>
+      </div>
+      <div class="col-sm-2">
+        <%= f.label :tipo_pessoa, class: 'required' %>
+        <%= f.collection_select :tipo_pessoa_id, TipoPessoa.where(id: 1), :id ,:descricao, {class: 'form-control'} %>
+      </div>
+      <div class="col-sm-2">
+        <%= f.label :ponto_obrigatorio %><br>
+        <%= f.check_box :ponto_obrigatorio, style: 'transform: scale(2.5);margin-top: 10px;margin-left: 8px;'%>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-5">
+        <%= f.label :cpf, class: 'required' %> <span id="val_cpf" class="validador"></span>
+        <div class="input-group">
+          <%= f.text_field :cpf, class: 'form-control maskcpf' %>
+          <span class="input-group-btn">
+            <a class="btn btn-info btn" onclick="return buscarPessoaNoSisrhPorCpf()"><i class="fa fa-address-card" aria-hidden="true"></i> Pesquisar sisRH</a>
+        </span>
+      </div>
+      </div>
+      <div class="col-sm-5">
+        <%= f.label :email_pessoal %> <span id="val_email_pessoal" class="validador"></span>
+        <%= f.email_field :email_pessoal, class: 'form-control' %>
+      </div>
+    </div>
+    <h2>Dados Pessoais</h2>
+    <div class="form-group">
+      <div class="col-sm-5">
+        <%= f.label :nome_pai %>
+        <%= f.text_field :nome_pai, class: 'form-control'  %>
+      </div>
+      <div class="col-sm-5">
+      <%= f.label :nome_mae %>
+      <%= f.text_field :nome_mae, class: 'form-control'  %>
+    </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-4">
+        <%= f.label :estado_civil %>
+        <%= f.select :estado_civil, Pessoa.estado_civil, { prompt: 'Selecione' }, class: 'form-control' %>
+      </div>
+      <div class="col-sm-6">
+        <%= f.label :conjuge %>
+        <%= f.text_field :conjuge, class: 'form-control'  %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-5">
+        <%= f.label :profissao %>
+        <%= f.text_field :profissao, class: 'form-control'  %>
+      </div>
+      <div class="col-sm-5">
+        <%= f.label :data_nascimento %>
+        <%= f.text_field :data_nascimento,  class:'form-control datepicker'%>
+      </div>
+    </div>  
+
+    <div class="form-group"> 
+      <div class="col-sm-5">
+        <%= f.label :naturalidade %>
+        <%= f.text_field :naturalidade, class: 'form-control'  %>
+      </div>
+      <div class="col-sm-5">
+        <%= f.label :cidade, class: 'required'%>
+        <%= f.collection_select :cidade_id, Cidade.where(estado_id: 6).order(:nome), :id, :nome, {include_blank: '--selecione--'}, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="form-group"> 
+      <div class="col-sm-5">
+        <%= f.label :tipo_sanguineo %>
+        <%= f.select :tipo_sanguineo, Pessoa.tipo_sanguineo, { prompt: 'Selecione' }, class: 'form-control' %>
+      </div>
+      <div class="col-sm-5">
+        <%= f.label :sexo, class: 'required'%>
+        <%= f.select :sexo, Pessoa.opcoes_sexo, { prompt: 'Selecione' }, class: 'form-control' %>
+      </div>
+    </div>
+    
+    <h2>Endereço Residencial</h2>
+    <div class="form-group">
+      <div class="col-sm-8">
+        <%= f.label :rua %>
+        <%= f.text_field :rua, class: 'form-control'  %>
+      </div>
+      <div class="col-sm-2">
+        <%= f.label :numero %>
+        <%= f.text_field :numero, class: 'form-control'  %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-5">
+        <%= f.label :complemento %>
+        <%= f.text_field :complemento, class: 'form-control'  %>
+      </div>
+      <div class="col-sm-5">
+        <%= f.label :bairro %>
+        <%= f.text_field :bairro, class: 'form-control'  %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-5">
+        <%= f.label :cidade %>
+        <%= f.text_field :cidade, class: 'form-control'  %>
+      </div>
+      <div class="col-sm-5">
+        <%= f.label :estado %>
+        <%= f.select :estado, Pessoa.estados, { prompt: 'Selecione' }, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-5">
+        <%= f.label :telefone %>
+        <%= f.text_field :telefone, class: 'form-control'  %>
+      </div>
+      <div class="col-sm-5">
+        <%= f.label :celular %>
+        <%= f.text_field :celular, class: 'form-control'  %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-3">
+        <%= f.label :cep %>
+        <%= f.text_field :cep, class: 'form-control'  %>
+      </div>
+    </div>
+
+    <h2>Documentos Pessoais</h2>
+    <div class="form-group">
+      <div class="col-sm-10">
+        <%= f.label :pis %>
+        <%= f.text_field :pis, class: 'form-control'  %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-5">
+        <%= f.label :ctps %>
+        <%= f.text_field :ctps, class: 'form-control'  %>
+      </div>
+      <div class="col-sm-5">
+        <%= f.label :serie %>
+        <%= f.text_field :serie, class: 'form-control'  %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-6">
+        <%= f.label :rg %>
+        <%= f.text_field :rg, class: 'form-control'  %>
+      </div>
+      <div class="col-sm-2">
+        <%= f.label :emissor %>
+        <%= f.text_field :emissor, class: 'form-control'  %>
+      </div>
+      <div class="col-sm-2">
+        <%= f.label :emissao %>
+        <%= f.text_field :emissao,  class:'form-control datepicker'%>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-5">
+        <%= f.label :certificado_militar %>
+        <%= f.text_field :certificado_militar, class: 'form-control'  %>
+      </div>
+      <div class="col-sm-5">
+        <%= f.label :emissor_militar %>
+        <%= f.text_field :emissor_militar, class: 'form-control'  %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-6">
+        <%= f.label :titulo_eleitoral %>
+        <%= f.text_field :titulo_eleitoral, class: 'form-control'  %>
+      </div>
+      <div class="col-sm-2">
+        <%= f.label :zona %>
+        <%= f.text_field :zona, class: 'form-control'  %>
+      </div>
+      <div class="col-sm-2">
+        <%= f.label :secao %>
+        <%= f.text_field :secao, class: 'form-control'  %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-6">
+        <%= f.label :cidade_eleitoral %>
+        <%= f.text_field :cidade_eleitoral, class: 'form-control'  %>
+      </div>
+      <div class="col-sm-4">
+        <%= f.label :estado_eleitoral %>
+        <%= f.select :estado_eleitoral, Pessoa.estados, { prompt: 'Selecione' }, class: 'form-control' %>
+      </div>
+    </div>
+
+    <h2>Conta Bancária</h2>
+    <div class="form-group">
+      <div class="col-sm-6">
+        <%= f.label :banco %>
+        <%= f.text_field :banco, class: 'form-control'  %>
+      </div>
+      <div class="col-sm-2">
+        <%= f.label :agencia %>
+        <%= f.text_field :agencia, class: 'form-control'  %>
+      </div>
+      <div class="col-sm-2">
+        <%= f.label :conta_corrente %>
+        <%= f.text_field :conta_corrente, class: 'form-control'  %>
+      </div>
+    </div>
+  </div>
+
+  <div id="pessoa_especial">
+    <div class="col-sm-6">
+      <%= f.label :nome, class: 'required' %>
+      <%= f.text_field :nome, class: 'form-control', required: true  %>
+    </div>
+    <div class="col-sm-2">
+      <%= f.label :tipo_pessoa, class: 'required'  %>
+      <%= f.collection_select :tipo_pessoa_id, TipoPessoa.where("id not in (1)"), :id ,:descricao, {class: 'form-control'} %>
+      </div>
+    <div class="col-sm-2">
+      <%= f.label :sexo, class: 'required'%>
+      <%= f.select :sexo, Pessoa.opcoes_sexo, { prompt: 'Selecione' }, class: 'form-control' %>
+    </div>
+    <div class="col-sm-2">
+      <%= f.label :cidade, class: 'required'%>
+      <%= f.collection_select :cidade_id, Cidade.where(estado_id: 6).order(:nome), :id, :nome, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+    <div class="col-sm-6">
+      <%= f.label :cpf, class: 'required' %>
+      <%= f.text_field :cpf, class: 'form-control maskcpf' %>
+    </div>
+    <div class="col-sm-6" >
+      <%= f.label :email_pessoal %> <span id="val_email_pessoal" class="validador"></span>
+      <%= f.email_field :email_pessoal, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-12">
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with }, id: "bt_salvar" %>
+      <%= link_to I18n.t('helpers.links.cancel'), pessoas_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+
+<% end %>
+
+<script>
+
+  // Desliga campos pessoa especial
+  $('#pessoa_especial input,textarea').each(function(){
+    $(this).prop("disabled", true);
+  })
+  $('#pessoa_especial #pessoa_tipo_pessoa_id').prop("disabled", true);
+  $('#pessoa_especial #pessoa_sexo').prop("disabled", true);
+  $('#pessoa_especial #pessoa_cidade_id').prop("disabled", true);
+  //$("#pessoa_especial").css("display","none");
+
+  $('#button_pessoa_comum').click(function(){
+    ativar_pessoa_comum();
+  });
+  $('#button_pessoa_especial').click(function(){
+    ativar_pessoa_especial();
+  });
+
+  function ativar_pessoa_comum(){
+    $('#pessoa_comum #pessoa_tipo_pessoa_id').prop("disabled", false);
+    $('#pessoa_comum input,select,textarea').each(function(){
+      $(this).prop("disabled", false);
+    });
+    $('#pessoa_especial input,textarea').each(function(){
+      $(this).prop("disabled", true);
+    });
+    $('#pessoa_especial #pessoa_tipo_pessoa_id').prop("disabled", true);
+    $('#pessoa_especial #pessoa_sexo').prop("disabled", true);
+    $('#pessoa_especial #pessoa_cidade_id').prop("disabled", true);
+    $("#pessoa_comum").css("display","block");
+    $("#pessoa_especial").css("display","none");
+  }
+
+  function ativar_pessoa_especial(){
+    $('.form-horizontal #pessoa_comum input,select,textarea').each(function(){
+      $(this).prop("disabled", true);
+    });
+    $('.form-horizontal #pessoa_especial input,select,textarea').each(function(){
+      $(this).prop("disabled", false);
+    });
+    $('#pessoa_comum #pessoa_estado_eleitoral').prop("disabled", true);
+    $('#pessoa_comum #pessoa_estado').prop("disabled", true);
+    $('#pessoa_comum #pessoa_tipo_sanguineo').prop("disabled", true);
+    $('#pessoa_comum #pessoa_sexo').prop("disabled", true);
+    $('#pessoa_comum #pessoa_uf').prop("disabled", true);
+    $('#pessoa_comum #pessoa_estado_civil').prop("disabled", true);
+    $('#pessoa_comum #pessoa_tipo_pessoa_id').prop("disabled", true);
+    $('#pessoa_comum #pessoa_cidade_id').prop("disabled", true);
+    $("#pessoa_comum").css("display","none");
+    $("#pessoa_especial").css("display","block");
+  }
+
+</script>

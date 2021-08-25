@@ -1,0 +1,71 @@
+<%- model_class = Socioeduk::TecnicoJovem -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_tecnico_jovem', default: Socioeduk::TecnicoJovem.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.socioeduk_tecnico_jovem', default: Socioeduk::TecnicoJovem.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= link_to_new new_socioeduk_tecnico_jovem_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_jovem) %></th>
+                                    <th><%= model_class.human_attribute_name(:tem_filhos) %></th>
+                                    <th><%= model_class.human_attribute_name(:quantos_filhos) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_convivio_familiar) %></th>
+                                    <th><%= model_class.human_attribute_name(:codigo_familiar) %></th>
+                                    <th><%= model_class.human_attribute_name(:cnis) %></th>
+                                    <th><%= model_class.human_attribute_name(:programas_sociais) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_renda_familiar) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_composicao_familiar) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_plano_individual_atendimento) %></th>
+                                    <th><%= model_class.human_attribute_name(:nome_tecnico) %></th>
+                                    <th><%= model_class.human_attribute_name(:profissional_referencia) %></th>
+                                    <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @socioeduk_tecnico_jovens.each do |socioeduk_tecnico_jovem| %>
+                <tr>
+                                    <td><%= socioeduk_tecnico_jovem.socioeduk_jovem.nome %></td>
+                                    <td><%= socioeduk_tecnico_jovem.tem_filhos %></td>
+                                    <td><%= socioeduk_tecnico_jovem.quantos_filhos %></td>
+                                    <td><%= socioeduk_tecnico_jovem.socioeduk_convivio_familiar.descricao %></td>
+                                    <td><%= socioeduk_tecnico_jovem.codigo_familiar %></td>
+                                    <td><%= socioeduk_tecnico_jovem.cnis %></td>
+                                    <td><%= socioeduk_tecnico_jovem.programas_sociais %></td>
+                                    <td><%= socioeduk_tecnico_jovem.socioeduk_renda_familiar.descricao %></td>
+                                    <td><%= socioeduk_tecnico_jovem.socioeduk_composicao_familiar.descricao %></td>
+                                    <td><%= socioeduk_tecnico_jovem.socioeduk_plano_individual_atendimento.try(:descricao) %></td>
+                                    <td><%= socioeduk_tecnico_jovem.nome_tecnico %></td>
+                                    <td><%= socioeduk_tecnico_jovem.profissional_referencia %></td>
+                                    <td>
+                    <%= link_to_show(socioeduk_tecnico_jovem) %>
+                    <%= link_to_edit(edit_socioeduk_tecnico_jovem_path(socioeduk_tecnico_jovem)) %>
+                    <%= link_to_delete(socioeduk_tecnico_jovem) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

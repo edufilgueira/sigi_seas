@@ -1,0 +1,41 @@
+<%- model_class = UnidadeSocioeducativa -%>
+<% content_for :ibox_content do %>
+<h1><%= I18n.t('titles.socioeduk_gestao_vagas_visualizar_vagas') %></h1>
+  <table class="table table-hover table-sm">
+    <thead>
+      <tr>
+        <th><%= model_class.human_attribute_name(:sigla) %></th>
+        <th><%= model_class.human_attribute_name(:nome) %></th>
+        <th>Capacidade</th>
+        <th>Admitido</th>
+        <th>Disponibilidade</th>
+        <th width="18%">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @unidades_socioeducativas.each do |unidade_socioeducativa| %>
+        <tr>
+          <td><%= unidade_socioeducativa.sigla %></td>
+          <td><%= link_to( unidade_socioeducativa.nome, {controller: :gestao_vagas, action: :listar_jovens, id_unidade:unidade_socioeducativa} ) %></td>
+          <td><%= unidade_socioeducativa.capacidade_total %></td>
+          <td><%= unidade_socioeducativa.quantidade_jovem_admitido %></td>
+          <td><%= unidade_socioeducativa.disponibilidade_vagas %></td>
+          <td>
+            <% if(!unidade_socioeducativa.recepcao) %>
+              <!-- Bloco IF verifica se tem vagas disponível na unidade. Caso não tenha o botão é desabilitado evitando disponibilidades negativas -->
+              <% if(unidade_socioeducativa.disponibilidade_vagas) > 0 %>
+                <%= link_to('<i class="fas fa-sign-in-alt"></i>'.html_safe, {controller: :gestao_vagas, action: :admitir, id_unidade:unidade_socioeducativa}, :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', class: "btn btn-sm btn-primary", title: "Admitir jovem", disabled: false) %>
+              <% else %>
+                <%= link_to('<i class="fas fa-sign-in-alt"></i>'.html_safe, {controller: :gestao_vagas, action: :admitir, id_unidade:unidade_socioeducativa}, :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', class: "btn btn-sm btn-primary", title: "Admitir jovem", disabled: true) %>
+              <% end %>
+              
+              <%= link_to('<i class="fas fa-users"></i>'.html_safe, {controller: :gestao_vagas, action: :listar_jovens, id_unidade:unidade_socioeducativa}, class: "btn btn-sm btn-success", title: "Listar socioeducandos") %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end -%>
+<%= render partial: 'common/box', locals: { title: I18n.t('activerecord.models.unidade_socioeducativa', default: UnidadeSocioeducativa.model_name.plural.humanize.upcase) } %>
+

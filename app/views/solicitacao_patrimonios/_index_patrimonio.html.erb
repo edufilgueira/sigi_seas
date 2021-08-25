@@ -1,0 +1,67 @@
+<%- model_class = SolicitacaoPatrimonio -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.solicitacao_patrimonio', default: SolicitacaoPatrimonio.model_name.human.pluralize.titleize) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.solicitacao_patrimonio', default: SolicitacaoPatrimonio.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= link_to_new new_solicitacao_patrimonio_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                  <th><%= model_class.human_attribute_name(:numero_solicitacao) %></th>
+                  <th><%= model_class.human_attribute_name(:numero_processo) %></th>
+                  <th><%= model_class.human_attribute_name(:solicitante) %></th>
+                  <th><%= model_class.human_attribute_name(:created_at) %></th>
+                  <th><%= model_class.human_attribute_name(:justificativa) %></th>
+                  <th><%= model_class.human_attribute_name(:observacao) %></th>
+                  <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% unless @solicitacao_patrimonios.nil? %>
+                  <% @solicitacao_patrimonios.each do |solicitacao_patrimonio| %>
+                  <tr>
+                    <td><%= solicitacao_patrimonio.id %></td>
+                    <td><%= solicitacao_patrimonio.numero_processo %></td>
+                    <td><%= solicitacao_patrimonio.usuario_solicitante.nome %></td>
+                    <td><%= l(solicitacao_patrimonio.created_at) %></td>
+                    <td><%= solicitacao_patrimonio.justificativa %></td>
+                    <td><%= solicitacao_patrimonio.observacao %></td>
+                    <td>
+                      <%= link_to_show(solicitacao_patrimonio) %>
+                      <% if !solicitacao_patrimonio.autorizado? %>
+                        <%= link_to(autorizar_solicitacao_solicitacao_patrimonios_path(id: solicitacao_patrimonio.id), class: 'btn btn-primary btn-sm', data: {tooltip: 'true', placement: 'top', animation: 'true', original_title: 'Autorizar'}) do %>
+                          <i class="fas fa-check"></i>
+                        <% end %>
+                      <% elsif solicitacao_patrimonio.autorizado? and !solicitacao_patrimonio.atendido? %>
+                        <%= link_to(atender_solicitacao_solicitacao_patrimonios_path(id: solicitacao_patrimonio.id), class: 'btn btn-primary btn-sm', data: {tooltip: 'true', placement: 'top', animation: 'true', original_title: 'Atendido'}) do %>
+                          <i class="far fa-thumbs-up"></i>
+                        <% end %>
+                      <% end %>
+                    </td>
+                  </tr>
+                  <% end %>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

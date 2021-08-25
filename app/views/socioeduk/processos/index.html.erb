@@ -1,0 +1,64 @@
+<%- model_class = Socioeduk::Processo -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_processo', default: Socioeduk::Processo.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <!-- <h5><%=  I18n.t('activerecord.models.socioeduk_processo', default: Socioeduk::Processo.model_name.human.pluralize.titleize) %></h5> -->
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <h1><%= I18n.t('titles.socioeduk_processo_index') %></h1>
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= render partial: 'busca_processo' %>
+            <%= link_to_new new_socioeduk_processo_path %>
+            <table class="table table-hover table-sm sortable">
+              <thead>
+                <tr>
+                  <th><%= model_class.human_attribute_name(:numero_processo) %></th>
+                  <th><%= model_class.human_attribute_name(:nome) %></th>
+                  <th><%= model_class.human_attribute_name(:cidade_comarca) %></th>
+                  <th><%= model_class.human_attribute_name(:medida) %></th>
+                  <th><%= model_class.human_attribute_name(:situacao_cumprimento) %></th>
+                  <th><%= model_class.human_attribute_name(:socioeduk_status_processo) %></th>
+                  <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @socioeduk_processos.each do |socioeduk_processo| %>
+                  <tr>
+                    <td><%= socioeduk_processo&.numero_processo %></td>
+                    <td><%= socioeduk_processo&.jovem %></td>
+                    <td><%= socioeduk_processo&.municipio_comarca %></td>
+                    <td><%= socioeduk_processo&.medida %></td>
+                    <td><%= socioeduk_processo&.situacao_cumprimento %></td>
+                    <td><%= socioeduk_processo&.status_processo %></td>
+                    <td>
+                      <%= link_to_show(socioeduk_processo) %>
+                      <%= link_to_edit(edit_socioeduk_processo_path(socioeduk_processo)) %>
+                      <%= link_to_delete(socioeduk_processo) %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <nav class="center">
+              <%= paginate @socioeduk_processos,  left: 3, right: 3%>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

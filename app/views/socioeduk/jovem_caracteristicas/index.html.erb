@@ -1,0 +1,21 @@
+<%- model_class = Socioeduk::JovemCaracteristica -%>
+
+
+<table class="table table-hover table-sm">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:tipo_sinal) %></th>
+      <th><%= model_class.human_attribute_name(:local_sinal) %></th>
+      <th><%= model_class.human_attribute_name(:descricao) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% socioeduk_jovem_caracteristicas.each do |socioeduk_jovem_caracteristica| %>
+    <tr>
+      <td><%= socioeduk_jovem_caracteristica.socioeduk_tipo_sinal&.descricao %></td>
+      <td><%= socioeduk_jovem_caracteristica.local_sinal %></td>
+      <td><%= socioeduk_jovem_caracteristica.descricao %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,107 @@
+<%= form_for(@unidade_socioeducativa, html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @unidade_socioeducativa %>
+  <%= render 'layouts/message_required' %>
+  <div class="form-group">
+    <div class="col-sm-10">
+      <%= f.label :nome, class: 'required' %>
+      <%= f.text_field :nome, class: 'form-control'  %>
+    </div>
+    <div class="col-sm-2">
+      <%= f.label :sigla, class: 'required' %>
+      <%= f.text_field :sigla, class: 'form-control'  %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-8">
+      <%= f.label :endereco, class: 'required' %>
+      <%= f.text_field :endereco, class: 'form-control'  %>
+    </div>
+    <div class="col-sm-4">
+      <%= f.label :cidade_id, class: 'required' %>
+      <%= f.collection_select :cidade_id, Cidade.where('estado_id = 6').order('nome asc'), :id, :nome, {prompt: '--- selecione ---'}, class: 'form-control'  %>
+    </div>
+  </div>
+
+  <!--<h2>Blocos</h2>
+  <section id="form_outros_nomes">
+      <div class="col-sm-12">
+        <div class="form-group table-nested-title">
+          <div class="col-sm-10">Bloco</div>
+          <div class="col-sm-2">Ação</div>
+        </div>
+        <%#= f.nested_fields_for :unidade_socioeducativa_blocos do |ff| %>
+          <div id="bloco<%#= ff.object.id %>" class="form-group table-nested-identify">
+            <div class="col-sm-10">
+              <%#= ff.text_field :descricao, class: 'form-control', placeholder: 'Descrição', style: 'font-size: 1.5em; font-weight: bold' %>
+
+              <table class="table table-bordered" style="margin-top: 10px;">
+                <thead>
+                  <tr>
+                    <th style="vertical-align: middle;" width="35px"><%#= link_to '<i class="fas fa-plus-circle"></i>'.html_safe, new_unidade_bloco_dormitorio_path(id_bloco: ff.object.id), class: 'btn btn-xs btn-info', title: 'Adicionar Dormitório' %></th>
+                    <th style="vertical-align: middle;" scope="col">Dormitórios</th>
+                    <th style="vertical-align: middle; text-align: center;" width="90px" scope="col">Cap. Base</th>
+                    <th style="vertical-align: middle; text-align: center;" width="90px" scope="col">Cap. Real</th>
+                    <th style="vertical-align: middle; text-align: center;" width="90px" scope="col">Status</th>
+                    <th style="vertical-align: middle; text-align: center;" width="90px" scope="col">Ação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <%# cont = 1%>
+                <%# @unidade_bloco_dormitorios = UnidadeBlocoDormitorio.where(unidade_socioeducativa_bloco_id: ff.object.id) %>
+                <%# if !@unidade_bloco_dormitorios.blank? %>
+                  <%# @unidade_bloco_dormitorios.each do |unidade_bloco_dormitorio| %>
+                    <%# if unidade_bloco_dormitorio.status != true %>
+                      <tr style='COLOR: #e4e4e4;'>
+                    <%# elsif %>
+                      <tr>
+                    <%# end %>
+                    
+                      <td style="vertical-align: middle; text-align: center;"><%#= cont %></td>
+                      <td style="vertical-align: middle;"><%#= unidade_bloco_dormitorio.descricao %></td>
+                      <td style="vertical-align: middle; text-align: center;"><%#= unidade_bloco_dormitorio.capacidade_base %></td>
+                      <td style="vertical-align: middle; text-align: center;"><%#= unidade_bloco_dormitorio.capacidade_real + unidade_bloco_dormitorio.capacidade_base %></td>
+                      <td style="vertical-align: middle; text-align: center;">
+                        <%# if unidade_bloco_dormitorio.status == true %>
+                          <span class="label label-primary">Ativo</span>
+                        <%# elsif %>
+                          <span class="label label-danger">Inativo</span>
+                        <%# end %>
+                      </td>
+                      <td><%#= link_to_delete(unidade_bloco_dormitorio) %> <%#= link_to_edit(edit_unidade_bloco_dormitorio_path(unidade_bloco_dormitorio, id_bloco: ff.object.id)) %></td>
+                    </tr>
+                    <%# cont += 1%>
+                  <%# end %>
+                <%# end %>
+
+                </tbody>
+              </table>
+
+            </div>
+          <div class="col-sm-2">
+            <table>
+              <tr>
+                <td>
+                  <a class="btn btn-xs btn-primary" title="Editar" style="float:left" href="javascript: void(0);" onclick="editarLinhaNested('bloco<%#= ff.object.id %>')"><i class="fas fa-edit"></i></a>
+                </td>
+                <td>
+                  
+                  <%#= ff.hidden_field :id %>
+                  <%#= ff.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px; margin-bottom: 8px;'%>  
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <%# end %>
+        
+    </div>   
+  </section>-->
+
+  <div class="form-group">
+    <div class="col-sm-10">
+      <%#= f.add_nested_fields_link :unidade_socioeducativa_blocos, 'Novo Bloco' , class:"btn btn-success" %>
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+      <%= link_to I18n.t('helpers.links.cancel'), unidades_socioeducativas_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+<% end %>

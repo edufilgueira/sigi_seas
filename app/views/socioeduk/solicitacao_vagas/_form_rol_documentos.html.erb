@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="col-sm-4 col-offset-1" id="doc-guia-cnj">
+        <%= f.label :doc_guia_cnj, class: "required"  %>
+        <%= f.file_field :doc_guia_cnj, class: "doc" %>
+    </div>
+
+    <div class="col-sm-4 col-offset-1" id="doc-pessoais">
+        <%= f.label :doc_pessoais, class: "required"%>
+        <%= f.file_field :doc_pessoais, class: "doc"%>
+    </div>
+
+    <div class="col-sm-4 col-offset-1" id="doc-pedido-internacao-provisoria">
+        <%= f.label :doc_pedido_internacao_provisoria, class: "required"%>
+        <%= f.file_field :doc_pedido_internacao_provisoria, class: "doc"%>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4 col-offset-1" id="doc-certidao-antecedentes">
+        <%= f.label :doc_certidao_antecedentes, class: "required"%>
+        <%= f.file_field :doc_certidao_antecedentes, class: "doc"%>
+    </div>
+
+    <div class="col-sm-4 col-offset-1" id="doc-decisao-interlocutoria">
+        <%= f.label :doc_decisao_interlocutoria, class: "required"%>
+        <%= f.file_field :doc_decisao_interlocutoria, class: "doc"%>
+    </div>
+
+    <div class="col-sm-4 col-offset-1" id="doc-estudos-tecnicos">
+        <%= f.label :doc_estudos_tecnicos%>
+        <%= f.file_field :doc_estudos_tecnicos%>
+    </div>
+</div>
+
+<div class="row">
+    <!-- <div class="col-sm-4 col-offset-1">
+      <%= f.label :doc_oficio_crv %>
+      <%= f.file_field :doc_oficio_crv, class: "doc" %>
+    </div>  -->
+
+    <div class="col-sm-4 col-offset-1" id="doc-historico-escolar">
+        <%= f.label :doc_historico_escolar%>
+        <%= f.file_field :doc_historico_escolar%>
+    </div>
+
+    <div class="col-sm-4 col-offset-1" id="doc-historico-saude">
+        <%= f.label :doc_historico_saude%>
+        <%= f.file_field :doc_historico_saude%>
+    </div>
+    <div class="col-sm-4 col-offset-1" id="doc-malote-digital">
+        <%= f.label :doc_comprovante_envio_malote_digital%>
+        <%= f.file_field :doc_comprovante_envio_malote_digital, class: "doc"%>
+    </div>
+</div>

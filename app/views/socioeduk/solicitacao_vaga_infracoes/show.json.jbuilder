@@ -1,0 +1,1 @@
+json.partial! "socioeduk_solicitacao_vaga_infracoes/socioeduk_solicitacao_vaga_infracao", socioeduk_solicitacao_vaga_infracao: @socioeduk_solicitacao_vaga_infracao

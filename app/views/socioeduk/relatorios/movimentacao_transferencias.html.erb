@@ -1,0 +1,71 @@
+<% content_for :title do %>
+    <%#= t('.title', default: @qtd_infracoes_tentada_consumadas.class.model_name.human ) %>
+  <% end -%>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+  
+        <div class="ibox-title">
+          <h5>Mapeamento de Trasferência</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="close-link">
+              <i class="fa fa-times"></i>
+            </a>
+          </div>
+        </div>
+  
+        <div class="ibox-content">
+          <div class="row">
+          <%= form_for(:frm, :url => {controller: :relatorios, action: :movimentacao_transferencias}, method: 'POST') do |f| %>
+            <div class="form-group">
+              <div class="col-sm-2"">
+                <%= f.text_field :data_inicial, placeholder: "Data Inicial", class: "form-control maskdata datepicker", value: @data_inicial%>
+              </div>
+              <div class="col-sm-2">
+                <%= f.text_field :data_final, placeholder: "Data Final", class: "form-control maskdata datepicker", value: @data_final %>
+              </div>
+              <div class="col-sm-2">
+                <%= f.submit 'Buscar', class: "btn btn-primary" %>
+              </div>
+            </div>
+          <% end %>
+            
+
+          <% if(!@movimentacoes.nil?) %>
+            <% cont = 0 %>
+            <table class="table table-hover table-sm sortable">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nome</th>
+                  <th>Data Tranferência</th>
+                  <th>Origem</th>
+                  <th>Destino</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @movimentacoes.each do |movimentacao| %>
+                <% cont += 1 %>
+                <tr>
+                  <td><%= cont %></td>
+                  <td><%= link_to( movimentacao.nome, {controller: :jovens, action: :show, id: movimentacao.jovem_id} ) %></td>
+                  <td><%= movimentacao.data_movimentacao %></td>
+                  <td><%= movimentacao.de %></td>
+                  <td><%= movimentacao.para %></td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% end %>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
+  <%#= link_to('Listar', socioeduk_relatorio_diarios_path, class: 'btn btn-default') %>
+  <%#= link_to 'Editar', edit_socioeduk_relatorio_diario_path(@socioeduk_relatorio_diario), class: 'btn btn-success' %>

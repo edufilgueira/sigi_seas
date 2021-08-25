@@ -1,0 +1,1 @@
+json.partial! "socioeduk_composicao_familiares/socioeduk_composicao_familiar", socioeduk_composicao_familiar: @socioeduk_composicao_familiar

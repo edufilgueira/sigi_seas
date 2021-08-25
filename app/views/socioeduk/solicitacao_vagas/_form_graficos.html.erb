@@ -1,0 +1,551 @@
+
+    <div class="row">
+        <div class="col-sm-6" id="chart4"></div>
+        <div class="col-sm-3" id="chart1"></div>
+        <div class="col-sm-3" id="chart2"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6" id="chart3"></div>
+        <div class="col-sm-3" id="chart5"></div>
+        <div class="col-sm-3" id="chart6"></div>
+        <div class="col-sm-3" id="chart7"></div>
+        <div class="col-sm-3" id="chart8"></div>
+        <div class="col-sm-3" id="chart9"></div>
+        <div class="col-sm-3" id="chart10"></div>
+    </div>
+    
+    
+    <script>
+        //Gráfico Capacidade X Ocupação Total
+        var options4 = {
+            chart: {
+                type: 'bar',
+                height: 350,
+            },
+            series: [{
+                name: 'Capacidade',
+                data: [ <%= @capacidade_base_regiao %> ]
+            }, {
+                name: 'Ocupação',
+                data: [ <%= @total_jovens_admitidos %> ]
+            }],
+            <% if @total_jovens_admitidos > @capacidade_base_regiao %>
+                colors:['#008FFB', '#FF4560'],
+            <% end %>
+            xaxis: {
+                categories: ['', '']
+            },
+            title: {
+                text: 'Capacidade x Ocupação: Geral',
+                align: 'center',
+                floating: true
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '30%',
+                    theme: 'palette7',
+                    },
+                },
+                stroke: {
+                    show: true,
+                    width: 2,
+                    colors: ['transparent']
+                    },
+            annotations: {
+        yaxis: [
+            {
+            
+            }
+        ]
+        }
+        }
+    //Gráfico Capacidade X Ocupação Masculino
+    var options1 = {
+        chart: {
+            type: 'bar',
+            height: 350,
+        },
+        series: [{
+            name: 'Capacidade ',
+            data: [ <%= @capacidade_base_regiao_masculino %>]
+        }, {
+            name: 'Ocupação ',
+            data: [ <%= @total_jovens_admitidos_masculino %>]
+        }],
+        <% if @total_jovens_admitidos_masculino > @capacidade_base_regiao_masculino %>
+                colors:['#008FFB', '#FF4560'],
+            <% end %>
+        xaxis: {
+            categories: ['', '']
+        },
+        title: {
+            text: 'Total Masculino',
+            align: 'center',
+            floating: true
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent']
+            },
+        annotations: {
+            yaxis: [
+            {
+                y: <%= @capacidade_base_regiao_masculino %>,
+                borderColor: '#00E396',
+                label: {
+                borderColor: '#00E396',
+            style: {
+                color: '#fff',
+                background: '#00E396'
+        },
+            text: '100%'
+      }
+    }
+  ]
+}
+    }
+
+    //Gráfico Capacidade X Ocupação Feminino
+    var options2 = {
+        chart: {
+            type: 'bar',
+            height: 350,
+        },
+        series: [{
+            name: 'Capacidade ',
+            data: [<%= @capacidade_base_regiao_feminino%>]
+        }, {
+            name: 'Ocupação ',
+            data: [<%= @total_jovens_admitidos_feminino %>]
+        }],
+        <% if @total_jovens_admitidos_feminino > @capacidade_base_regiao_feminino %>
+                colors:['#008FFB', '#FF4560'],
+            <% end %>
+        xaxis: {
+            categories: ['', '']
+        },
+        title: {
+            text: 'Total Feminino',
+            align: 'center',
+            floating: true
+        },
+        grid: {
+            padding: {
+                top: 40,
+                right: 0,
+                bottom: 0,
+                left: 0
+            }, 
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent']
+            },
+        annotations: {
+            yaxis: [
+            {
+                y: <%= @capacidade_base_regiao_feminino%>,
+                borderColor: '#00E396',
+                label: {
+                borderColor: '#00E396',
+            style: {
+                color: '#fff',
+                background: '#00E396'
+        },
+            text: '100%'
+      }
+    }
+  ]
+}
+    }
+
+    //Gráfico Capacidade X Medida Socioeducativa
+    var options3 = {
+        series: [{
+            name: 'Capacidade por Medida',
+            data: [<%= @capacidade_base_regiao_internacao_provisoria %>, <%= @capacidade_base_regiao_internacao %>, <%= @capacidade_base_regiao_semiliberdade %>]
+        }, {
+            name: 'Ocupação por Medida',
+            data: [<%= @total_jovens_admitidos_internacao_provisoria %>, <%= @total_jovens_admitidos_internacao %>, <%= @total_jovens_admitidos_semiliberdade %>]
+            }],
+            chart: {
+            type: 'bar',
+            height: 350,
+            },
+            <% if @total_jovens_admitidos_internacao_provisoria >@capacidade_base_regiao_internacao_provisoria %>
+                colors:['#008FFB', '#FF4560', '#008FFB', '#00E396', '#008FFB', '#00E396'],
+            <% elseif @total_jovens_admitidos_internacao > @capacidade_base_regiao_internacao %>
+                colors:['#008FFB', '#00E396', '#008FFB', '#FF4560', '#008FFB', '#00E396'],
+            
+            <% elseif @total_jovens_admitidos_semiliberdade > @capacidade_base_regiao_semiliberdade %>
+                colors:['#008FFB', '#00E396', '#008FFB', '#00E396', '#008FFB', '#FF4560'],
+            
+            <% elseif @total_jovens_admitidos_internacao_provisoria > @capacidade_base_regiao_internacao_provisoria && @total_jovens_admitidos_internacao > @capacidade_base_regiao_internacao %>
+                colors:['#008FFB', '#FF4560', '#008FFB', '#FF4560', '#008FFB', '#00E396'],
+            
+            <% elseif @total_jovens_admitidos_internacao > @capacidade_base_regiao_internacao && @total_jovens_admitidos_semiliberdade > @capacidade_base_regiao_semiliberdade %>
+                colors:['#008FFB', '#00E396', '#008FFB', '#FF4560', '#008FFB', '#FF4560'],
+            
+            <% elseif @total_jovens_admitidos_internacao_provisoria > @capacidade_base_regiao_internacao_provisoria && @total_jovens_admitidos_semiliberdade > @capacidade_base_regiao_semiliberdade %>
+                colors:['#008FFB', '#FF4560', '#008FFB', '#00E396', '#008FFB', '#FF4560'],
+            
+            <% elseif @total_jovens_admitidos_internacao_provisoria > @capacidade_base_regiao_internacao_provisoria && @total_jovens_admitidos_internacao > @capacidade_base_regiao_internacao && @total_jovens_admitidos_semiliberdade > @capacidade_base_regiao_semiliberdade %>
+                colors:['#008FFB', '#FF4560', '#008FFB', '#FF4560', '#008FFB', '#FF4560'],
+            <% end %>
+            plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: '55%',
+                theme: 'palette7',
+                dataLabels: {
+                    position: 'center',
+                  },
+                },
+            },
+            dataLabels: {
+            enabled: true
+            },
+            stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent']
+            },
+            xaxis: {
+            categories: ['Provisória', 'Internação', 'Semiliberdade'],
+            },
+            title: {
+                text: 'Ocupação x Vaga  por Tipo de Medida',
+                align: 'center',
+                floating: true
+            },
+            yaxis: {
+                title: {
+                text: 'Internações',
+                formatter: (value) => { return val },
+                }
+            },
+            fill: {
+                opacity: 1
+            },
+            tooltip: {
+                y: {
+                formatter: function (val) {
+                    return val + " socioeducandos"
+                }
+                }
+            }
+    }
+    //Gráfico Internação Provisória Masculino
+    var options5 = {
+        chart: {
+            type: 'bar',
+            height: 350,
+        },
+        series: [{
+            name: 'Capacidade',
+            data: [ <%= @capacidade_base_regiao_internacao_provisoria_masculino %>]
+        }, {
+            name: 'Ocupação',
+            data: [ <%= @total_jovens_admitidos_internacao_provisoria_masculino %>]
+        }],
+        <% if @total_jovens_admitidos_internacao_provisoria_masculino > @capacidade_base_regiao_internacao_provisoria_masculino %>
+                colors:['#008FFB', '#FF4560'],
+            <% end %>
+        xaxis: {
+            categories: ['', '']
+        },
+        title: {
+            text: 'Internação Provisória Masculina',
+            align: 'center',
+            floating: true
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent']
+            },
+        annotations: {
+            yaxis: [
+            {
+                y: <%= @capacidade_base_regiao_internacao_provisoria_masculino %>,
+                borderColor: '#00E396',
+                label: {
+                borderColor: '#00E396',
+            style: {
+                color: '#fff',
+                background: '#00E396'
+        },
+            text: '100%'
+      }
+    }
+  ]
+}
+    }
+    //Gráfico Internação Provisória Feminino
+    var options6 = {
+        chart: {
+            type: 'bar',
+            height: 350,
+        },
+        series: [{
+            name: 'Capacidade',
+            data: [ <%= @capacidade_base_regiao_internacao_provisoria_feminino %>]
+        }, {
+            name: 'Ocupação',
+            data: [ <%= @total_jovens_admitidos_internacao_provisoria_feminino %>]
+        }],
+        <% if @total_jovens_admitidos_internacao_provisoria_feminino > @capacidade_base_regiao_internacao_provisoria_feminino %>
+                colors:['#008FFB', '#FF4560'],
+            <% end %>
+        xaxis: {
+            categories: ['', '']
+        },
+        title: {
+            text: 'Internação Provisória Feminina',
+            align: 'center',
+            floating: true
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent']
+            },
+        annotations: {
+            yaxis: [
+            {
+                y: <%= @capacidade_base_regiao_internacao_provisoria_feminino %>,
+                borderColor: '#00E396',
+                label: {
+                borderColor: '#00E396',
+            style: {
+                color: '#fff',
+                background: '#00E396'
+        },
+            text: '100%'
+      }
+    }
+  ]
+}
+    }
+
+    //Gráfico Internação Masculina
+    var options7 = {
+        chart: {
+            type: 'bar',
+            height: 350,
+        },
+        series: [{
+            name: 'Capacidade',
+            data: [ <%= @capacidade_base_regiao_internacao_masculino %>]
+        }, {
+            name: 'Ocupação',
+            data: [ <%= @total_jovens_admitidos_internacao_masculino %>]
+        }],
+        <% if @total_jovens_admitidos_internacao_masculino > @capacidade_base_regiao_internacao_masculino %>
+                colors:['#008FFB', '#FF4560'],
+            <% end %>
+        xaxis: {
+            categories: ['', '']
+        },
+        title: {
+            text: 'Internação Masculina',
+            align: 'center',
+            floating: true
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent']
+            },
+        annotations: {
+            yaxis: [
+            {
+                y: <%= @capacidade_base_regiao_internacao_masculino %>,
+                borderColor: '#00E396',
+                label: {
+                borderColor: '#00E396',
+            style: {
+                color: '#fff',
+                background: '#00E396'
+        },
+            text: '100%'
+      }
+    }
+  ]
+}
+    }
+    //Gráfico Internação  Feminino
+    var options8 = {
+        chart: {
+            type: 'bar',
+            height: 350,
+        },
+        series: [{
+            name: 'Capacidade',
+            data: [ <%= @capacidade_base_regiao_internacao_feminino %>]
+        }, {
+            name: 'Ocupação',
+            data: [ <%= @total_jovens_admitidos_internacao_feminino %>]
+        }],
+        <% if @total_jovens_admitidos_internacao_feminino > @capacidade_base_regiao_internacao_feminino %>
+                colors:['#008FFB', '#FF4560'],
+            <% end %>
+        xaxis: {
+            categories: ['', '']
+        },
+        title: {
+            text: 'Internação Feminina',
+            align: 'center',
+            floating: true
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent']
+            },
+        annotations: {
+            yaxis: [
+            {
+                y: <%= @capacidade_base_regiao_internacao_feminino %>,
+                borderColor: '#00E396',
+                label: {
+                borderColor: '#00E396',
+            style: {
+                color: '#fff',
+                background: '#00E396'
+        },
+            text: '100%'
+      }
+    }
+  ]
+}
+    }
+    //Gráfico Semiliberdade Masculino
+    var options9 = {
+        chart: {
+            type: 'bar',
+            height: 350,
+        },
+        series: [{
+            name: 'Capacidade',
+            data: [ <%= @capacidade_base_regiao_semiliberdade_masculino %> ]
+        }, {
+            name: 'Ocupação',
+            data: [ <%= @total_jovens_admitidos_semiliberdade_masculino %>]
+        }],
+        <% if @total_jovens_admitidos_semiliberdade_masculino > @capacidade_base_regiao_semiliberdade_masculino %>
+                colors:['#008FFB', '#FF4560'],
+            <% end %>
+        xaxis: {
+            categories: ['', '']
+        },
+        title: {
+            text: 'Semiliberdade Masculino',
+            align: 'center',
+            floating: true
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent']
+            },
+        annotations: {
+            yaxis: [
+            {
+                y: <%= @capacidade_base_regiao_semiliberdade_masculino %>,
+                borderColor: '#00E396',
+                label: {
+                borderColor: '#00E396',
+            style: {
+                color: '#fff',
+                background: '#00E396'
+        },
+            text: '100%'
+      }
+    }
+  ]
+}
+    }
+    //Gráfico Semiliberdade Feminina
+    var options10 = {
+        chart: {
+            type: 'bar',
+            height: 350,
+        },
+        series: [{
+            name: 'Capacidade',
+            data: [ <%= @capacidade_base_regiao_semiliberdade_feminino %> ]
+        }, {
+            name: 'Ocupação',
+            data: [ <%= @total_jovens_admitidos_semiliberdade_feminino %>]
+        }],
+        <% if @total_jovens_admitidos_semiliberdade_feminino > @capacidade_base_regiao_semiliberdade_feminino %>
+                colors:['#008FFB', '#FF4560'],
+            <% end %>
+        xaxis: {
+            categories: ['', '']
+        },
+        title: {
+            text: 'Semiliberdade Feminina',
+            align: 'center',
+            floating: true
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent']
+            },
+        annotations: {
+            yaxis: [
+            {
+                y: <%= @capacidade_base_regiao_semiliberdade_feminino %>,
+                borderColor: '#00E396',
+                label: {
+                borderColor: '#00E396',
+            style: {
+                color: '#fff',
+                background: '#00E396'
+        },
+            text: '100%'
+            }
+            }
+        ]
+    },
+    }
+
+    //Variáveis para renderizar o gráfico
+    var chart_capacidade_base_regiao_masc = new ApexCharts(document.querySelector("#chart1"), options1);
+    var chart_capacidade_base_regiao_fem = new ApexCharts(document.querySelector("#chart2"), options2);
+    var chart_capacidade_base_regiao_por_medida = new ApexCharts(document.querySelector("#chart3"), options3);
+    var chart_capacidade_base_regiao_por_internacao_provisoria = new ApexCharts(document.querySelector("#chart4"), options4);
+    var chart_capacidade_base_regiao_internacao_provisoria_masculino = new ApexCharts(document.querySelector("#chart5"), options5);
+    var chart_capacidade_base_regiao_internacao_provisoria_feminina = new ApexCharts(document.querySelector("#chart6"), options6);
+    var chart_capacidade_base_regiao_internacao_masculino = new ApexCharts(document.querySelector("#chart7"), options7);
+    var chart_capacidade_base_regiao_internacao_feminina = new ApexCharts(document.querySelector("#chart8"), options8);
+    var chart_capacidade_base_regiao_semiliberdade_masculino = new ApexCharts(document.querySelector("#chart9"), options9);
+    var chart_capacidade_base_regiao_semiliberdade_feminina = new ApexCharts(document.querySelector("#chart10"), options10);
+
+    //Renderiza Gráfico
+    chart_capacidade_base_regiao_masc.render();
+    chart_capacidade_base_regiao_fem.render();
+    chart_capacidade_base_regiao_por_medida.render();
+    chart_capacidade_base_regiao_por_internacao_provisoria.render();
+    chart_capacidade_base_regiao_internacao_provisoria_masculino.render();
+    chart_capacidade_base_regiao_internacao_provisoria_feminina.render();
+    chart_capacidade_base_regiao_internacao_masculino.render();
+    chart_capacidade_base_regiao_internacao_feminina.render();
+    chart_capacidade_base_regiao_semiliberdade_masculino.render();
+    chart_capacidade_base_regiao_semiliberdade_feminina.render();
+
+    $(document).ready(function() {
+        if(<%= @capacidade_base_regiao_masculino %> == <%= @total_jovens_admitidos_masculino %>){
+            let geralTotal = document.querySelector('#SvgjsPath1216');
+            geralTotal.setAttribute('fill', 'rgba(255, 105, 97, 1.0)');
+        };
+    });
+
+
+</script>

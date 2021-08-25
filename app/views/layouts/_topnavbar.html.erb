@@ -1,0 +1,26 @@
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+            <form role="search" class="navbar-form-custom" method="post" action="/">
+                <div class="form-group">
+                    <input type="text" placeholder="Pesquise por algo..." class="form-control" name="top-search" id="top-search" />
+                </div>
+            </form>
+        </div>
+        <ul class="nav navbar-top-links navbar-right">
+            <li>
+                <%= link_to(content_tag(:i, nil, {class: "fas fa-desktop", style: 'color: #F6A54A;'}), new_gestao_demandas_solicitacao_path(url_path: "#{request.protocol}#{request.host_with_port}#{request.fullpath}"), :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', title: "Solicitar Demanda Sistema") %>
+            </li>
+            <!-- <li class="label label-primary">
+                <i class="fas fa-user">  <%#= current_usuario.try(:pessoa).try(:nome).try(:upcase) %></i>
+            </li> -->
+            <li>
+                <%= link_to(content_tag(:i, nil, class: 'fas fa-key') + 'Alterar Senha', edit_usuario_registration_path) %>
+            </li>
+            <li>
+                <%= link_to(content_tag(:i, nil, class: 'fas fa-sign-out-alt') + 'Sair', destroy_usuario_session_path, :method => :delete) %>
+            </li>
+        </ul>
+    </nav>
+</div>

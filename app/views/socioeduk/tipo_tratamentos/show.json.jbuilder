@@ -1,0 +1,1 @@
+json.partial! "socioeduk_tipo_tratamentos/socioeduk_tipo_tratamento", socioeduk_tipo_tratamento: @socioeduk_tipo_tratamento

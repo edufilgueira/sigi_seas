@@ -1,0 +1,53 @@
+<%- model_class = ItensSolicitacaoPatrimonio -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.itens_solicitacao_patrimonio', default: ItensSolicitacaoPatrimonio.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.itens_solicitacao_patrimonio', default: ItensSolicitacaoPatrimonio.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= link_to_new new_itens_solicitacao_patrimonio_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                                    <th><%= model_class.human_attribute_name(:solicitacao_patrimonio) %></th>
+                                    <th><%= model_class.human_attribute_name(:item_patrimonio) %></th>
+                                    <th><%= model_class.human_attribute_name(:quantidade_solicitada) %></th>
+                                    <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @itens_solicitacao_patrimonios.each do |itens_solicitacao_patrimonio| %>
+                <tr>
+                                    <td><%= itens_solicitacao_patrimonio.solicitacao_patrimonio %></td>
+                                    <td><%= itens_solicitacao_patrimonio.item_patrimonio %></td>
+                                    <td><%= itens_solicitacao_patrimonio.quantidade_solicitada %></td>
+                                    <td>
+                    <%= link_to_show(itens_solicitacao_patrimonio) %>
+                    <%= link_to_edit(edit_itens_solicitacao_patrimonio_path(itens_solicitacao_patrimonio)) %>
+                    <%= link_to_delete(itens_solicitacao_patrimonio) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

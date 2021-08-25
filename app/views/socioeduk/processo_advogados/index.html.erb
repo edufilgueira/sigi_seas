@@ -1,0 +1,59 @@
+<%- model_class = Socioeduk::ProcessoAdvogado -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_processo_advogado', default: Socioeduk::ProcessoAdvogado.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.socioeduk_processo_advogado', default: Socioeduk::ProcessoAdvogado.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= link_to_new new_socioeduk_processo_advogado_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_processo) %></th>
+                                    <th><%= model_class.human_attribute_name(:nome) %></th>
+                                    <th><%= model_class.human_attribute_name(:numero) %></th>
+                                    <th><%= model_class.human_attribute_name(:uf_oab) %></th>
+                                    <th><%= model_class.human_attribute_name(:defensor_publico) %></th>
+                                    <th><%= model_class.human_attribute_name(:unidade_socioeducativa) %></th>
+                                    <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @socioeduk_processo_advogados.each do |socioeduk_processo_advogado| %>
+                <tr>
+                                    <td><%= socioeduk_processo_advogado.socioeduk_processo %></td>
+                                    <td><%= socioeduk_processo_advogado.nome %></td>
+                                    <td><%= socioeduk_processo_advogado.numero %></td>
+                                    <td><%= socioeduk_processo_advogado.uf_oab %></td>
+                                    <td><%= socioeduk_processo_advogado.defensor_publico %></td>
+                                    <td><%= socioeduk_processo_advogado.unidade_socioeducativa %></td>
+                                    <td>
+                    <%= link_to_show(socioeduk_processo_advogado) %>
+                    <%= link_to_edit(edit_socioeduk_processo_advogado_path(socioeduk_processo_advogado)) %>
+                    <%= link_to_delete(socioeduk_processo_advogado) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,83 @@
+<% content_for :title do %>
+  <%= t('.title', default: @solicitacao_patrimonio.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t('.title', default: @solicitacao_patrimonio.class.model_name.human ) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <th><%= SolicitacaoPatrimonio.human_attribute_name :numero_solicitacao %></th>
+                  <th><%= SolicitacaoPatrimonio.human_attribute_name :numero_processo %></th>
+                  <th><%= SolicitacaoPatrimonio.human_attribute_name :solicitante %></th>
+                  <th><%= SolicitacaoPatrimonio.human_attribute_name :justificativa %></th>
+                  <th><%= SolicitacaoPatrimonio.human_attribute_name :observacao %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="min-width: 90px; word-break: break-all;"><%= @solicitacao_patrimonio.id %></td>
+                  <td style="min-width: 90px; word-break: break-all;"><%= @solicitacao_patrimonio.numero_processo %></td>
+                  <td style="min-width: 90px; word-break: break-all;"><%= @solicitacao_patrimonio.usuario_solicitante.nome %></td>
+                  <td style="min-width: 90px; word-break: break-all;"><%= @solicitacao_patrimonio.justificativa %></td>
+                  <td style="min-width: 90px; word-break: break-all;"><%= @solicitacao_patrimonio.observacao %></td>
+                </tr>
+              </tbody>
+            </table>
+            <%= form_tag('/solicitacao_patrimonios/atender_itens_solicitacao') do %>
+              <table class="table table-bordered">
+                <h3>Item(s) Solicitado(s)</h3>
+                <thead>
+                  <th>Item</th>
+                  <th class="center">Quantidade Solicitada</th>
+                  <th class="center">Quantidade Disponível</th>
+                  <th class="center">Quantidade Entregue</th>
+                </thead>
+                <tbody>
+                  <% @itens_solicitacao_patrimonio.each do |item, quantidade_disponivel| %>
+                    <tr>
+                      <td><%= item.item_patrimonio.nome %></td>
+                      <td class="center"><%= item.quantidade_solicitada %></td>
+                      <% if quantidade_disponivel > 0 %>
+                        <td style="color: green;" class="center"><%= quantidade_disponivel %></td>
+                      <% else %>
+                        <td style="color: red;" class="center"><%= quantidade_disponivel %></td>
+                      <% end %>
+                      <% if @solicitacao_patrimonio.autorizado? && item.quantidade_entregue.nil? %>
+                        <%= hidden_field_tag :solicitacao_id, @solicitacao_patrimonio_id %>
+                        <%= hidden_field_tag "item[][id]", item.id %>
+                        <td class="center"><%= text_field_tag "item[][quantidade_entregue]", nil, class: 'form-control input-formated' %></td>
+                      <% elsif @solicitacao_patrimonio.autorizado? && !item.quantidade_entregue.nil? %>
+                        <td class="center"><%= text_field_tag "item[][quantidade_entregue]", item.quantidade_entregue, class: 'form-control input-formated', readonly: true %></td>
+                      <% else %>
+                        <td class="center"><%= text_field_tag "item[][quantidade_entregue]", nil, class: 'form-control input-formated', readonly: true %></td>
+                      <% end %>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+              <%= submit_tag 'Salvar', class: 'btn btn-primary' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', solicitacao_patrimonios_path, class: 'btn btn-default') %>
+<%= link_to 'Editar', edit_solicitacao_patrimonio_path(@solicitacao_patrimonio), class: 'btn btn-success' %>

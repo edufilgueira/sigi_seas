@@ -1,0 +1,3 @@
+$('#modalAuxiliarTitle').html('Transferência de Jovem Medida');
+$('#modalAuxiliar').find('.modal-body').html("<%= escape_javascript( render partial: 'form_transferido.html', locals: { disable_with: 'Atualizando...' } ) %>");
+$('#modalAuxiliar').modal('show');

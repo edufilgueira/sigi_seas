@@ -1,0 +1,63 @@
+<%- model_class = Socioeduk::JovemApreensao -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_jovem_apreensao', default: Socioeduk::JovemApreensao.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.socioeduk_jovem_apreensao', default: Socioeduk::JovemApreensao.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= link_to_new new_socioeduk_jovem_apreensao_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_jovem) %></th>
+                                    <th><%= model_class.human_attribute_name(:antecedente_criminal) %></th>
+                                    <th><%= model_class.human_attribute_name(:qtd_processo_anterior) %></th>
+                                    <th><%= model_class.human_attribute_name(:data_hora_entrada_delegacia) %></th>
+                                    <th><%= model_class.human_attribute_name(:dia_delegacia) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_tipo_medida_socioeducativa) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_tipo_decisao_judicial) %></th>
+                                    <th><%= model_class.human_attribute_name(:qtd_dia_internacao_medida) %></th>
+                                    <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @socioeduk_jovem_apreensoes.each do |socioeduk_jovem_apreensao| %>
+                <tr>
+                                    <td><%= socioeduk_jovem_apreensao.socioeduk_jovem.nome %></td>
+                                    <td><%= socioeduk_jovem_apreensao.antecedente_criminal %></td>
+                                    <td><%= socioeduk_jovem_apreensao.qtd_processo_anterior %></td>
+                                    <td><%= socioeduk_jovem_apreensao.data_hora_entrada_delegacia %></td>
+                                    <td><%= socioeduk_jovem_apreensao.dia_delegacia %></td>
+                                    <td><%= socioeduk_jovem_apreensao.socioeduk_tipo_medida_socioeducativa.descricao %></td>
+                                    <td><%= socioeduk_jovem_apreensao.socioeduk_tipo_decisao_judicial.descricao %></td>
+                                    <td><%= socioeduk_jovem_apreensao.qtd_dia_internacao_medida %></td>
+                                    <td>
+                    <%= link_to_show(socioeduk_jovem_apreensao) %>
+                    <%= link_to_edit(edit_socioeduk_jovem_apreensao_path(socioeduk_jovem_apreensao)) %>
+                    <%= link_to_delete(socioeduk_jovem_apreensao) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

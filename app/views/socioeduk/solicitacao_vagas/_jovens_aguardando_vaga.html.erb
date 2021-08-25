@@ -1,0 +1,26 @@
+<table class="table table-holver">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Jovem</th>
+      <th>Data da Apreensão</th>
+      <th>Medida</th>
+      <th>Pontuação</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% unless @jovens_aguardando_vaga.nil? %>
+      <% count = 0 %>
+      <% @jovens_aguardando_vaga.sort_by(&:pontuacao).reverse.each do |jovem| %>
+        <% count += 1 %>
+        <tr>
+          <td><%= count %></td>
+          <td><%= jovem.nome %></td>
+          <td><%= jovem.data_apreensao %></td>
+          <td><%= jovem.tipo_medida_socioeducativa.descricao %></td>
+          <td><%= number_with_precision(jovem.pontuacao, separator: '.', precision: 2) %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

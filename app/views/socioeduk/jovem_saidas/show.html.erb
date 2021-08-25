@@ -1,0 +1,55 @@
+<% content_for :title do %>
+  <%= t('.title', default: @socioeduk_jovem_saida.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t('.title', default: @socioeduk_jovem_saida.class.model_name.human ) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                                    
+                  
+                  <th><%= Socioeduk::JovemSaida.human_attribute_name :socioeduk_jovem %></th>
+                                    
+                  
+                  <th><%= Socioeduk::JovemSaida.human_attribute_name :data_hora %></th>
+                                    
+                  
+                  <th><%= Socioeduk::JovemSaida.human_attribute_name :destino %></th>
+                                    
+                  
+                  <th><%= Socioeduk::JovemSaida.human_attribute_name :observacao %></th>
+                                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_saida.socioeduk_jovem.nome %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_saida.data_hora %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_saida.destino %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_saida.observacao %></td>
+                                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', socioeduk_jovem_saidas_path, class: 'btn btn-default') %>
+<%= link_to 'Editar', edit_socioeduk_jovem_saida_path(@socioeduk_jovem_saida), class: 'btn btn-success' %>

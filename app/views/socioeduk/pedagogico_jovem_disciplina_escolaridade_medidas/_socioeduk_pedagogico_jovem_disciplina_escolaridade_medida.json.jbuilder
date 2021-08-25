@@ -1,0 +1,2 @@
+json.extract! socioeduk_pedagogico_jovem_disciplina_escolaridade_medida, :id, :socioeduk_pedagogico_jovem_escolaridade_medida_id, :socioeduk_escolaridade_id, :socioeduk_situacao_disciplina_id, :data_situacao, :observacao, :created_at, :updated_at
+json.url socioeduk_pedagogico_jovem_disciplina_escolaridade_medida_url(socioeduk_pedagogico_jovem_disciplina_escolaridade_medida, format: :json)

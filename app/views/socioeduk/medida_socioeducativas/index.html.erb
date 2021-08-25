@@ -1,0 +1,61 @@
+<%- model_class = SocioedukMedidaSocioeducativa -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_medida_socioeducativa', default: SocioedukMedidaSocioeducativa.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.socioeduk_medida_socioeducativa', default: SocioedukMedidaSocioeducativa.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= link_to_new new_socioeduk_medida_socioeducativa_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_processo) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_tipo_medida_socioeducativa) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_situacao_cumprimento) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_circunstancia) %></th>
+                                    <th><%= model_class.human_attribute_name(:inicio) %></th>
+                                    <th><%= model_class.human_attribute_name(:fim_previsto) %></th>
+                                    <th><%= model_class.human_attribute_name(:periodo_dias) %></th>
+                                    <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @socioeduk_medida_socioeducativas.each do |socioeduk_medida_socioeducativa| %>
+                <tr>
+                                    <td><%= socioeduk_medida_socioeducativa.socioeduk_processo %></td>
+                                    <td><%= socioeduk_medida_socioeducativa.socioeduk_tipo_medida_socioeducativa %></td>
+                                    <td><%= socioeduk_medida_socioeducativa.socioeduk_situacao_cumprimento %></td>
+                                    <td><%= socioeduk_medida_socioeducativa.socioeduk_circunstancia %></td>
+                                    <td><%= socioeduk_medida_socioeducativa.inicio %></td>
+                                    <td><%= socioeduk_medida_socioeducativa.fim_previsto %></td>
+                                    <td><%= socioeduk_medida_socioeducativa.periodo_dias %></td>
+                                    <td>
+                    <%= link_to_show(socioeduk_medida_socioeducativa) %>
+                    <%= link_to_edit(edit_socioeduk_medida_socioeducativa_path(socioeduk_medida_socioeducativa)) %>
+                    <%= link_to_delete(socioeduk_medida_socioeducativa) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

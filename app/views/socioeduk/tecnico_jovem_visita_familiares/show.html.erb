@@ -1,0 +1,59 @@
+<% content_for :title do %>
+  <%= t('.title', default: @socioeduk_tecnico_jovem_visita_familiar.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t('.title', default: @socioeduk_tecnico_jovem_visita_familiar.class.model_name.human ) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                                    
+                  
+                  <th><%= Socioeduk::TecnicoJovemVisitaFamiliar.human_attribute_name :socioeduk_tecnico_jovem %></th>
+                                    
+                  
+                  <th><%= Socioeduk::TecnicoJovemVisitaFamiliar.human_attribute_name :data_visita %></th>
+                                    
+                  
+                  <th><%= Socioeduk::TecnicoJovemVisitaFamiliar.human_attribute_name :pessoa_visitada %></th>
+                                    
+                  
+                  <th><%= Socioeduk::TecnicoJovemVisitaFamiliar.human_attribute_name :finalidade_visita %></th>
+                                    
+                  
+                  <th><%= Socioeduk::TecnicoJovemVisitaFamiliar.human_attribute_name :responsavel_realizacao %></th>
+                                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_tecnico_jovem_visita_familiar.socioeduk_tecnico_jovem %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_tecnico_jovem_visita_familiar.data_visita %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_tecnico_jovem_visita_familiar.pessoa_visitada %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_tecnico_jovem_visita_familiar.finalidade_visita %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_tecnico_jovem_visita_familiar.responsavel_realizacao %></td>
+                                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', socioeduk_tecnico_jovem_visita_familiares_path, class: 'btn btn-default') %>
+<%= link_to 'Editar', edit_socioeduk_tecnico_jovem_visita_familiar_path(@socioeduk_tecnico_jovem_visita_familiar), class: 'btn btn-success' %>

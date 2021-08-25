@@ -1,0 +1,374 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require jquery-ui/jquery-ui.min.css
+ *= require style
+ *= require animate/animate.css
+ *= require progress
+ *= require print_view
+ *= require toastr/toastr.min.css
+ *= require custom_collapse.css
+ *= require clockpicker/clockpicker.css
+ *= require recursoshumanos/vinculos
+ *= require socioeduk/jovens
+ *= require socioeduk/relatorio_diarios
+ *= require sweetalert2
+ */
+
+
+@import "select2";
+@import "select2-bootstrap";
+@import "bootstrap";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+.table {
+  text-transform: uppercase;
+}
+
+.detail-service p {
+  margin-left: 2%;
+}
+.select2tags {
+  width: 40%;
+}
+label.required {
+    font-weight: bold;
+}
+label.required:after {
+    color: #e32;
+    content: ' *';
+    display:inline;
+}
+.control-group.error > input, .control-group.error > select, .control-group.error > textarea, .control-group.error > span.select2 > span > span.select2-selection {
+  border-color: #dc3545;
+}
+
+.control-group.error > div.invalid-feedback {
+  display: block;
+  color: #8a1f11;
+}
+
+@media screen and (min-width: 320px) {
+  .fitMobile {
+    margin-top: -10px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .fitMobile {
+    margin-top: none;
+  }
+  .fit {
+    position: relative;
+    left: -4vw;
+  }
+  .widget {
+    height: 230px;
+  }
+}
+.indicators_fulfilled {
+  background: #00b292;
+}
+
+.validador{
+  color: #e32;
+  display: inline;
+}
+/************************* ORGANIZA O NESTED FOR *************************/
+.table-nested {
+  background-color: initial;
+  background-image: none;
+  border: 1px solid #e5e6e7;
+  border-radius: 1px;
+  color: inherit;
+  display: block;
+  transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+  width: 100%;
+  border-bottom: 1px solid #eaeaea;
+  border: 0px solid #000;
+  pointer-events: none;
+  margin-top: -3px;
+  margin-bottom: 10px;
+}
+
+.table-nested-row {
+  border-bottom: 1px solid #eaeaea;
+}
+
+.table-nested-title{
+  font-size: 14px;
+  font-weight: bold;
+  /*border-bottom: 2px solid #eaeaea;*/
+  padding: 6px 0 6px 0px;
+  background-color: #f9f9f9;
+  border-top: 1px solid #eaeaea;
+}
+
+.deletar-nested{
+  float: left;
+  width: 25px;
+  transform: scale(2);
+  z-index: 20;
+}
+
+.acao-nested{
+  float: left;
+  width: 25px;
+  transform: scale(2);
+  z-index: 20;
+}
+
+.botao_acao_nested td{
+  width: 100px;
+  border: 1px solid #000;
+}
+
+.deletar-nested_sem_float{
+  width: 25px;
+  transform: scale(2);
+  z-index: 20;
+}
+
+.esconde_nested_radio{
+  display: none;
+}
+
+.exibe_nested_radio{
+  display: block;
+}
+
+.esconde_nested_campo{
+  display: none;
+}
+
+.exibe_nested_campo{
+  display: block;
+}
+
+/****************************** AND NESTED FOR *****************************/
+
+.alinha-campo-oculto{
+  padding: 0 20px 0 20px;
+}
+
+.center {
+  text-align: center;
+}
+
+
+
+.bloco_separador {
+  border-left: 1px solid #e5e6e7;
+  border-right: 1px solid #e5e6e7;
+  border-bottom: 1px solid #e5e6e7;
+  padding: 10px 16px 0 15px;
+}
+
+.titulo_bloco_separador{
+  background-color: #f3f3f3;
+  margin: -10px -16px 0 -15px;
+  padding: 5px 2px 5px 11px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #e5e6e7;
+  font-weight: 100;
+  font-family: inherit;
+  font-size: 18px;
+}
+
+.tabela_display{
+  width: 100%;
+  margin-top: 30px;
+  border: solid 1px #e5e6e7;
+}
+
+.tabela_display td{
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 10px
+}
+
+.b-r {
+  border-right: 0px solid #e7eaec;
+}
+
+.titulo_nested{
+  border-left: solid 1px #e7eaec;
+  border-right: solid 1px #e7eaec;
+  background-color: #e1f0f9;
+}
+
+.linha_nested{
+  border-left: solid 1px #e7eaec;
+  border-right: solid 1px #e7eaec;
+}
+
+// Head table fixed
+.tableFixHead { overflow-y: auto; height: 1000px; }
+
+table.border-black tr {
+  border: 2px solid black;
+}
+
+.painel{
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+  color: #8a6d3b;
+  padding: 15px;
+  border: 1px solid #faebcc;
+  border-radius: 4px;
+}
+
+.tabela_dados_plana{
+  border: 1px solid #e5e6e7;
+  width: 100%;
+}
+.tabela_dados_plana td{
+  padding-left: 10px;
+}
+
+.td_dados_plano{
+  width: 30%;
+  padding-top: 7px;
+}
+
+.td_dados_plano_tr{
+  height: 20px;
+  text-transform: uppercase;
+}
+
+.td_dados_plano_tr dt{
+  margin-top: 5px;
+}
+
+.div-floating {
+  height: 50px;
+  width: 150px;
+  position: fixed;
+  right: 10px;
+  z-index: 100;
+  // background-image: linear-gradient(#293846, #19aa8d);
+  background-image: image-url('bg_pontuacao.png');
+  vertical-align: inherit;
+  border-radius: 5px;
+  padding-top: 10px;
+  text-align: right;
+  color: white;
+  font-size: 1.6em;
+  display: none;
+  font-weight: bold;
+  // opacity: 0.7;
+  border: 1px solid #9cdcdb;
+  box-shadow: 3px 3px 7px #c4d4d4;
+}
+
+.div-dot-display {
+  height: 50px;
+  width: 150px;
+  position: fixed;
+  right: 60px;
+  z-index: 100;
+  // background-image: linear-gradient(#293846, #19aa8d);
+  background-image: image-url('bg_pontuacao.png');
+  vertical-align: inherit;
+  border-radius: 5px;
+  padding-top: 10px;
+  text-align: right;
+  color: white;
+  font-size: 1.6em;
+  display: none;
+  font-weight: bold;
+  // opacity: 0.7;
+  border: 1px solid #9cdcdb;
+  box-shadow: 3px 3px 7px #c4d4d4;
+}
+
+.validador{
+  color: #990000;
+  display: none;
+}
+
+// legenda fila de vagas
+#legend {
+  display: block;
+  float: left;
+  height: 16px;
+  width: 30px;
+  margin-right: 5px;
+  margin-left: 0;
+  border: 1px solid #999;
+}
+
+.tabela-historico{
+  font-size: 9px;
+  width: 100%;
+  border: 1px solid #e7eaec;
+  text-transform: capitalize;
+}
+
+.tabela-historico thead tr th{
+  padding: 4px;
+  text-transform: capitalize;
+}
+
+.tabela-historico tbody tr td{
+  padding: 4px;
+  text-transform: capitalize;
+}
+
+.print {
+  display:none;
+}
+  
+.no-print { 
+  display:block; 
+}
+
+// estilo para exibir imagem em tela cheia
+.fullscreen:-webkit-full-screen {
+  width: auto !important;
+  height: auto !important;
+  margin:auto !important;
+}
+
+.fullscreen:-moz-full-screen {
+  width: auto !important;
+  height: auto !important;
+  margin:auto !important;
+}
+
+.fullscreen:-ms-fullscreen {
+  width: auto !important;
+  height: auto !important;
+  margin:auto !important;
+}
+
+#tableMapaPdf {
+  font-family: 'Noto Sans SC', 'Noto Sans';
+  font-size: 14em;
+}
+
+.documentos_acao {
+  /*background-color: red;*/
+  width: 100%;
+  position: absolute;
+}
+.documentos_tooltip {
+  position:relative;
+  height: 100%;
+  background: #FFF; 
+  line-height:21px; 
+  padding:7px;
+  display: none;
+}

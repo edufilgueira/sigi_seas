@@ -1,0 +1,49 @@
+<%- model_class = Biblioteca::LocalPublicacao -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.biblioteca_local_publicacao', default: Biblioteca::LocalPublicacao.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.biblioteca_local_publicacao', default: Biblioteca::LocalPublicacao.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= link_to_new new_biblioteca_local_publicacao_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                                    <th><%= model_class.human_attribute_name(:descricao) %></th>
+                                    <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @biblioteca_local_publicacoes.each do |biblioteca_local_publicacao| %>
+                <tr>
+                                    <td><%= biblioteca_local_publicacao.descricao %></td>
+                                    <td>
+                    <%= link_to_show(biblioteca_local_publicacao) %>
+                    <%= link_to_edit(edit_biblioteca_local_publicacao_path(biblioteca_local_publicacao)) %>
+                    <%= link_to_delete(biblioteca_local_publicacao) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

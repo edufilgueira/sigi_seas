@@ -1,0 +1,136 @@
+<%- model_class = Socioeduk::GestaoVaga -%>
+<% content_for :title do %>
+  <%=  I18n.t('activerecord.models.socioeduk_gestao_vaga', default: Socioeduk::GestaoVaga.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <!-- <h5><%=  I18n.t('activerecord.models.socioeduk_gestao_vaga', default: Socioeduk::GestaoVaga.model_name.human.pluralize.titleize) %></h5> -->
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <h1><%= I18n.t('titles.socioeduk_gestao_vagas_acompanhar_solicitacao_vagas') %></h1>
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <table class="table table-hover table-sm sortable">
+              <thead>
+                <tr>
+                  <th>Juíz</th>
+                  <th><%= model_class.human_attribute_name(:nome) %></th>
+                  <th><%= model_class.human_attribute_name(:sexo) %></th>
+                  <!--<th><%= model_class.human_attribute_name(:data_infracao) %></th>
+                  <th><%= model_class.human_attribute_name(:data_apreensao) %></th>-->
+                  <th><%= model_class.human_attribute_name(:socioeduk_tipo_medida_socioeducativa_id) %></th>
+                  <!--<th><%= model_class.human_attribute_name(:email_solicitante) %></th>--->
+                  <th><%= model_class.human_attribute_name(:data_hora_solicitacao) %></th>
+                  <th>PRAZO</th>
+                  <th><%= model_class.human_attribute_name(:status) %></th>
+                  <th width="12%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @solicitacoes.each do |solicitacao| %>
+                  <%# pessoa = Pessoa.where(usuario_id: solicitacao.usuario_id)[0].nome %>
+                  <% pessoa = Pessoa.where(usuario_id: solicitacao.usuario_id).first %>
+                  <tr>
+                    <% nome_juiz = Pessoa.find(pessoa.juiz_id).nome if !pessoa.juiz_id.nil? %>
+                    <td><%= (pessoa.juiz_id? ? nome_juiz : pessoa.nome) %></td>
+                    <td><%= solicitacao&.nome.upcase %></td>
+                    <td>
+                      <% if solicitacao&.sexo == "M" %>
+                        <span class="btn btn-sm btn-circle" style="background-color:#2785d4"><i class="fa fa-male" aria-hidden="true" style="color: white;"></i></span>
+                      <% else %>
+                        <span class="btn btn-sm btn-circle" style="background-color:#e86cff"><i class="fa fa-female" aria-hidden="true" style="color: white;"></i></span>
+                      <% end %>
+                    </td>
+                    <!--<td><%#= solicitacao&.data_infracao %></td>
+                    <td><%#= solicitacao&.data_apreensao %></td>-->
+                    <td><%= solicitacao&.tipo_medida_socioeducativa&.descricao %></td>
+                    <!--<td><%#= solicitacao&.usuario&.email %></td>-->
+                    <td><div id="data_final<%= solicitacao.id %>" datafim="<%= l(solicitacao&.created_at) %>"><%= solicitacao&.created_at %></div></td>
+                    <td><div id="prazo<%= solicitacao.id %>" linha="<%= solicitacao.id %>"></div></td>
+                    <td>
+                      <% if (!solicitacao.documento_alterado) %>
+                        <%= solicitacao&.status == "aguardando"? content_tag(:span, solicitacao&.status&.upcase, class: 'label label-danger') : (solicitacao&.status&.upcase == "AUTORIZADA"? content_tag(:span, solicitacao&.status&.upcase, class: 'label label-primary') : content_tag(:span, solicitacao&.status&.upcase, class: 'label label-warning')) %>
+                      <% else %>
+                        <%= solicitacao&.status == "aguardando"? content_tag(:span, solicitacao&.status&.upcase, class: 'label label-warning') : (solicitacao&.status&.upcase == "AUTORIZADA"? content_tag(:span, solicitacao&.status&.upcase, class: 'label label-primary') : content_tag(:span, solicitacao&.status&.upcase, class: 'label label-warning')) %>
+                      <% end %>
+                    </td>
+                    <td>
+                      <div class="documentos_acao">
+                        <% if [nil, "pendente"].include?(solicitacao.status) %>
+                          <%= link_to('<i class="fas fa-user-plus"></i>'.html_safe, {controller: :solicitacao_vagas, action: :autorizar_vaga, id: solicitacao.id}, :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', class: "btn btn-sm btn-primary", title: "Autorizar Vaga", disabled: false) %>
+                          <%= link_to('<i class="fas fa-user-times"></i>'.html_safe, {controller: :solicitacao_vagas, action: :negar_vaga, id: solicitacao.id}, :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', class: "btn btn-outline btn-sm btn-danger dim", title: "Aguardar Vaga", disabled: false) %>
+                        <% end %>
+                        <% if (solicitacao.documento_alterado) %>
+                          <%= link_to('<i class="fas fa-user-plus"></i>'.html_safe, {controller: :solicitacao_vagas, action: :autorizar_vaga, id: solicitacao.id}, :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', class: "btn btn-sm btn-primary", title: "Autorizar Vaga", disabled: false) %>
+                          <%= link_to('<i class="fas fa-user-times"></i>'.html_safe, {controller: :solicitacao_vagas, action: :negar_vaga, id: solicitacao.id}, :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', class: "btn btn-outline btn-sm btn-danger dim", title: "Aguardar Vaga", disabled: false) %>
+                        <% end %>
+                        <%= link_to content_tag(:i, nil, class: "fas fa-search"), visualizar_solicitacao_vagas_socioeduk_gestao_vagas_path(id: solicitacao), class: 'btn btn-outline btn-sm btn-info dim', title: "Visualizar mais detalhes" %>
+                        <%= solicitacao.resposta_arquivo_processo? ? image_tag("pdf_preview", size: "25x30", style:"margin-bottom: 5px;", id: "documentos_download"+solicitacao.id.to_s, onclick: "ligar_tooltip("+solicitacao.id.to_s+")" ) : "" %>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr id="tr_tooltip<%= solicitacao.id %>" style="display:none">
+                    <td colspan="8" style="border-top: solid 1px #FFF;">
+                      <div id="documentos_tooltip<%= solicitacao.id %>" class="documentos_tooltip">
+                        <%= link_to solicitacao.resposta_arquivo_processo? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : "", solicitacao.resposta_arquivo_processo.url(:original, false), target: '_blank' %>
+                        <label><%= solicitacao.resposta_arquivo_processo_file_name ? solicitacao.resposta_arquivo_processo_file_name : "" %></label><br>
+                        <%= link_to solicitacao.resposta_arquivo_processo2? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : "", solicitacao.resposta_arquivo_processo2.url(:original, false), target: '_blank' %>
+                        <label><%= solicitacao.resposta_arquivo_processo2_file_name ? solicitacao.resposta_arquivo_processo2_file_name : "" %></label><br>
+                        <%= link_to solicitacao.resposta_arquivo_processo3? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : "", solicitacao.resposta_arquivo_processo3.url(:original, false), target: '_blank' %>
+                        <label><%= solicitacao.resposta_arquivo_processo3_file_name ? solicitacao.resposta_arquivo_processo3_file_name : "" %></label><br>
+                        <%= link_to solicitacao.resposta_arquivo_processo4? ? content_tag(:i, nil, {class: 'fas fa-file-pdf fa-2x', style: 'color: #d42e2e;'}) : "", solicitacao.resposta_arquivo_processo4.url(:original, false), target: '_blank' %>
+                        <label><%= solicitacao.resposta_arquivo_processo4_file_name ? solicitacao.resposta_arquivo_processo4_file_name : "" %></label>
+                        <button type="button" class="close" style="float: unset;"><span aria-hidden="true" onclick="ligar_tooltip(<%= solicitacao.id %>)">×</span></button>
+                      </div>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  function ligar_tooltip(id){
+    if($("#documentos_tooltip"+id).css("display") == "none"){
+      $("#tr_tooltip"+id).slideDown();
+      $("#documentos_tooltip"+id).slideDown();
+    }
+    else
+    {
+      $("#documentos_tooltip"+id).slideUp();
+      $("#tr_tooltip"+id).slideUp();
+    }
+  }
+
+  function iniciar_contador(){
+    $("table div").each(function() {
+      //data = 
+      //contador_regressivo(data, idElement);
+      linha = $(this).attr("linha");
+      if(linha != null){
+        var data = $('#data_final'+linha).attr('datafim');
+        contador_regressivo(data, "prazo"+linha, 24);
+      }
+    });
+  }
+
+  iniciar_contador();
+
+</script>

@@ -1,0 +1,113 @@
+<%= form_for(@socioeduk_jovem_recepcao, html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @socioeduk_jovem_recepcao %>
+  <%= render 'layouts/message_required' %>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_jovem %>
+      <%= f.collection_select :socioeduk_jovem_id, Socioeduk::Jovem.all, :id, :nome_concat_mae, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :antecedentes %>
+      <%= f.check_box :antecedentes, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :bo %>
+      <%= f.text_field :bo, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :responsavel %>
+      <%= f.check_box :responsavel, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :nome_responsavel %>
+      <%= f.text_field :nome_responsavel, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :telefone %>
+      <%= f.text_field :telefone, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :presenca_familiar_junto %>
+      <%= f.text_field :presenca_familiar_junto, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :condutor_nome %>
+      <%= f.text_field :condutor_nome, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :condutor_documento, 'Documento Funcional' %>
+      <%= f.text_field :condutor_documento, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :condutor_cargo %>
+      <%= f.text_field :condutor_cargo, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :datahora_apresentacao %>
+      <%= f.text_field :datahora_apresentacao, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :oficio %>
+      <%= f.check_box :oficio, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :documentos_pessoais %>
+      <%= f.check_box :documentos_pessoais, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :decisao %>
+      <%= f.check_box :decisao, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :corpo_delito %>
+      <%= f.check_box :corpo_delito, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :certidao_antecedente_criminal %>
+      <%= f.check_box :certidao_antecedente_criminal, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :kit_vestuario %>
+      <%= f.check_box :kit_vestuario, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10">
+      <%= f.hidden_field :recepcao_origem, value: 'Recepcionado' %>
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+      <%= link_to I18n.t('helpers.links.cancel'), socioeduk_jovem_recepcoes_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+<% end %>

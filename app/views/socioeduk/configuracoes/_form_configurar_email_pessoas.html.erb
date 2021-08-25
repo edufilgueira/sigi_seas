@@ -1,0 +1,162 @@
+<%= form_for(@configurar_email_nested, :url => {controller: :configuracoes, action: :configuracao_email_salvar}, html: { class: 'form-horizontal' }) do |f| %>
+  <%= render 'layouts/error_messages', model_name: @configurar_email_nested %>
+  <%#= render 'layouts/message_required' %>
+
+  <div class="form-group table-nested-title titulo_nested">
+    <div class="col-sm-1">
+      <%= f.add_nested_fields_link :configuracao_email_areas, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-xs btn-success" %>
+    </div>
+    <div class="col-sm-11">Areas</div>
+  </div>
+  <%= f.nested_fields_for :configuracao_email_areas do |ff| %>
+  <div id="configuracao_email_pessoa<%= ff.object.id %>"
+      class="form-group table-nested-identify linha_nested">
+      <div class="col-sm-12">
+        <%= ff.collection_select :area_id, Area.all, :id, :nome, {include_blank: '--selecione--'}, class: 'form-control', required: true %>
+      </div>
+  </div>
+  <% end %>
+
+  <% configuracao_email_areas = Socioeduk::ConfiguracaoEmailArea.where(socioeduk_configuracao_email_id: @id) %>
+    <% if configuracao_email_areas.length > 0 %>
+    <div class="row">
+      <div class="col-sm-12 b-r">
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col" style="width: 20px;">#</th>
+                <th scope="col">Area</th>
+                <th scope="col" style="width: 50px;">Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+              <% cont = 0 %>
+              <% configuracao_email_areas.each do |configuracao_email_area| %>
+              <% cont += 1 %>
+                <tr>
+                  <td><%= cont %></td>
+                  <td><%= configuracao_email_area.area.nome %></td>
+                  <td>
+                      <%= link_to('<i class="fa fa-trash"></i>'.html_safe, {controller: :configuracoes, action: :configuracao_email_area_destroy, id: configuracao_email_area.id }, class: "btn btn-xs btn-danger") %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+        </table>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group table-nested-title titulo_nested">
+    <div class="col-sm-1">
+      <%= f.add_nested_fields_link :configuracao_email_funcoes, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-xs btn-success" %>
+    </div>
+    <div class="col-sm-11">Função</div>
+  </div>
+  <%= f.nested_fields_for :configuracao_email_funcoes do |ff| %>
+  <div id="configuracao_email_pessoa<%= ff.object.id %>"
+      class="form-group table-nested-identify linha_nested">
+      <div class="col-sm-12">
+        <%= ff.collection_select :funcao_id, Funcao.all, :id, :nome, {include_blank: '--selecione--'}, class: 'form-control', required: true %>
+      </div>
+  </div>
+  <% end %>
+
+  <% configuracao_email_funcoes = Socioeduk::ConfiguracaoEmailFuncao.where(socioeduk_configuracao_email_id: @id) %>
+    <% if configuracao_email_funcoes.length > 0 %>
+    <div class="row">
+      <div class="col-sm-12 b-r">
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col" style="width: 20px;">#</th>
+                <th scope="col">Função</th>
+                <th scope="col" style="width: 50px;">Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+              <% cont = 0 %>
+              <% configuracao_email_funcoes.each do |configuracao_email_funcao| %>
+              <% cont += 1 %>
+                <tr>
+                  <td><%= cont %></td>
+                  <td><%= configuracao_email_funcao.funcao.nome %></td>
+                  <td>
+                      <%= link_to('<i class="fa fa-trash"></i>'.html_safe, {controller: :configuracoes, action: :configuracao_email_funcao_destroy, id: configuracao_email_funcao.id }, class: "btn btn-xs btn-danger") %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+        </table>
+      </div>
+    </div>
+  <% end %>
+  <hr>
+  <div id="email_pessoas">
+    <div class="form-group table-nested-title titulo_nested">
+      <div class="col-sm-1">
+        <%= f.add_nested_fields_link :configuracao_email_pessoas, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-xs btn-success" %>
+      </div>
+      <div class="col-sm-5">Identificação</div>
+      <div class="col-sm-6">Email</div>
+    </div>
+    <%= f.nested_fields_for :configuracao_email_pessoas do |ff| %>
+    <div id="configuracao_email_pessoa<%= ff.object.id %>"
+        class="form-group table-nested-identify linha_nested">
+        <div class="col-sm-6">
+          <%= ff.text_field :identificacao, class: 'form-control', required: true  %>
+        </div>
+        <div class="col-sm-6">
+          <%= ff.text_field :email, class: 'form-control', required: true  %>
+        </div>
+    </div>
+    <% end %>
+
+    <% configuracao_email_pessoas = Socioeduk::ConfiguracaoEmailPessoa.where(socioeduk_configuracao_email_id: @id) %>
+    <% if configuracao_email_pessoas.length > 0 %>
+      <div class="row">
+        <div class="col-sm-12 b-r">
+          <table class="table">
+              <thead class="thead-dark">
+              <tr>
+                  <th scope="col" style="width: 20px;">#</th>
+                  <th scope="col">Identificação</th>
+                  <th scope="col">Email</th>
+                  <th scope="col" style="width: 50px;">Ação</th>
+              </tr>
+              </thead>
+              <tbody>
+                  <% cont=0 %>
+                  <% configuracao_email_pessoas.each do |configuracao_email_pessoa| %>
+                  <% cont += 1%>
+                  <tr>
+                    <td><%= cont %></td>
+                    <td><%= configuracao_email_pessoa.identificacao %></td>
+                    <td><%= configuracao_email_pessoa.email %></td>
+                    <td>
+                        <%= link_to('<i class="fa fa-trash"></i>'.html_safe, {controller: :configuracoes, action: :configuracao_email_pessoa_destroy, id: configuracao_email_pessoa.id }, class: "btn btn-xs btn-danger") %>
+                    </td>
+                  </tr>
+              <% end %>
+              </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-12">
+      <%= f.hidden_field :id, value: @id %>
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with }, disabled: false, id: "botao_salvar" %>
+      <div class="btn btn-warning" href="#" onclick="close_modal_auxiliar()">Cancelar</div>
+    </div>
+  </div>
+
+
+<% end %>
+
+<script>
+  $('.modal-body').css('height',$(window).height()-130)
+  $('.modal-body').css('overflow','auto')
+</script>

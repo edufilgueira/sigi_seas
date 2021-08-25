@@ -1,0 +1,57 @@
+<%= form_for(@socioeduk_jovem_ocorrencia, html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @socioeduk_jovem_ocorrencia %>
+  <%= render 'layouts/message_required' %>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_jovem %>
+      <%= f.collection_select :socioeduk_jovem_id, Socioeduk::Jovem.all, :id, :nome_concat_mae, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%#= f.collection_select :socioeduk_tipo_ocorrencia_id, Socioeduk::TipoOcorrencia.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control', data: {remote: true, url: listar_ocorrencias_socioeduk_tipo_ocorrencias_path} %>
+      <%#= f.collection_radio_buttons :socioeduk_tipo_ocorrencia_id, Socioeduk::TipoOcorrencia.all, :id, :descricao, data: {remote: true, url: listar_ocorrencias_socioeduk_tipo_ocorrencias_path} %>
+      <label><%= f.label :socioeduk_tipo_ocorrencia %></label><br>
+      <label class="radio-inline" for="socioeduk_jovem_ocorrencia_socioeduk_tipo_ocorrencia_id_1">
+          <%= f.radio_button :socioeduk_tipo_ocorrencia_id, "1" %>  SAIDA
+      </label>
+      <label class="radio-inline" for="socioeduk_jovem_ocorrencia_socioeduk_tipo_ocorrencia_id_2">
+          <%= f.radio_button :socioeduk_tipo_ocorrencia_id, "2" %>  CONDUÇÃO
+      </label>
+      <label class="radio-inline" for="socioeduk_jovem_ocorrencia_socioeduk_tipo_ocorrencia_id_3">
+          <%= f.radio_button :socioeduk_tipo_ocorrencia_id, "3" %>  MOVIMENTAÇÃO
+      </label>
+      <label class="radio-inline" for="socioeduk_jovem_ocorrencia_socioeduk_tipo_ocorrencia_id_4">
+          <%= f.radio_button :socioeduk_tipo_ocorrencia_id, "4" %>  PROCESSUAL
+      </label>
+      <label class="radio-inline" for="socioeduk_jovem_ocorrencia_socioeduk_tipo_ocorrencia_id_5">
+          <%= f.radio_button :socioeduk_tipo_ocorrencia_id, "5" %>  RETORNO
+      </label>
+      <label class="radio-inline" for="socioeduk_jovem_ocorrencia_socioeduk_tipo_ocorrencia_id_6">
+          <%= f.radio_button :socioeduk_tipo_ocorrencia_id, "6" %>  ENTRADA
+      </label>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-8 col-offset-1">
+      <%= f.label :socioeduk_ocorrencia %>
+      <%= f.collection_select :socioeduk_ocorrencia, [], :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+    <div class="col-sm-2 col-offset-1">
+      <%= f.label :data_hora %>
+      <%= f.text_field :data_hora, class: 'form-control datetimepicker' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :descricao %>
+      <%= f.text_field :descricao, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10">
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+      <%= link_to I18n.t('helpers.links.cancel'), socioeduk_jovem_ocorrencias_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+<% end %>

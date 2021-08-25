@@ -1,0 +1,31 @@
+<li class="nav-header">
+  <div class="dropdown profile-element">
+    <span>
+      <%= image_tag 'seas.png', size: '150x60', class: 'img-responsive' %>
+    </span>
+    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+      <span class="clear">
+        <span class="block m-t-xs">
+          <strong class="font-bold"><%= current_usuario&.pessoa&.nome %></strong>
+        </span> <span class="text-muted text-xs block"><%= current_usuario&.cargo %> <b class="caret"></b></span>
+        <span class="block m-t-xs">
+          <strong class="font-bold">Módulo: <%= @selected_system&.upcase %></strong>
+        </span>
+      </span>
+    </a>
+    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+      <li><%= link_to('Alterar senha', edit_usuario_registration_path) %></li>
+      <li class="divider"></li>
+      <li><%= link_to('Sair', destroy_usuario_session_path, :method => :delete) %></li>
+    </ul>
+  </div>
+  <div class="logo-element">
+    <%= sigla_sistema %>
+  </div>
+</li>
+<li class="<%= 'active' if current_page?(root_path) %>">
+  <%= link_to root_path do %>
+    <i class="fas fa-th"></i><span class="nav-label">Módulos</span>
+  <%end%>
+</li>
+

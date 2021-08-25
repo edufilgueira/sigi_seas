@@ -1,0 +1,1 @@
+json.partial! "socioeduk_tipo_decisao_judiciais/socioeduk_tipo_decisao_judicial", socioeduk_tipo_decisao_judicial: @socioeduk_tipo_decisao_judicial

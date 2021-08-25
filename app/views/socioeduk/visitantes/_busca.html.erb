@@ -1,0 +1,18 @@
+<br>
+<%= search_form_for @q do |f| %>
+  <div class="form-group">
+    <div class="row">
+     <div class="col-sm-4">
+        <%= f.search_field :socioeduk_jovem_nome_cont, placeholder: "Nome Jovem", class: "form-control" %>
+     </div>
+     <div class="col-sm-4">
+        <%= f.search_field :nome_cont, placeholder: "Nome visitante", class: "form-control" %>
+     </div>
+     <div class="col-sm-2">
+        <%= f.search_field :numero_eq, placeholder: "N° Documento", class: "form-control" %>
+     </div> 
+      <%= f.submit 'Buscar', class: "btn btn-primary" %>
+      <%= link_to "Limpar",  socioeduk_visitantes_path, class:"btn btn-warning" %>
+    </div>
+  </div>
+<% end %>

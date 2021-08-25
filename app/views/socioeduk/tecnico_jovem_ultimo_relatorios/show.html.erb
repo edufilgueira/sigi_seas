@@ -1,0 +1,59 @@
+<% content_for :title do %>
+  <%= t('.title', default: @socioeduk_tecnico_jovem_ultimo_relatorio.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t('.title', default: @socioeduk_tecnico_jovem_ultimo_relatorio.class.model_name.human ) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                                    
+                  
+                  <th><%= Socioeduk::TecnicoJovemUltimoRelatorio.human_attribute_name :socioeduk_tecnico_jovem %></th>
+                                    
+                  
+                  <th><%= Socioeduk::TecnicoJovemUltimoRelatorio.human_attribute_name :socioeduk_sugestao_relatorio %></th>
+                                    
+                  
+                  <th><%= Socioeduk::TecnicoJovemUltimoRelatorio.human_attribute_name :data_inclusao %></th>
+                                    
+                  
+                  <th><%= Socioeduk::TecnicoJovemUltimoRelatorio.human_attribute_name :socioeduk_tipo_retorno %></th>
+                                    
+                  
+                  <th><%= Socioeduk::TecnicoJovemUltimoRelatorio.human_attribute_name :unidade_socioeducativa_inclusao_id %></th>
+                                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_tecnico_jovem_ultimo_relatorio.socioeduk_tecnico_jovem %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_tecnico_jovem_ultimo_relatorio.socioeduk_sugestao_relatorio %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_tecnico_jovem_ultimo_relatorio.data_inclusao %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_tecnico_jovem_ultimo_relatorio.socioeduk_tipo_retorno %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_tecnico_jovem_ultimo_relatorio.unidade_socioeducativa_inclusao_id %></td>
+                                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', socioeduk_tecnico_jovem_ultimo_relatorios_path, class: 'btn btn-default') %>
+<%= link_to 'Editar', edit_socioeduk_tecnico_jovem_ultimo_relatorio_path(@socioeduk_tecnico_jovem_ultimo_relatorio), class: 'btn btn-success' %>

@@ -1,0 +1,28 @@
+<%= form_for(@itens_solicitacao_patrimonio, html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @itens_solicitacao_patrimonio %>
+  <%= render 'layouts/message_required' %>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :solicitacao_patrimonio %>
+      <%= f.text_field :solicitacao_patrimonio, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :item_patrimonio %>
+      <%= f.text_field :item_patrimonio, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :quantidade_solicitada %>
+      <%= f.number_field :quantidade_solicitada, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10">
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+      <%= link_to I18n.t('helpers.links.cancel'), itens_solicitacao_patrimonios_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+<% end %>

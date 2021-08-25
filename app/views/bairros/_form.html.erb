@@ -1,0 +1,22 @@
+<%= form_for(@bairro, html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @bairro %>
+  <%= render 'layouts/message_required' %>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :cidade %>
+      <%= f.collection_select :cidade_id, Cidade.all, :id, :nome,  {prompt: 'Selecione'}, {class: 'form-control'} %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :nome %>
+      <%= f.text_field :nome, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10">
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+      <%= link_to I18n.t('helpers.links.cancel'), bairros_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+<% end %>

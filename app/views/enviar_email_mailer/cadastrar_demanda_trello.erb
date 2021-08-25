@@ -1,0 +1,4 @@
+<br>
+
+<p><b>Solicitado por:</b> <%= @dados_demanda&.usuario&.email.gsub('@seas.ce.gov.br', '').gsub('.', ' ').upcase %> (<%= @dados_demanda&.usuario&.email %>)</p>
+<p><b>Descrição:</b> <%= @dados_demanda&.descricao %></p>

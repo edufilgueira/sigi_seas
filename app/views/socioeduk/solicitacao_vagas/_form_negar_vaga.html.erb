@@ -1,0 +1,66 @@
+<%#= form_for(@solicitacao_vaga, :url => {controller: :solicitacao_vagas, action: :autorizar_solicitacao_vaga}, html: { class: 'form-horizontal' }) do |f| %>
+<%= form_for(:frm, :url => aguardar_solicitacao_vaga_socioeduk_solicitacao_vagas_path) do |f| %>
+  <%= render 'layouts/error_messages', model_name: @solicitacao_vaga %>
+  
+  <% if !flash[:notice].nil? %>
+    <div class="alert alert-danger" role="alert">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <div class="col-sm-6 col-offset-1">
+      <%= f.label :Nome_do_Juiz %><br>
+      <%= @pessoa.nome %>
+    </div>
+    <div class="col-sm-6 col-offset-1">
+      <%= f.label :Email_do_Juiz %><br>
+      <%= @usuario.email %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12 col-offset-1"><br></div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12 col-offset-1">
+      <%= f.label "Modelo do E-mail", class: "required" %>
+      <%= select_tag :configuracao_email_id, options_from_collection_for_select(@configuracao_emails, :id, :descricao), prompt: 'Selecione o modelo de email', class: 'form-control select2', data: {remote: true, url: socioeduk_configuracoes_buscar_por_id_configuracao_email_path}, required: true %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12 col-offset-1"><br></div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12 col-offset-1">
+      <%= f.hidden_field :id, value: @solicitacao_vaga.id %>
+      <%= f.hidden_field :nome_juiz, value: @pessoa.nome %>
+      <%#= link_to content_tag(:i, nil, class: "fas fa-user-plus"), autorizar_solicitacao_vaga_socioeduk_solicitacao_vagas_path(id: @solicitacao_vaga.id), class: 'btn btn-outline btn-sm btn-primary dim', title: "Autorizar Vaga" %>
+      <%= f.submit 'Enviar', class: 'btn btn-primary', data: { disable_with: disable_with } %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12 col-offset-1"><br></div>
+  </div>
+  <div class="form-group" style="padding: 0 15px 0 15px;">
+    <%= tinymce %> 
+    <%= text_area_tag :email_text, "Selecione um modelo de email", :class => "tinymce", :rows => 40, :cols => 40, style:"height: 394px" %>
+    <!--<div id="email_body" style="height: 328px; width: 100%; overflow: auto; border: solid 1px #e5e6e7; border-radius: 2px;"></div>-->
+  </div>
+<% end %>
+
+<script>
+  $('.maskdata').mask('00/00/0000', {reverse: false});
+  
+  $("#socioeduk_gestao_vaga_socioeduk_jovem_recepcao_id").change(function(){
+    desabilitar_botao();
+  });
+
+  function desabilitar_botao(){
+    var id = $('#socioeduk_gestao_vaga_socioeduk_jovem_recepcao_id').find(":selected").val();
+    var text = $('#socioeduk_gestao_vaga_data_movimentacao').val();
+    if(id > 0 && text != "")
+      $('#botao_salvar').prop("disabled", false);
+    else
+      $('#botao_salvar').prop("disabled", true);
+  }
+</script>

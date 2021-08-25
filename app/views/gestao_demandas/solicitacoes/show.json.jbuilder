@@ -1,0 +1,1 @@
+json.partial! "gestao_demandas_solicitacoes/gestao_demandas_solicitacao", gestao_demandas_solicitacao: @gestao_demandas_solicitacao

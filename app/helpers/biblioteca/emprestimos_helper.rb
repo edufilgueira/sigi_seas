@@ -1,0 +1,2 @@
+module Biblioteca::EmprestimosHelper
+end

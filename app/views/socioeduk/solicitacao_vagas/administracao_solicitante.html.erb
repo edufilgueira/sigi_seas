@@ -1,0 +1,58 @@
+<%- model_class = Socioeduk::SolicitacaoVaga -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_solicitacao_vaga', default: Socioeduk::SolicitacaoVaga.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <!-- <h5><%=  I18n.t('activerecord.models.socioeduk_solicitacao_vaga', default: Socioeduk::SolicitacaoVaga.model_name.human.pluralize.titleize) %> -->
+                </h5>
+                <div>
+                </div>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <h1><%= I18n.t('titles.socioeduk_solicitacao_vagas_administracao_solicitante') %></h1>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <%= render 'form_graficos' %>
+                    </div>
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li><a class="nav-link active" data-toggle="tab" href="#tab-1">Jovens nos Centros
+                                    Socioeducativos
+                                    <span
+                                        class="label label-primary"><%= @jovens_cumprindo_medida.flatten.length unless @jovens_cumprindo_medida.nil? %></span></a>
+                            </li>
+                            <li><a class="nav-link" data-toggle="tab" href="#tab-2">Jovens Aguardando Vaga <span
+                                        class="label label-danger"><%= @jovens_aguardando_vaga.length unless @jovens_aguardando_vaga.nil? %></span></a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" id="tab-1" class="tab-pane active">
+                                <div class="panel-body">
+                                    <%= render partial: 'jovens_em_cumprimento_medida' %>
+                                </div>
+                            </div>
+                            <div role="tabpanel" id="tab-2" class="tab-pane">
+                                <div class="panel-body">
+                                    <%= render partial: 'jovens_aguardando_vaga' %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

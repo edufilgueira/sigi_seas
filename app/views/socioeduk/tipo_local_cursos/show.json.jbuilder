@@ -1,0 +1,1 @@
+json.partial! "socioeduk_tipo_local_cursos/socioeduk_tipo_local_curso", socioeduk_tipo_local_curso: @socioeduk_tipo_local_curso

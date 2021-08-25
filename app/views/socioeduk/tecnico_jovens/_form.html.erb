@@ -1,0 +1,273 @@
+<%= form_for(@socioeduk_tecnico_jovem, html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @socioeduk_tecnico_jovem %>
+  <%= render 'layouts/message_required' %>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_jovem %>
+      <%= f.collection_select :socioeduk_jovem_id, Socioeduk::Jovem.all, :id, :nome, {include_blank: '--selecione--'}, class: 'form-control select2' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.check_box :tem_filhos %>
+      <%= f.label :tem_filhos %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :quantos_filhos %>
+      <%= f.number_field :quantos_filhos, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_convivio_familiar %>
+      <%= f.collection_select :socioeduk_convivio_familiar_id, Socioeduk::ConvivioFamiliar.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%#= f.label :codigo_familiar %>
+      <%#= f.text_field :codigo_familiar, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :cnis %>
+      <%= f.text_field :cnis, class: 'form-control' %>
+    </div>
+  </div>
+  <h2>Programa Social</h2>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.check_box :programas_sociais %>
+      <%= f.label :programas_sociais %>
+    </div>
+  </div>
+  <section id="form_programa_sociais" class="form-group">
+      <div class="col-sm-10">
+        <div class="form-group table-nested-title">
+          <div class="col-sm-11">Programa Social</div>
+          <div class="col-sm-1">Ação</div>
+        </div>
+        <%= f.nested_fields_for :socioeduk_tecnico_jovem_programa_sociais do |s| %>
+        <div id="programa_social<%= s.object.id %>" class="form-group table-nested-identify">
+            <div class="col-sm-11">
+              <%= s.collection_select :socioeduk_programa_social_id, Socioeduk::ProgramaSocial.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+            </div>
+          <div class="col-sm-1">
+            <table>
+              <tr>
+                <td>
+                  <a class="btn btn-xs btn-primary" title="Editar" style="float:left" href="javascript: void(0);" onclick="editarLinhaNested('programa_social<%= s.object.id %>')"><i class="fas fa-edit"></i></a>
+                </td>
+                <td>
+                  <%= s.hidden_field :id %>
+                  <%= s.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px; margin-bottom: 8px;'%>  
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <% end %>
+        <%= f.add_nested_fields_link :socioeduk_tecnico_jovem_programa_sociais, 'Adicionar Escolaridade' , class:"btn btn-success" %>
+     </div>   
+  </section>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_renda_familiar %>
+      <%= f.collection_select :socioeduk_renda_familiar_id, Socioeduk::RendaFamiliar.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_composicao_familiar %>
+      <%= f.collection_select :socioeduk_composicao_familiar_id, Socioeduk::ComposicaoFamiliar.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_plano_individual_atendimento %>
+      <%= f.collection_select :socioeduk_plano_individual_atendimento_id, Socioeduk::PlanoIndividualAtendimento.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+  </div>
+  <h2>Plano de Atendimento</h2>
+  <section class="form-group"> 
+    <div class="col-sm-10">
+      <div class="form-group table-nested-title">
+        <div class="col-sm-8">Unidade Socioeducativa</div>
+        <div class="col-sm-3">Data de Inclusão</div>
+        <div class="col-sm-1">Ação</div>
+      </div>
+      <%= f.nested_fields_for :socioeduk_tecnico_jovem_plano_atendimentos do |a| %>
+        <div id="plano_atendimento<%= a.object.id %>" class="form-group table-nested-identify">
+          <div  class="col-sm-8"> 
+            <%= a.collection_select :unidade_socioeducativa_inclusao_id, UnidadeSocioeducativa.all, :id, :nome, {include_blank: '--selecione--'}, onclick: 'datepicker()', class: 'form-control' %>
+          </div>
+          <div class="col-sm-3">
+            <%= a.text_field :data_inclusao, class: 'form-control datepicker' %>
+          </div>
+          <div class="col-sm-1">
+            <table>
+              <tr>
+                <td>
+                  <a class="btn btn-xs btn-primary" title="Editar" style="float:left" href="javascript: void(0);" onclick="editarLinhaNested('plano_atendimento<%= a.object.id %>')"><i class="fas fa-edit"></i></a>
+                </td>
+                <td>
+                  <%= a.hidden_field :id %>
+                  <%= a.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px; margin-bottom: 8px;'%>  
+                </td>
+              </tr>
+            </table>
+          </div> 
+        </div> 
+        <% end %>
+        <%= f.add_nested_fields_link :socioeduk_tecnico_jovem_plano_atendimentos, 'Adicionar Unidade' , class:"btn btn-success" %>
+    </div> 
+  </section> 
+    <h2>Ultimo Relatorio</h2>
+  <section class="form-group">
+    <div class="col-sm-10">
+      <div class="form-group table-nested-title">
+        <div class="col-sm-4">Realatório</div>
+        <div class="col-sm-2">Data Inclusão</div>
+        <div class="col-sm-2">Retorno</div>
+        <div class="col-sm-3">Unidade Socioeducativa</div>
+        <div class="col-sm-1">Ação</div>
+      </div>
+      <%= f.nested_fields_for :socioeduk_tecnico_jovem_ultimo_relatorios do |r| %>
+        <div id="ultimo_relatorio<%= r.object.id %>" class="form-group table-nested-identify">
+            <div class="col-sm-4">
+              <%= r.collection_select :socioeduk_sugestao_relatorio_id, Socioeduk::SugestaoRelatorio.all, :id, :descricao, {include_blank: '--selecione--'}, onclick: 'datepicker()', class: 'form-control' %>
+            </div>
+            <div class="col-sm-2">
+              <%= r.text_field :data_inclusao, class: 'form-control datepicker' %>
+            </div>
+            <div class="col-sm-2">
+              <%= r.collection_select :socioeduk_tipo_retorno_id, Socioeduk::TipoRetorno.all, :id, :descricao, {include_blank: '--selecione--'}, onclick: 'datepicker()', class: 'form-control' %>
+            </div>
+            <div class="col-sm-3">
+              <%= r.collection_select :unidade_socioeducativa_inclusao_id, UnidadeSocioeducativa.all, :id, :nome, {include_blank: '--selecione--'}, onclick: 'datepicker()', class: 'form-control' %>
+            </div> 
+            <div class="col-sm-1">
+            <table>
+              <tr>
+                <td>
+                  <a class="btn btn-xs btn-primary" title="Editar" style="float:left" href="javascript: void(0);" onclick="editarLinhaNested('ultimo_relatorio<%= r.object.id %>')"><i class="fas fa-edit"></i></a>
+                </td>
+                <td>
+                  <%= r.hidden_field :id %>
+                  <%= r.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px; margin-bottom: 8px;'%>  
+                </td>
+              </tr>
+            </table>
+          </div> 
+       </div>
+        <% end %>
+        <%= f.add_nested_fields_link :socioeduk_tecnico_jovem_ultimo_relatorios, 'Adicionar Relatorios' , class:"btn btn-success" %>
+    </div>
+  </section>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :nome_tecnico %>
+      <%= f.text_field :nome_tecnico, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :profissional_referencia %>
+      <%= f.text_field :profissional_referencia, class: 'form-control' %>
+    </div>
+  </div>
+  <h2>Visita Familiar</h2>
+  <section class="form-group">
+    <div class="col-sm-10">
+      <div class="form-group table-nested-title">
+        <div class="col-sm-4">Pessoa Visitada</div>
+        <div class="col-sm-3">Finalidade da Visita</div>
+        <div class="col-sm-2">Responsavel Realizacao</div>
+        <div class="col-sm-2">Data</div>
+        <div class="col-sm-1">Ação</div>
+      </div>
+      <%= f.nested_fields_for :socioeduk_tecnico_jovem_visita_familiares do |v| %>
+        <div id="visita_familiar<%= v.object.id %>" class="form-group table-nested-identify">
+          <div class="col-sm-4">
+            <%= v.text_field :pessoa_visitada, onblur: 'datepicker()', class: 'form-control' %>
+          </div>
+          <div class="col-sm-3">
+            <%= v.text_field :finalidade_visita, onblur: 'datepicker()', class: 'form-control' %>
+          </div>
+          <div class="col-sm-2">
+            <%= v.text_field :responsavel_realizacao, onblur: 'datepicker()', class: 'form-control' %>
+          </div>
+          <div class="col-sm-2" >
+            <%= v.text_field :data_visita, class: 'form-control datepicker' %>
+          </div>
+          <div class="col-sm-1">
+            <table>
+              <tr>
+                <td>
+                  <a class="btn btn-xs btn-primary" title="Editar" style="float:left" href="javascript: void(0);" onclick="editarLinhaNested('visita_familiar<%= v.object.id %>')"><i class="fas fa-edit"></i></a>
+                </td>
+                <td>
+                  <%= v.hidden_field :id %>
+                  <%= v.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px; margin-bottom: 8px;'%>  
+                </td>
+              </tr>
+            </table>
+          </div> 
+        </div>
+      <% end %>
+      <%= f.add_nested_fields_link :socioeduk_tecnico_jovem_visita_familiares, 'Adicionar Relatorios' , class:"btn btn-success" %>
+    </div>
+  </section>
+
+<h2>Família</h2>
+  <section class="form-group">
+    <div class="col-sm-10">
+      <div class="form-group table-nested-title">
+        <div class="col-sm-4">Nome</div>
+        <div class="col-sm-3">Escolaridade</div>
+        <div class="col-sm-2">Profissão</div>
+        <div class="col-sm-2">Tipo Parentesco</div>
+        <div class="col-sm-1">Ação</div>
+      </div>
+      <%= f.nested_fields_for :socioeduk_tecnico_jovem_familias do |v| %>
+        <div id="visita_familiar<%= v.object.id %>" class="form-group table-nested-identify">
+          <div class="col-sm-4">
+            <%= v.text_field :nome, class: 'form-control' %>
+          </div>
+          <div class="col-sm-3">
+            <%= v.collection_select :socioeduk_escolaridade_id, Socioeduk::Escolaridade.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+          </div>
+          <div class="col-sm-2">
+            <%= v.text_field :profissao, class: 'form-control' %>
+          </div>
+          <div class="col-sm-2">
+            <%= v.collection_select :socioeduk_tipo_parentesco_id, Socioeduk::TipoParentesco.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+          </div>
+          <div class="col-sm-1">
+            <table>
+              <tr>
+                <td>
+                  <a class="btn btn-xs btn-primary" title="Editar" style="float:left" href="javascript: void(0);" onclick="editarLinhaNested('visita_familiar<%= v.object.id %>')"><i class="fas fa-edit"></i></a>
+                </td>
+                <td>
+                  <%= v.hidden_field :id %>
+                  <%= v.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px; margin-bottom: 8px;'%>  
+                </td>
+              </tr>
+            </table>
+          </div> 
+        </div>
+      <% end %>
+      <%= f.add_nested_fields_link :socioeduk_tecnico_jovem_familias, 'Adicionar Relatorios' , class:"btn btn-success" %>
+    </div>
+  </section>
+  <div class= "form-group">
+    <div class="col-sm-10">
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+      <%= link_to I18n.t('helpers.links.cancel'), socioeduk_tecnico_jovens_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+<% end %>

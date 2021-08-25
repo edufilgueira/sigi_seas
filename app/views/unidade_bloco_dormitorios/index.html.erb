@@ -1,0 +1,53 @@
+<%- model_class = UnidadeBlocoDormitorio -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.unidade_bloco_dormitorio', default: UnidadeBlocoDormitorio.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.unidade_bloco_dormitorio', default: UnidadeBlocoDormitorio.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= link_to_new new_unidade_bloco_dormitorio_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                                    <th><%= model_class.human_attribute_name(:unidade_socioeducativa_bloco) %></th>
+                                    <th><%= model_class.human_attribute_name(:descricao) %></th>
+                                    <th><%= model_class.human_attribute_name(:capacidade_base) %></th>
+                                    <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @unidade_bloco_dormitorios.each do |unidade_bloco_dormitorio| %>
+                <tr>
+                                    <td><%= unidade_bloco_dormitorio.unidade_socioeducativa_bloco.descricao %></td>
+                                    <td><%= unidade_bloco_dormitorio.descricao %></td>
+                                    <td><%= unidade_bloco_dormitorio.capacidade_base %></td>
+                                    <td>
+                    <%= link_to_show(unidade_bloco_dormitorio) %>
+                    <%= link_to_edit(edit_unidade_bloco_dormitorio_path(unidade_bloco_dormitorio)) %>
+                    <%= link_to_delete(unidade_bloco_dormitorio) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

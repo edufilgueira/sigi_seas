@@ -1,0 +1,688 @@
+<%= form_for(@socioeduk_saude_jovem, html: { class: 'form-horizontal' }) do |f| %>
+<%#= render 'layouts/error_messages', model_name: @socioeduk_saude_jovem %>
+<%= render 'layouts/message_required' %>
+<h2>Informações pessoais</h2>
+<div class="form-group">
+    <div class="col-sm-12 col-offset-1">
+        <%= f.label :socioeduk_jovem %>
+        <%= f.collection_select :socioeduk_jovem_recepcao_id,  Socioeduk::Jovem.saude_jovem_nao_cadastrada, :id, :nome , {include_blank: '--selecione--'}, class: 'form-control', required: "true" %>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-5 col-offset-1">
+        <%= f.label :cartao_sus %>
+        <%= f.text_field :cartao_sus, class: 'form-control' %>
+    </div>
+    <div class="col-sm-5 col-offset-1">
+        <%= f.label :socioeduk_condicao_fisica %>
+        <%= f.collection_select :socioeduk_condicao_fisica_id, Socioeduk::CondicaoFisica.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-5 col-offset-1">
+        <%= f.label :altura_estimada %>
+        <%= f.number_field :altura_estimada, :value => 0, class: 'form-control' %>
+    </div>
+    <div class="col-sm-5 col-offset-1">
+        <%= f.label :peso_estimado %>
+        <%= f.number_field :peso_estimado, :value => 0, class: 'form-control' %>
+    </div>
+</div>
+<br>
+<hr>
+<h2>Antecedentes Obstétricos</h2>
+<div class="form-group">
+    <div class="col-sm-12 col-offset-1">
+        <%= f.check_box :gravida%>
+        <%= f.label :gravida %>
+    </div>
+</div>
+<div id="form_gravida" class="alinha-campo-oculto">
+    <div class="form-group">
+        <div class="col-sm-4 col-offset-1">
+            <%= f.label :data_ultima_menstruacao %>
+            <%= f.text_field :data_ultima_menstruacao, class: 'form-control maskdata' %>
+        </div>
+        <div class="col-sm-4 col-offset-1">
+            <%= f.label :data_provavel_parto %>
+            <%= f.text_field :data_provavel_parto, class: 'form-control maskdata' %>
+        </div>
+    </div>
+</div>
+<div id="form_mulher">
+    <div class="form-group">
+        <div class="col-sm-12 col-offset-1">
+            <div class="form-group">
+                <div class="col-sm-3 col-offset-1">
+                    <%= f.label :qtd_gestacoes %>
+                    <%= f.number_field :qtd_gestacoes, in: 0.0..15.0, :value => 0, class: 'form-control' %>
+                </div>
+                <div class="col-sm-3 col-offset-1">
+                    <%= f.label :qtd_parto_normal %>
+                    <%= f.number_field :qtd_parto_normal, in: 0.0..15.0, :value => 0, class: 'form-control' %>
+                </div>
+                <div class="col-sm-3 col-offset-1">
+                    <%= f.label :qtd_cesariana %>
+                    <%= f.number_field :qtd_cesariana, in: 0.0..15.0, :value => 0, class: 'form-control' %>
+                </div>
+                <div class="col-sm-3 col-offset-1">
+                    <%= f.label :qtd_aborto %>
+                    <%= f.number_field :qtd_aborto, in: 0.0..15.0, :value => 0, class: 'form-control' %>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-3 col-offset-1">
+                    <%= f.label :qtd_filhos_vivos %>
+                    <%= f.number_field :qtd_filhos_vivos, in: 0.0..15.0, :value => 0, class: 'form-control' %>
+                </div>
+                <div class="col-sm-3 col-offset-1">
+                    <%= f.label :filhos_deficiente_fisico %>
+                    <%= f.number_field :filhos_deficiente_fisico, in: 0.0..15.0, :value => 0, class: 'form-control' %>
+                </div>
+                <div class="col-sm-6 col-offset-1">
+                    <%= f.label :metodo_contraceptivo %><br>
+                    <%= f.check_box :metodo_contraceptivo %>
+                </div>
+            </div>
+            <br><br>
+            <div class="col-sm-12 b-r nested-row">
+                <div class="form-group table-nested-title">
+                    <div class="col-sm-5">Tipo do método contraceptivo</div>
+                    <div class="col-sm-6">Outros métodos</div>
+                    <div class="col-sm-1">Ação</div>
+                </div>
+                <%= f.nested_fields_for :socioeduk_saude_jovens_metodos_contraceptivos do |form| %>
+                <div id="metodos_contraceptivo<%= form.object.id %>" class="form-group table-nested-identify">
+                    <div class="col-sm-5">
+                        <%= form.collection_select(:socioeduk_metodo_contraceptivo_id, Socioeduk::MetodoContraceptivo.all(), :id, :descricao, { :prompt => 'Selecione um item' }, class: 'form-control') %>
+                    </div>
+                    <div class="col-sm-6">
+                        <%= form.text_field :outros_metodos, class: 'form-control' %>
+                    </div>
+                    <div class="col-sm-1">
+                        <table>
+                            <tr>
+                                <td>
+                                    <a class="btn btn-xs btn-primary" title="Editar" href="javascript: void(0);"
+                                        onclick="editarLinhaNested('metodos_contraceptivo<%= form.object.id %>')"><i
+                                            class="fas fa-edit"></i></a>
+                                </td>
+                                <td>
+                                    <%= form.hidden_field :id %>
+                                    <%= form.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px;margin-bottom: 8px;' %>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <% end %>
+                <%= f.add_nested_fields_link :socioeduk_saude_jovens_metodos_contraceptivos, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-success" %>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<hr>
+<h2>Saúde Mental</h2>
+<div class="form-group">
+    <div class="col-sm-12 col-offset-1">
+        <%= f.check_box :usou_drogas %>
+        <%= f.label :usou_drogas %>
+    </div>
+</div>
+<div id="form_usou_drogas" class="alinha-campo-oculto">
+    <div class="col-sm-12 b-r nested-row">
+        <div class="form-group table-nested-title">
+            <div class="col-sm-3 center">Entorpecentes</div>
+            <div class="col-sm-1 center">Idade <br> Iniciou</div>
+            <div class="col-sm-1 center">Idade <br> Parou</div>
+            <div class="col-sm-1 center">Frequencia</div>
+            <div class="col-sm-2 center">Auto <br> consideração</div>
+            <div class="col-sm-1 center">Fez <br> tratamento?</div>
+            <div class="col-sm-2 center">Tipo <br> tratamento </div>
+            <div class="col-sm-1 center">Ação</div>
+        </div>
+        <%= f.nested_fields_for :socioeduk_saude_jovens_substancias_utilizadas do |form| %>
+        <div id="substancias_utilizada<%= form.object.id %>" class="form-group table-nested-identify">
+            <div class="col-sm-3">
+                <%= form.collection_select(:socioeduk_entorpecente_id, Socioeduk::Entorpecente.all(), :id, :descricao, { :prompt => 'Selecione um item' }, class: 'form-control' ) %>
+            </div>
+            <div class="col-sm-1">
+                <%= form.number_field :iniciou_com_idade, in: 0.0..17.0, :value => 0, class: 'form-control' %>
+            </div>
+            <div class="col-sm-1">
+                <%= form.number_field :parou_com_idade, in: 0.0..17.0, :value => 0, class: 'form-control' %>
+            </div>
+            <div class="col-sm-1">
+                <%= form.number_field :frequencia, in: 0.0..200.0, :value => 0, class: 'form-control' %>
+            </div>
+            <div class="col-sm-2">
+                <%= form.collection_select(:socioeduk_tipo_auto_consideracao_id, Socioeduk::TipoAutoConsideracao.all(), :id, :descricao, { :prompt => 'Selecione um item' }, class: 'form-control' ) %>
+            </div>
+            <div class="col-sm-1">
+                <%= form.check_box :realizou_tratamento, class: 'form-control' %>
+            </div>
+            <div class="col-sm-2">
+                <%= form.collection_select(:socioeduk_tipo_tratamento_id, Socioeduk::TipoTratamento.all(), :id, :descricao, { :prompt => 'Selecione um item' }, class: 'form-control' ) %>
+            </div>
+            <div class="col-sm-1">
+                <table>
+                    <tr>
+                        <td>
+                            <a class="btn btn-xs btn-primary" title="Editar" href="javascript: void(0);"
+                                onclick="editarLinhaNested('substancias_utilizada<%= form.object.id %>')"><i
+                                    class="fas fa-edit"></i></a>
+                        </td>
+                        <td>
+                            <%= form.hidden_field :id %>
+                            <%= form.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px;margin-bottom: 8px;'%>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <% end %>
+        <%= f.add_nested_fields_link :socioeduk_saude_jovens_substancias_utilizadas, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-success" %>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+        <%= f.check_box :integrante_familia_usa_drogas%>
+        <%= f.label :integrante_familia_usa_drogas %>
+    </div>
+</div>
+<div id="form_integrante_familia_usa_drogas" class="alinha-campo-oculto">
+    <div class="col-sm-12 b-r nested-row">
+        <div class="form-group table-nested-title">
+            <div class="col-sm-11">Parentesco</div>
+            <div class="col-sm-1">Ação</div>
+        </div>
+        <%= f.nested_fields_for :socioeduk_saude_jovens_tipo_parentescos do |form| %>
+        <div id="tipo_parentesco<%= form.object.id %>" class="form-group table-nested-identify">
+            <div class="col-sm-11">
+                <%= form.collection_select(:socioeduk_tipo_parentesco_id, Socioeduk::TipoParentesco.all(), :id, :descricao, { :prompt => 'Selecione um item' }, class: 'form-control' ) %>
+            </div>
+            <div class="col-sm-1">
+                <table>
+                    <tr>
+                        <td>
+                            <a class="btn btn-xs btn-primary" title="Editar" href="javascript: void(0);"
+                                onclick="editarLinhaNested('tipo_parentesco<%= form.object.id %>')"><i
+                                    class="fas fa-edit"></i></a>
+                        </td>
+                        <td>
+                            <%= form.hidden_field :id %>
+                            <%= form.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px;margin-bottom: 8px;'%>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <% end %>
+        <%= f.add_nested_fields_link :socioeduk_saude_jovens_tipo_parentescos, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-success" %>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-12 col-offset-1">
+        <%= f.check_box :historico_tratamento_psiquiatrico %>
+        <%= f.label :historico_tratamento_psiquiatrico %>
+    </div>
+</div>
+<div id="form_historico_tratamento_psiquiatrico" class="alinha-campo-oculto">
+    <div class="form-group">
+        <div class="col-sm-12 col-offset-1">
+            <div class="form-group">
+                <div class="col-sm-4 col-offset-1">
+                    <%= f.label :local_tratamento_psiquiatrico_id %>
+                    <%= f.collection_select :local_tratamento_psiquiatrico_id, Socioeduk::LocalTratamento.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control maskdata' %>
+                </div>
+                <div class="col-sm-6 col-offset-1">
+                    <%= f.label :outro_local_psiquiatrico %>
+                    <%= f.text_field :outro_local_psiquiatrico, class: 'form-control' %>
+                </div>
+                <div class="col-sm-2 col-offset-1">
+                    <%= f.label :tempo_psiquiatrico %>
+                    <%= f.text_field :tempo_psiquiatrico, class: 'form-control maskdata' %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-12 col-offset-1">
+        <%= f.check_box :hipotese_diagnostica_transtorno_mental %>
+        <%= f.label :hipotese_diagnostica_transtorno_mental %>
+    </div>
+</div>
+<div id="form_hipotese_diagnostica_transtorno_mental" class="alinha-campo-oculto">
+    <div class="form-group">
+        <div class="col-sm-12 col-offset-1">
+            <div class="form-group">
+                <div class="col-sm-4 col-offset-1">
+                    <%= f.label :local_tratamento_transtorno_mental_id %>
+                    <%= f.collection_select :local_tratamento_transtorno_mental_id, Socioeduk::LocalTratamento.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+                </div>
+                <div class="col-sm-6 col-offset-1">
+                    <%= f.label :outro_local_transtorno_mental %>
+                    <%= f.text_field :outro_local_transtorno_mental, class: 'form-control' %>
+                </div>
+                <div class="col-sm-2 col-offset-1">
+                    <%= f.label :tempo_transtorno_mental %>
+                    <%= f.text_field :tempo_transtorno_mental, class: 'form-control maskdata' %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-12 col-offset-1">
+        <%= f.check_box :medicamento_controlado %>
+        <%= f.label :medicamento_controlado %>
+    </div>
+</div>
+<div id="form_medicamento_controlado" class="alinha-campo-oculto">
+    <div class="col-sm-12 b-r nested-row">
+        <div class="form-group table-nested-title">
+            <div class="col-sm-11">Medicamento controlado</div>
+            <div class="col-sm-1">Ação</div>
+        </div>
+        <%= f.nested_fields_for :socioeduk_saude_jovens_tipo_medicamento_controlados do |form| %>
+        <div id="tipo_medicamento_controlado<%= form.object.id %>" class="form-group table-nested-identify">
+            <div class="col-sm-11">
+                <%= form.collection_select(:socioeduk_tipo_medicamento_controlado, Socioeduk::TipoMedicamentoControlado.all(), :id, :descricao, { :prompt => 'Selecione um item' }, class: 'form-control' ) %>
+            </div>
+            <div class="col-sm-1">
+                <table>
+                    <tr>
+                        <td>
+                            <a class="btn btn-xs btn-primary" title="Editar" href="javascript: void(0);"
+                                onclick="editarLinhaNested('tipo_medicamento_controlado<%= form.object.id %>')"><i
+                                    class="fas fa-edit"></i></a>
+                        </td>
+                        <td>
+                            <%= form.hidden_field :id %>
+                            <%= form.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px;margin-bottom: 8px;'%>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <% end %>
+        <%= f.add_nested_fields_link :socioeduk_saude_jovens_tipo_medicamento_controlados, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-success" %>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-12 col-offset-1">
+        <%= f.check_box :tentativa_suicidio %>
+        <%= f.label :tentativa_suicidio %>
+    </div>
+</div>
+<div id="form_tentativa_suicidio" class="alinha-campo-oculto">
+    <div class="form-group">
+        <div class="col-sm-4 col-offset-1">
+            <%= f.label :qtd_tentativas_suicidio %>
+            <%= f.number_field :qtd_tentativas_suicidio,in: 0.0..30.0, :value => 0, class: 'form-control' %>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2 col-offset-1">
+            <%= f.label :datas_tentativas_tentativas_suicidio %>
+            <%= f.text_field :datas_tentativas_tentativas_suicidio, class: 'form-control maskdata' %>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+        <%= f.check_box :tentativa_suicidio_familiar %>
+        <%= f.label :tentativa_suicidio_familiar %>
+    </div>
+</div>
+<div id="form_tentativa_suicidio_familiar" class="alinha-campo-oculto">
+    <div class="col-sm-12 b-r nested-row">
+        <div class="form-group table-nested-title">
+            <div class="col-sm-11">Parentesco</div>
+            <div class="col-sm-1">Ação</div>
+        </div>
+        <%= f.nested_fields_for :socioeduk_saude_jovens_tipo_parentesco_suicidios do |form| %>
+        <div id="tipo_parentesco_suicidio<%= form.object.id %>" class="form-group table-nested-identify">
+            <div class="col-sm-11">
+                <%= form.collection_select(:socioeduk_tipo_parentesco_id, Socioeduk::TipoParentesco.all(), :id, :descricao, { :prompt => 'Selecione um item' }, class: 'form-control' ) %>
+            </div>
+            <div class="col-sm-1">
+                <table>
+                    <tr>
+                        <td>
+                            <a class="btn btn-xs btn-primary" title="Editar" href="javascript: void(0);"
+                                onclick="editarLinhaNested('tipo_parentesco_suicidio<%= form.object.id %>')"><i
+                                    class="fas fa-edit"></i></a>
+                        </td>
+                        <td>
+                            <%= form.hidden_field :id %>
+                            <%= form.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px;margin-bottom: 8px;'%>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <% end %>
+        <%= f.add_nested_fields_link :socioeduk_saude_jovens_tipo_parentesco_suicidios, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-success" %>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+        <%= f.check_box :doenca_mental_familiar %>
+        <%= f.label :doenca_mental_familiar %>
+    </div>
+</div>
+<div id="form_doenca_mental_familiar" class="alinha-campo-oculto">
+    <div class="col-sm-12 b-r nested-row">
+        <div class="form-group table-nested-title">
+            <div class="col-sm-11">Doença mental na família</div>
+            <div class="col-sm-1">Ação</div>
+        </div>
+        <%= f.nested_fields_for :socioeduk_saude_jovens_tipo_parentesco_doenca_mentais do |form| %>
+        <div id="tipo_parentesco_doenca_mental<%= form.object.id %>" class="form-group table-nested-identify">
+            <div class="col-sm-11">
+                <%= form.collection_select(:socioeduk_tipo_parentesco_id, Socioeduk::TipoParentesco.all(), :id, :descricao, { :prompt => 'Selecione um item' }, class: 'form-control' ) %>
+            </div>
+            <div class="col-sm-1">
+                <table>
+                    <tr>
+                        <td>
+                            <a class="btn btn-xs btn-primary" title="Editar" href="javascript: void(0);"
+                                onclick="editarLinhaNested('tipo_parentesco_doenca_mental<%= form.object.id %>')"><i
+                                    class="fas fa-edit"></i></a>
+                        </td>
+                        <td>
+                            <%= form.hidden_field :id %>
+                            <%= form.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px;margin-bottom: 8px;'%>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <% end %>
+        <%= f.add_nested_fields_link :socioeduk_saude_jovens_tipo_parentesco_doenca_mentais, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-success" %>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+        <%= f.label :cid_mental_id %>
+        <%= f.collection_select :cid_mental_id, Socioeduk::Cid.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+        <%= f.label :diagnostico_mental %>
+        <%= f.text_field :diagnostico_mental, class: 'form-control' %>
+    </div>
+</div>
+<br>
+<hr>
+<h2>Saúde Clinica</h2>
+<div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+        <%= f.check_box :historico_doenca_tratamento %>
+        <%= f.label :historico_doenca_tratamento %>
+    </div>
+</div>
+<div id="form_historico_doenca_tratamento" class="alinha-campo-oculto">
+    <div class="col-sm-12 b-r nested-row">
+        <div class="form-group table-nested-title center">
+            <div class="col-sm-3">Cid</div>
+            <div class="col-sm-1">Odontológico</div>
+            <div class="col-sm-2">Diagnóstico</div>
+            <div class="col-sm-3">Local de tratamento</div>
+            <div class="col-sm-2">Outro local</div>
+            <div class="col-sm-1">Ação</div>
+        </div>
+        <%= f.nested_fields_for :socioeduk_saude_jovem_saude_clinicas do |form| %>
+        <div id="saude_clinica<%= form.object.id %>" class="form-group table-nested-identify">
+            <div class="col-sm-3">
+                <%= form.collection_select(:socioeduk_cid_id, Socioeduk::Cid.all(), :id, :descricao, { :prompt => 'Selecione um item' }, class: 'form-control' ) %>
+            </div>
+            <div class="col-sm-1">
+                <%= form.check_box :odontologico_clinico, class: 'form-control' %>
+            </div>
+            <div class="col-sm-2">
+                <%= form.text_field :diagnostico, class: 'form-control' %>
+            </div>
+            <div class="col-sm-3">
+                <%= form.collection_select(:socioeduk_local_tratamento_id, Socioeduk::LocalTratamento.all(), :id, :descricao, { :prompt => 'Selecione um item' }, class: 'form-control' ) %>
+            </div>
+            <div class="col-sm-2">
+                <%= form.text_field :outro_local_tratamento, class: 'form-control' %>
+            </div>
+            <div class="col-sm-1">
+                <table>
+                    <tr>
+                        <td>
+                            <a class="btn btn-xs btn-primary" title="Editar" href="javascript: void(0);"
+                                onclick="editarLinhaNested('saude_clinica<%= form.object.id %>')"><i
+                                    class="fas fa-edit"></i></a>
+                        </td>
+                        <td>
+                            <%= form.hidden_field :id %>
+                            <%= form.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px;margin-bottom: 8px;'%>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <% end %>
+        <%= f.add_nested_fields_link :socioeduk_saude_jovem_saude_clinicas, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-success" %>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+        <%= f.check_box :medicamento_doenca_cronica%>
+        <%= f.label :medicamento_doenca_cronica %>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+        <%= f.check_box :uso_protese %>
+        <%= f.label :uso_protese %>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+        <%= f.check_box :uso_ortese %>
+        <%= f.label :uso_ortese %>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+        <%= f.check_box :fez_cirurgia %>
+        <%= f.label :fez_cirurgia %>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+        <%= f.check_box :tem_fratura %>
+        <%= f.label :tem_fratura %>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+        <%= f.check_box :tem_alergia_alimentar %>
+        <%= f.label :tem_alergia_alimentar %>
+    </div>
+</div>
+<div id="form_tem_alergia_alimentar" class="alinha-campo-oculto">
+    <div class="form-group">
+        <div class="col-sm-10 col-offset-1">
+            <%= f.label :descricao_alergia %>
+            <%= f.text_field :descricao_alergia, class: 'form-control' %>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+        <%= f.check_box :tem_alergia_medicamentosa %>
+        <%= f.label :tem_alergia_medicamentosa %>
+    </div>
+</div>
+<div id="form_tem_alergia_medicamentosa" class="alinha-campo-oculto">
+    <div class="form-group">
+        <div class="col-sm-10 col-offset-1">
+            <%= f.label :descricao_alergia_medicamentosa %>
+            <%= f.text_field :descricao_alergia_medicamentosa, class: 'form-control' %>
+        </div>
+    </div>
+</div>
+<br>
+<div class="col-sm-12 b-r nested-row">
+    <div class="form-group table-nested-title">
+        <div class="col-sm-11">Vacinação</div>
+        <div class="col-sm-1">Ação</div>
+    </div>
+    <%= f.nested_fields_for :socioeduk_saude_jovem_vacinas do |form| %>
+    <div id="vacina<%= form.object.id %>" class="form-group table-nested-identify">
+        <div class="col-sm-8">
+            <%= form.collection_select(:socioeduk_tipo_vacina_id, Socioeduk::TipoVacina.all(), :id, :descricao, { :prompt => 'Selecione um item' }, class: 'form-control' ,onClick:"datepicker(this)") %>
+        </div>
+        <div class="col-sm-3">
+            <%= form.text_field :data_vacinacao, class: 'form-control maskdata'%>
+        </div>
+        <div class="col-sm-1">
+            <table>
+                <tr>
+                    <td>
+                        <a class="btn btn-xs btn-primary" title="Editar" href="javascript: void(0);"
+                            onclick="editarLinhaNested('vacina<%= form.object.id %>')"><i class="fas fa-edit"></i></a>
+                    </td>
+                    <td>
+                        <%= form.hidden_field :id %>
+                        <%= form.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px;margin-bottom: 8px;'%>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <% end %>
+    <%= f.add_nested_fields_link :socioeduk_saude_jovem_vacinas, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-success" %>
+</div>
+<!--<br><br>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :outras_vacinas_recebidas %>
+      <%= f.text_field :outras_vacinas_recebidas, class: 'form-control' %>
+    </div>
+  </div>-->
+<br>
+<div class="col-sm-12 b-r nested-row">
+    <div class="form-group table-nested-title">
+        <div class="col-sm-11">Exames</div>
+        <div class="col-sm-1">Ação</div>
+    </div>
+    <%= f.nested_fields_for :socioeduk_saude_jovem_exames do |form| %>
+    <div id="exame<%= form.object.id %>" class="form-group table-nested-identify">
+        <div class="col-sm-6">
+            <%= form.collection_select(:socioeduk_tipo_exame_id, Socioeduk::TipoExame.all(), :id, :descricao, { :prompt => 'Selecione um item' }, class: 'form-control', onClick:"datepicker(this)") %>
+        </div>
+        <div class="col-sm-5">
+            <%= form.text_field :data_exame, class: 'form-control maskdata'%>
+        </div>
+        <div class="col-sm-1">
+            <table>
+                <tr>
+                    <td>
+                        <a class="btn btn-xs btn-primary" title="Editar" href="javascript: void(0);"
+                            onclick="editarLinhaNested('exame<%= form.object.id %>')"><i class="fas fa-edit"></i></a>
+                    </td>
+                    <td>
+                        <%= form.hidden_field :id %>
+                        <%= form.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px;margin-bottom: 8px;'%>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <% end %>
+    <%= f.add_nested_fields_link :socioeduk_saude_jovem_exames, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-success" %>
+</div>
+<!--<br><br>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :outros_exames %>
+      <%= f.text_field :outros_exames, class: 'form-control' %>
+    </div>
+  </div>-->
+<br>
+<div class="col-sm-12 b-r nested-row">
+    <div class="form-group table-nested-title">
+        <div class="col-sm-11">Atendimento</div>
+        <div class="col-sm-1 left">Ação</div>
+    </div>
+    <section>
+
+    </section>
+    <%= f.nested_fields_for :socioeduk_saude_jovem_atendimentos do |form| %>
+
+    <div class="row ">
+        <div class="col-sm-11">
+            <div id="atendimento<%= form.object.id %>" class="form-group table-nested-identify col-sm-12">
+                <div class="col-sm-3">
+                    <%= f.label :socioeduk_tipo_atendimento_id, 'Tipo de atendimento' %>
+                    <%= form.collection_select(:socioeduk_tipo_atendimento_id, Socioeduk::TipoAtendimento.all(), :id, :descricao, { :prompt => 'Selecione um item' }, class: 'form-control' ,onClick:"datepicker(this)") %>
+                    <section>
+                </div>
+                <div class="col-sm-3">
+                    <%= f.label :data_atendimento, 'Data atendimento' %>
+                    <%= form.text_field :data_atendimento, class: 'form-control maskdata'%>
+                </div>
+                <div class="col-sm-3">
+                    <%= f.label :local_atendimento, 'Local Atendimento' %>
+                    <%= form.collection_select(:local_atendimento, Socioeduk::LocalAtendimento.all(), :id, :descricao, { :prompt => 'Selecione um item' }, class: 'form-control' ,onClick:"datepicker(this)") %>
+                </div>
+                <div class="col-sm-3">
+                    <%= f.label :outro_local_atendimento, 'Outro local' %>
+                    <%= form.text_field :outro_local_atendimento, class: 'form-control'%>
+                </div>
+                <div class="col-sm-5">
+                    <%= f.label :socioeduk_cid_id, 'CID' %>
+                    <%= form.collection_select(:socioeduk_cid_id, Socioeduk::Cid.all(), :id, :descricao, { :prompt => 'Selecione um item' }, class: 'form-control' ,onClick:"datepicker(this)") %>
+                </div>
+                <div class="col-sm-7">
+                    <%= f.label :diagnostico, 'Diagnóstico' %>
+                    <%= form.text_field :diagnostico, class: 'form-control'%>
+                </div>
+                <div class="col-sm-6">
+                    <%= f.label :nome_profissional, 'Nome do profissional' %>
+                    <%= form.text_field :nome_profissional, class: 'form-control'%>
+                </div>
+                <div class="col-sm-6">
+                    <%= f.label :descricao_atendimento, 'Descrição atendimento' %>
+                    <%= form.text_field :descricao_atendimento, class: 'form-control'%>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-1 right"></div>
+        <table>
+            <tr>
+                <td>
+                    <a class="btn btn-xs btn-primary" title="Editar" href="javascript: void(0);"
+                        onclick="editarLinhaNested('atendimento<%= form.object.id %>')"><i class="fas fa-edit"></i></a>
+                </td>
+                <td>
+                    <%= form.hidden_field :id %>
+                    <%= form.check_box :_destroy, class: 'deletar-nested', style: 'margin-left: 5px;margin-bottom: 8px;'%>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<hr>
+<% end %>
+<%= f.add_nested_fields_link :socioeduk_saude_jovem_atendimentos, '<i class="fas fa-plus-circle"></i>'.html_safe , class:"btn btn-success" %>
+</div>
+<div class="form-group">
+    <div class="col-sm-10">
+        <br>
+        <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+        <%= link_to I18n.t('helpers.links.cancel'), socioeduk_saude_jovens_path, class: 'btn btn-warning' %>
+    </div>
+</div>
+
+<% end %>

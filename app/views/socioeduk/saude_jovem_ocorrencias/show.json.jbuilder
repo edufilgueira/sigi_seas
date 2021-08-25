@@ -1,0 +1,1 @@
+json.partial! "socioeduk_saude_jovem_ocorrencias/socioeduk_saude_jovem_ocorrencia", socioeduk_saude_jovem_ocorrencia: @socioeduk_saude_jovem_ocorrencia

@@ -1,0 +1,50 @@
+<%= form_for(@socioeduk_jovem_recepcao, html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @socioeduk_jovem_recepcao %>
+  <%= render 'layouts/message_required' %>
+  <div class="form-group">
+    <div class="col-sm-5 col-offset-1">
+      <%= f.label :socioeduk_jovem %>
+      <%= f.collection_select :socioeduk_jovem_id, Socioeduk::Jovem.cadastrado_sem_recepcao_e_liberados, :id, :nome, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+    <div class="col-sm-5 col-offset-1">
+      <%= f.label :unidade_socioeducativa %>
+      <%= select_tag :para_unidade_socioeducativa_id, options_from_collection_for_select(UnidadeSocioeducativa.all, :id, :sigla_nome), prompt: '--Selecione--', class: 'form-control select2' %>
+    </div>
+    <div class="col-sm-2 col-offset-1">
+      <%= f.label :datahora_apresentacao %>
+      <%= f.text_field :datahora_apresentacao, class: 'form-control maskdata' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-2 col-offset-1">
+      <%= f.label :documentos_pessoais %>
+      <%= f.check_box :documentos_pessoais, class: 'form-control' %>
+    </div>
+    <div class="col-sm-2 col-offset-1">
+      <%= f.label :decisao %>
+      <%= f.check_box :decisao, class: 'form-control' %>
+    </div>
+    <div class="col-sm-3 col-offset-1">
+      <%= f.label :certidao_antecedente_criminal %>
+      <%= f.check_box :certidao_antecedente_criminal, class: 'form-control' %>
+    </div>
+    <div class="col-sm-2 col-offset-1">
+      <%= f.label :guia_cnj %>
+      <%= f.check_box :guia_cnj, class: 'form-control' %>
+    </div>
+    <div class="col-sm-3 col-offset-1">
+      <%= f.label :representacao_ministerial %>
+      <%= f.check_box :representacao_ministerial, class: 'form-control' %>
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <div class="col-sm-10">
+      <%= f.hidden_field :recepcao_origem, value: 'Direta' %>
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+      <%= link_to I18n.t('helpers.links.cancel'), socioeduk_jovem_recepcoes_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+<% end %>

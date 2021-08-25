@@ -1,0 +1,2 @@
+module Biblioteca::LocalPublicacoesHelper
+end

@@ -1,0 +1,63 @@
+<% content_for :title do %>
+  <%= t('.title', default: @biblioteca_emprestimo.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t('.title', default: @biblioteca_emprestimo.class.model_name.human ) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                                    
+                  
+                  <th><%= Biblioteca::Emprestimo.human_attribute_name :biblioteca_livro %></th>
+                                    
+                  
+                  <th><%= Biblioteca::Emprestimo.human_attribute_name :pessoa %></th>
+                                    
+                  
+                  <th><%= Biblioteca::Emprestimo.human_attribute_name :status %></th>
+                                    
+                  
+                  <th><%= Biblioteca::Emprestimo.human_attribute_name :data %></th>
+                                    
+                  
+                  <th><%= Biblioteca::Emprestimo.human_attribute_name :nota %></th>
+                                    
+                  
+                  <th><%= Biblioteca::Emprestimo.human_attribute_name :usuario %></th>
+                                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @biblioteca_emprestimo.biblioteca_livro %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @biblioteca_emprestimo.pessoa %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @biblioteca_emprestimo.status %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @biblioteca_emprestimo.data %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @biblioteca_emprestimo.nota %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @biblioteca_emprestimo.usuario %></td>
+                                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', biblioteca_emprestimos_path, class: 'btn btn-default') %>
+<%= link_to 'Editar', edit_biblioteca_emprestimo_path(@biblioteca_emprestimo), class: 'btn btn-success' %>

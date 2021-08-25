@@ -1,0 +1,53 @@
+<%- model_class = Socioeduk::SaudeJovemExame -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_saude_jovem_exame', default: Socioeduk::SaudeJovemExame.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.socioeduk_saude_jovem_exame', default: Socioeduk::SaudeJovemExame.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= link_to_new new_socioeduk_saude_jovem_exame_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_saude_jovem) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_tipo_exame) %></th>
+                                    <th><%= model_class.human_attribute_name(:data_exame) %></th>
+                                    <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @socioeduk_saude_jovem_exames.each do |socioeduk_saude_jovem_exame| %>
+                <tr>
+                                    <td><%= socioeduk_saude_jovem_exame.socioeduk_saude_jovem %></td>
+                                    <td><%= socioeduk_saude_jovem_exame.socioeduk_tipo_exame %></td>
+                                    <td><%= socioeduk_saude_jovem_exame.data_exame %></td>
+                                    <td>
+                    <%= link_to_show(socioeduk_saude_jovem_exame) %>
+                    <%= link_to_edit(edit_socioeduk_saude_jovem_exame_path(socioeduk_saude_jovem_exame)) %>
+                    <%= link_to_delete(socioeduk_saude_jovem_exame) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

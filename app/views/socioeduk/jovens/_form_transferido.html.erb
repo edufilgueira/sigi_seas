@@ -1,0 +1,65 @@
+<%= form_for(@gestao_vaga, :url => {controller: :gestao_vagas, action: :salvar_transferencia}, html: { class: 'form-horizontal' }) do |f| %>
+  <%= render 'layouts/error_messages', model_name: @gestao_vaga %>
+  <%= render 'layouts/message_required' %>
+  
+  <% if !flash[:notice].nil? %>
+    <div class="alert alert-danger" role="alert">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <div class="col-sm-12 col-offset-1">
+      <%= f.label :de_unidade_socioeducativa_id, class: 'required' %>
+      <%= f.collection_select :de_unidade_socioeducativa_id, UnidadeSocioeducativa.centros_socioeducativos_urlbm.order(:nome), :id, :sigla_nome, {include_blank: '--selecione--'}, class: 'form-control', disabled: 'true' %>
+      <%= f.hidden_field :de_unidade_socioeducativa_id, value: @id_unidade_origem %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12 col-offset-1">
+      <%= f.label :para_unidade_socioeducativa_id, class: 'required' %>
+      <%= f.collection_select :para_unidade_socioeducativa_id, UnidadeSocioeducativa.where.not(sigla: ['CRV', 'SEAS'], id:@id_unidade_origem).order(:nome), :id, :sigla_nome, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-3 col-offset-1">
+      <%= f.label :data_movimentacao, class: 'required' %>
+      <%= f.text_field :data_movimentacao, class: 'form-control maskdata', onkeyup: "desabilitar_botao()" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12 col-offset-1">
+      <%= f.label :motivo_transferencia, required: true, class: 'required' %>
+      <%= f.text_area :motivo_transferencia, class: 'form-control', onkeyup: "desabilitar_botao()" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10">
+      <%= f.hidden_field :status, value: 'Transferido' %>
+      <%= f.hidden_field :socioeduk_jovem_recepcao_id, value: @id_jovem_recepcao %>
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with }, disabled: true, id: "botao_salvar" %>
+      <div class="btn btn-warning" href="#" onclick="close_modal_auxiliar()">Cancelar</div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+
+  $('.maskdata').mask('00/00/0000', {reverse: false});
+
+  $("#socioeduk_gestao_vaga_para_unidade_socioeducativa_id").change(function(){
+    desabilitar_botao();
+  });
+
+  function desabilitar_botao(){
+    var id = $('#socioeduk_gestao_vaga_para_unidade_socioeducativa_id').find(":selected").val();
+    var mov = $('#socioeduk_gestao_vaga_data_movimentacao').val();
+    var trans = $('#socioeduk_gestao_vaga_motivo_transferencia').val();
+
+    if(id > 0 && mov != "" && trans != "")
+      $('#botao_salvar').prop("disabled", false);
+    else
+      $('#botao_salvar').prop("disabled", true);
+  }
+
+</script>

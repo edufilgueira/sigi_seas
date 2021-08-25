@@ -1,0 +1,59 @@
+<%= form_for(@socioeduk_jovem_apreensao, html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @socioeduk_jovem_apreensao %>
+  <%= render 'layouts/message_required' %>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_jovem %>
+      <%= f.collection_select :socioeduk_jovem_id, Socioeduk::Jovem.all, :id, :nome_concat_mae, {include_blank: '--selecione--'}, class: 'form-control select2' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.check_box :antecedente_criminal %>
+      <%= f.label :antecedente_criminal %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-5 col-offset-1">
+      <%= f.label :qtd_processo_anterior %>
+      <%= f.number_field :qtd_processo_anterior, class: 'form-control' %>
+    </div>
+    <div class="col-sm-5 col-offset-1">
+      <%= f.label :dia_delegacia %>
+      <%= f.number_field :dia_delegacia, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-5 col-offset-1">
+      <%= f.label :qtd_dia_internacao_medida %>
+      <%= f.number_field :qtd_dia_internacao_medida, class: 'form-control' %>
+    </div>
+    <div class="col-sm-5 col-offset-1">
+      <%= f.label :data_hora_entrada_delegacia %>
+      <div class='input-group date'>
+        <%= f.text_field :data_hora_entrada_delegacia, class: 'form-control datetimepicker' %>
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-5 col-offset-1">
+      <%= f.label :socioeduk_tipo_medida_socioeducativa %>
+      <%= f.collection_select :socioeduk_tipo_medida_socioeducativa_id, Socioeduk::TipoMedidaSocioeducativa.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+    <div class="col-sm-5 col-offset-1">
+      <%= f.label :socioeduk_tipo_decisao_judicial %>
+      <%= f.collection_select :socioeduk_tipo_decisao_judicial_id, Socioeduk::TipoDecisaoJudicial.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10">
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+      <%= link_to I18n.t('helpers.links.cancel'), socioeduk_jovem_apreensoes_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+<% end %>

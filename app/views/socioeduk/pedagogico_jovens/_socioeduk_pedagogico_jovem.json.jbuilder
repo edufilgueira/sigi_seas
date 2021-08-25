@@ -1,0 +1,2 @@
+json.extract! socioeduk_pedagogico_jovem, :id, :socioeduk_jovem_id, :socioeduk_tipo_alfabetizado_id, :socioeduk_situacao_escolar_id, :socioeduk_escolaridade_id, :ultima_escola_frequentada, :ultimo_ano_escolar, :cgm, :socioeduk_situacao_ocupacional_anterior, :socioeduk_situacao_ocupacional_atual, :created_at, :updated_at
+json.url socioeduk_pedagogico_jovem_url(socioeduk_pedagogico_jovem, format: :json)

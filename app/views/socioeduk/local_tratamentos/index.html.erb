@@ -1,0 +1,51 @@
+<%- model_class = Socioeduk::LocalTratamento -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_local_tratamento', default: Socioeduk::LocalTratamento.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.socioeduk_local_tratamento', default: Socioeduk::LocalTratamento.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= link_to_new new_socioeduk_local_tratamento_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                                    <th><%= model_class.human_attribute_name(:descricao) %></th>
+                                    <th><%= model_class.human_attribute_name(:status) %></th>
+                                    <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @socioeduk_local_tratamentos.each do |socioeduk_local_tratamento| %>
+                <tr>
+                                    <td><%= socioeduk_local_tratamento.descricao %></td>
+                                    <td><%= socioeduk_local_tratamento.status %></td>
+                                    <td>
+                    <%= link_to_show(socioeduk_local_tratamento) %>
+                    <%= link_to_edit(edit_socioeduk_local_tratamento_path(socioeduk_local_tratamento)) %>
+                    <%= link_to_delete(socioeduk_local_tratamento) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

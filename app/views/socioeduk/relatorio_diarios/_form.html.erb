@@ -1,0 +1,181 @@
+<%= form_for(@socioeduk_relatorio_diario, html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @socioeduk_relatorio_diario %>
+  <%= render 'layouts/message_required' %>
+  <div id="mensagem"></div>
+  <div class="form-group">
+    <div class="col-sm-6 col-offset-1">
+      <%= f.label :unidade_socioeducativa, class: 'required' %>
+      <% if [71].include?(current_usuario.id) %>
+        <%= f.text_field :unidade_socioeducativa, value: UnidadeSocioeducativa.find(12).sigla_nome, class: 'form-control', disabled: true %>
+        <%= f.hidden_field :unidade_socioeducativa_id, value: 12 %>
+      <% elsif [69, 70].include?(current_usuario.id) %>
+        <%= f.text_field :unidade_socioeducativa, value: UnidadeSocioeducativa.find(18).sigla_nome, class: 'form-control', disabled: true %>
+        <%= f.hidden_field :unidade_socioeducativa_id, value: 18 %>
+      <% elsif [76, 77].include?(current_usuario.id) %>
+        <%= f.text_field :unidade_socioeducativa, value: UnidadeSocioeducativa.find(14).sigla_nome, class: 'form-control', disabled: true %>
+        <%= f.hidden_field :unidade_socioeducativa_id, value: 14 %>
+      <% elsif [84, 85].include?(current_usuario.id) %>
+        <%= f.text_field :unidade_socioeducativa, value: UnidadeSocioeducativa.find(13).sigla_nome, class: 'form-control', disabled: true %>
+        <%= f.hidden_field :unidade_socioeducativa_id, value: 13 %>
+      <% elsif [75].include?(current_usuario.id) %>
+        <%= f.text_field :unidade_socioeducativa, value: UnidadeSocioeducativa.find(15).sigla_nome, class: 'form-control', disabled: true %>
+        <%= f.hidden_field :unidade_socioeducativa_id, value: 15 %>
+      <% else %>
+        <%= f.text_field :unidade_socioeducativa, value: current_usuario.pessoa&.recursoshumanos_vinculo&.unidade_socioeducativa_area&.unidade_socioeducativa&.sigla_nome, class: 'form-control', disabled: true %>
+        <%= f.hidden_field :unidade_socioeducativa_id, value: current_usuario.pessoa&.recursoshumanos_vinculo&.unidade_socioeducativa_area&.unidade_socioeducativa&.id %>
+      <% end %>
+      <%#= f.text_field :unidade_socioeducativa, value: current_usuario&.pessoa&.funcao_pessoa&.last&.funcao&.area&.unidade_socioeducativa&.sigla_nome, class: 'form-control', disabled: true %>
+      <%#= f.collection_select :unidade_socioeducativa_id, UnidadeSocioeducativa.all, :id, :sigla_nome, {prompt: 'selecione'}, class: 'form-control' %>
+    </div>
+    <div class="col-sm-4 col-offset-1">
+      <%= f.label :data, class: 'required' %>
+      <%= f.text_field :data, required: true, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col"><b>Medida Socioeducativa</b></th>
+            <th scope="col"><b>Masculino</b></th>
+            <th scope="col"><b>Feminino</b></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td align="left">Internação</td>
+            <td><%= f.number_field :int_mas, class: 'form-control calc-capacidade' %></td>
+            <td><%= f.number_field :int_fem, class: 'form-control calc-capacidade' %></td>
+          </tr>
+          <tr>
+            <td align="left">Internação Provisória</td>
+            <td><%= f.number_field :ip_mas, class: 'form-control calc-capacidade' %></td>
+            <td><%= f.number_field :ip_fem, class: 'form-control calc-capacidade' %></td>
+          </tr>
+          <tr>
+            <td align="left">Semiliberdade</td>
+            <td><%= f.number_field :sl_mas, class: 'form-control calc-capacidade' %></td>
+            <td><%= f.number_field :sl_fem, class: 'form-control calc-capacidade' %></td>
+          </tr>
+          <tr>
+            <td align="left">Sanção</td>
+            <td><%= f.number_field :san_mas, class: 'form-control calc-capacidade' %></td>
+            <td><%= f.number_field :san_fem, class: 'form-control calc-capacidade' %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Capacidade Nominal</th>
+            <th scope="col">Capacidade Real</th>
+            <th scope="col">Socioeducador Homem</th>
+            <th scope="col">Socioeducador Mulher</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= f.number_field :capacidade_nominal, class: 'form-control quantidade' %></td>
+            <td><%= f.number_field :capacidade_real, class: 'form-control calc-capacidade quantidade' %></td>
+            <td><%= f.number_field :socioeducador_homem, class: 'form-control calc-capacidade' %></td>
+            <td><%= f.number_field :socioeducador_mulher, class: 'form-control calc-capacidade' %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col" colspan="2" style="text-align: center;"><b>Capacidade / Adolescente (%)</b></th>
+            <th scope="col" colspan="2" style="text-align: center;"><b>Adolescente / Socioeducador</b></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= f.text_field :capacidade_por_adolescente_percentual, class: 'form-control', readonly: true %></td>
+            <td><%= f.text_field :capacidade_socioeducador_por_adolescente_percentual, class: 'form-control', readonly: true %></td>
+            <td colspan="2"><%= f.number_field :capacidade_por_adolescente, class: 'form-control', readonly: true %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Evasão</th>
+            <th scope="col">Fuga</th>
+            <th scope="col">Descumprimento</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= f.number_field :evasao, class: 'form-control' %></td>
+            <td><%= f.number_field :fuga, class: 'form-control' %></td>
+            <td><%= f.number_field :descumprimento, class: 'form-control' %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col" title="<%= render partial: 'evento_simplex' %>">Evento Simples</th>
+            <th scope="col" title="<%= render partial: 'evento_complexo' %>">Evento Complexo</th>
+            <th scope="col" title="<%= render partial: 'evento_critico' %>">Evento Crítico</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= f.number_field :situacao_crise_simples, class: 'form-control' %></td>
+            <td><%= f.number_field :situacao_crise_complexa, class: 'form-control' %></td>
+            <td><%= f.number_field :situacao_crise_critica, class: 'form-control' %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!--
+    <div class="form-group">
+      <div class="col-sm-10 col-offset-1">
+        <%#= f.label :preenchido_por %>
+        <%#= f.text_field :preenchido_por, class: 'form-control' %>
+      </div>
+    </div>
+  -->
+  
+  <%= f.hidden_field :preenchido_por, value: current_usuario.id, class: 'form-control' %>
+
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :resumo %>
+      <%= f.text_area :resumo, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-10">
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+      <%= link_to I18n.t('helpers.links.cancel'), socioeduk_relatorio_diarios_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+<% end %>

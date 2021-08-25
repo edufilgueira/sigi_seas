@@ -1,0 +1,1423 @@
+
+pt-BR:
+  User: 'Usuário'
+  date:
+    abbr_day_names:
+    - Dom
+    - Seg
+    - Ter
+    - Qua
+    - Qui
+    - Sex
+    - Sáb
+    abbr_month_names:
+    -
+    - Jan
+    - Fev
+    - Mar
+    - Abr
+    - Mai
+    - Jun
+    - Jul
+    - Ago
+    - Set
+    - Out
+    - Nov
+    - Dez
+    day_names:
+    - Domingo
+    - Segunda
+    - Terça
+    - Quarta
+    - Quinta
+    - Sexta
+    - Sábado
+    formats:
+      default: ! '%d/%m/%Y h:m h'
+      long: ! '%d de %B de %Y'
+      long_week: ! '%A, %d de %B de %Y'
+      month_name: ! '%B'
+      short: ! '%d de %B'
+      short2: ! '%d %b'
+    month_names:
+    -
+    - Janeiro
+    - Fevereiro
+    - Março
+    - Abril
+    - Maio
+    - Junho
+    - Julho
+    - Agosto
+    - Setembro
+    - Outubro
+    - Novembro
+    - Dezembro
+    order:
+    - :day
+    - :month
+    - :year
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: aproximadamente 1 hora
+        other: aproximadamente %{count} horas
+      about_x_months:
+        one: aproximadamente 1 mês
+        other: aproximadamente %{count} meses
+      about_x_years:
+        one: aproximadamente 1 ano
+        other: aproximadamente %{count} anos
+      almost_x_years:
+        one: quase 1 ano
+        other: quase %{count} anos
+      half_a_minute: meio minuto
+      less_than_x_minutes:
+        one: menos de um minuto
+        other: menos de %{count} minutos
+      less_than_x_seconds:
+        one: menos de 1 segundo
+        other: menos de %{count} segundos
+      over_x_years:
+        one: mais de 1 ano
+        other: mais de %{count} anos
+      x_days:
+        one: 1 dia
+        other: ! '%{count} dias'
+      x_minutes:
+        one: 1 minuto
+        other: ! '%{count} minutos'
+      x_months:
+        one: 1 mês
+        other: ! '%{count} meses'
+      x_seconds:
+        one: 1 segundo
+        other: ! '%{count} segundos'
+    prompts:
+      day: Dia
+      hour: Hora
+      minute: Minuto
+      month: Mês
+      second: Segundo
+      year: Ano
+  errors: &errors
+    format: ! '%{attribute} %{message}'
+    messages:
+      invalid_field: 'Favor verifique o(s) seguinte(s) campo(s): %{campos}'
+      destroy_exception: Não foi possível apagar.
+      accepted: deve ser aceito.
+      blank: não pode ficar em branco
+      confirmation: não está de acordo.
+      empty: não pode ficar vazio.
+      equal_to: deve ser igual a %{count}.
+      even: deve ser par.
+      exclusion: não está disponível.
+      greater_than: deve ser maior que %{count}.
+      greater_than_or_equal_to: deve ser maior ou igual a %{count}.
+      inclusion: não está incluído na lista.
+      invalid: campo inválido.
+      less_than: deve ser menor que %{count}.
+      less_than_or_equal_to: deve ser menor ou igual a %{count}.
+      not_a_number: não é um número.
+      not_an_integer: não é um número inteiro.
+      odd: deve ser ímpar.
+      record_invalid: ! 'A validação falhou: %{errors}'
+      taken: já existente no sistema.
+      too_long: ! 'é muito longo (máximo: %{count} caracteres)'
+      too_short: ! 'é muito curto (mínimo: %{count} caracteres)'
+      wrong_length: não possui o tamanho esperado (%{count} caracteres).
+    template:
+      body: ! 'Por favor, verifique o(s) seguinte(s) campo(s):'
+      header:
+        one: ! 'Não foi possível gravar %{model}: 1 erro'
+        other: ! 'Não foi possível gravar %{model}: %{count} erros.'
+  condicao:
+    sim: "sim"
+    nao: "não"
+  success:
+    save: "Salvo com sucesso."
+  helpers:
+    actions: "Ações"
+    links:
+      edit: "Editar"
+      back: "Voltar"
+      cancel: "Cancelar"
+      confirm: "Tem certeza que deseja apagar este registro?"
+      destroy: "Apagar"
+      new: "Novo"
+      show: "Informações"
+      detail: "Detalhe"
+    titles:
+      edit: "Editar %{model}"
+      save: "Salvar %{model}"
+      new: "Inserir %{model}"
+      create: "Inserir %{model}"
+      delete: "Apagar %{model}"
+      modal:
+        details: 'Detalhe'
+        version: 'Versão'
+    select:
+      prompt: Por favor selecione
+      no_one: "Nenhum registro foi encontrado."
+    submit:
+      create: Criar
+      submit: Salvar
+      update: Atualizar
+    label:
+      user:
+        email: 'Email'
+        password: 'Senha'
+        password_confirmation: 'Confirmação de Senha'
+        current_password: 'Senha Atual'
+      uf:
+        nome: 'Nome'
+        sigla: 'Sigla'
+      defesa_previa_lei:
+        descricao: 'Descrição'
+        numero: 'Número'
+      defesa_previa_artigo:
+        descricao: 'Descrição'
+        codigo: 'Código'
+        lei_id: 'Lei'
+      defesa_previa_inciso:
+        descricao: 'Descrição'
+        codigo: 'Código'
+        artigo_id: 'Artigo'
+      defesa_previa_alinea:
+        descricao: 'Descrição'
+        codigo: 'Código'
+        descricao_completa: 'Descrição completa'
+      campo_calculado:
+        quantidade_cargo_contratado: Contratado
+        quantidade_cargo_disponivel: Disponível
+        
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "Sem %{entry_name} encontrados"
+          one: "Mostrando 1 %{entry_name}"
+          other: "Mostrando todos %{count} %{entry_name}"
+      more_pages:
+        display_entries: "<p class='text-muted'>Mostrando %{first}-%{last} de %{total}</p>"
+  number:
+    currency:
+      format:
+        delimiter: .
+        format: ! '%u %n'
+        precision: 2
+        separator: ! ','
+        significant: false
+        strip_insignificant_zeros: false
+        unit: R$
+    format:
+      delimiter: .
+      precision: 3
+      separator: ! ','
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: ! '%n %u'
+        units:
+          billion:
+            one: bilhão
+            other: bilhões
+          million:
+            one: milhão
+            other: milhões
+          quadrillion:
+            one: quatrilhão
+            other: quatrilhões
+          thousand: mil
+          trillion:
+            one: trilhão
+            other: trilhões
+          unit: ''
+      format:
+        delimiter: .
+        precision: 2
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: ! '%n %u'
+        units:
+          byte:
+            one: 'Byte'
+            other: 'Bytes'
+          gb: 'GB'
+          kb: 'KB'
+          mb: 'MB'
+          tb: 'TB'
+    percentage:
+      format:
+        delimiter: .
+    precision:
+      format:
+        delimiter: .
+  support:
+    array:
+      last_word_connector: ! ' e '
+      two_words_connector: ! ' e '
+      words_connector: ! ', '
+  time:
+    am: ''
+    formats:
+      default: ! '%d/%m/%Y, %H:%M:%S'
+      long: ! '%d de %B de %Y, %H:%M'
+      medium: ! '%d/%m/%Y %H:%M'
+      time: ! '%H:%M'
+      short: ! '%d de %B, %H:%M'
+    pm: ''
+  # remove these aliases after 'activemodel' and 'activerecord' namespaces are removed from Rails repository
+  system:
+    initials: 'TP - Template Detran'
+    name: 'Sistema template padrão Detran'
+    version: 'v0.0.1'
+    indentifique: 'Identifique-se'
+    entries: 'Cadastros'
+    password: 'Senha'
+    company: 'Departamento Estadual de Trânsito - DETRAN-CE'
+    address: ' - Sede: Av. Godofredo Maciel, 2900 - Maraponga - Fortaleza/Ce CEP: 60.710-903'
+    contact: 'suporte aos sistemas:  (85) 3101.5820 ou 3101.5887 | DETRAN: 0800 275 6768 / Perícia: 154 - CNPJ: 07.135.668/0001-95'
+    copyright: '© 2011 - Governo do Estado do Ceará. Todos os direitos reservados.'
+    message:
+      not_permission: 'Usuário não possui permissão para acessar essa área:'
+    tab:
+      envolvidos: 'Envolvidos'
+      bases: 'Bases'
+      sectors: 'Setores'
+      lotacao_empresa: 'Empresa Lotação'
+      versions: 'Versões'
+  messages:
+    cadastro_sucesso: 'Registro incluído com sucesso.'
+    delecao_sucesso: 'Registro excluído com sucesso.'
+    atualizado_sucesso: 'Registro alterado com sucesso.'
+    inatividade: ''
+    associado_sucesso: 'Registro associado com sucesso.'
+    associacao_existente: '%{model} existente.'
+    delecao_erro: 'Não foi possível excluir o registro.'
+    cpf_cadastrado: "CPF já Cadastrado"
+    atualizado_erro: Erro ao atualizar registro.
+  activemodel:
+    errors:
+      <<: *errors
+
+  activerecord:
+    errors:
+      required: 'Obrigatório'
+      user:
+        not_found: 'Usuário não encontrado.'
+      messages:
+        record_invalid: "A validação falhou: %{errors}"
+        restrict_dependent_destroy:
+          has_one: "Não é possível excluir este registro, pois existe %{record} relecionado(a)."
+          has_many: "Não é possível excluir este registro, pois existem %{record} relacionados(as)."
+        required: deve existir
+    funcionalidades_personalizadas:
+      administracao_solicitante: Panorama de Vagas
+    models:
+      socioeduk_relatorio_diarios: Relatório Diário
+      socioeduk_processo_advogado: Processo Advogado
+      socioeduk_visitante_jovem: Visitante
+      socioeduk_visitante: Cadastro de visitante
+      socioeduk_jovem_documento: "Jovem Documento"
+      socioeduk_jovem_transferencia: "Jovem Transferência"
+      socioeduk_jovem_ocorrencia: "Jovem Ocorrência"
+      socioeduk_processo_anexo: "Processo Anexo"
+      socioeduk_municipio: "Município"
+      socioeduk_processo: "Processo" 
+      socioeduk_bloco: "Bloco"
+      socioeduk_situacao_processo: "Tipo de Processo"
+      socioeduk_comarca: "Comarcas"
+      socioeduk_tipo_processo: "Tipo de Processo"
+      socioeduk_renda_familiar: "Renda Familiar"
+      socioeduk_composicao_familiare: "Composição Familiar"
+      socioeduk_convivio_familiar: "Convívio Familiar"
+      socioeduk_quarto: "Quartos"
+      socioeduk_tipo_oficina: "Tipo de Oficina"
+      socioeduk_tipo_curso: "Tipo de Curso"
+      socioeduk_tipo_alfabetizado: "Tipo alfabetizados"
+      socioeduk_tipo_medida_socioeducativa: "Tipo de Medida Socioeducativa"
+      socioeduk_tipo_decisao_judicial: "Tipo de Decisao Judicial"
+      socioeduk_situacao_disciplina: "Situção da Disciplina"
+      socioeduk_local_atendimento: "Local de Atendimento"
+      situacao_escolare : "Situação Escolar"
+      situacao_ocupacional : "Situação Ocupacional"
+      socioeduk_escolaridade : "Escolaridade"
+      socioeduk_disciplina_escolaridade : "Disciplina Escolaridade"
+      socioeduk_outro_nome : "Apelidos"
+      socioeduk_tipo_atendimento : "Tipo de Atendimento"
+      socioeduk_tipo_exame  : "Tipo de Exame"
+      socioeduk_tipo_vacina: "Tipo de Vacina"
+      socioeduk_cid: "Cid"
+      socioeduk_cor_olho: "Cor dos Olhos"
+      socioeduk_tipo_medicamento_controlado: "Tipo de Medicamento Controlado"
+      socioeduk_local_tratamento: "Local de Tratamento"
+      socioeduk_tipo_tratamento: "Tipo de Tratamento"
+      socioeduk_tipo_parentesco: "Tipo de Parentesco"
+      socioeduk_endereco_jovem: "Endereço do Jovem"
+      socioeduk_jovem_contato: "Contato do Jovem"
+      socioeduk_jovem_caracteristica: "Característica do Jovem"
+      socioeduk_jovem: "Jovem"
+      socioeduk_raca_cor: "Raça Cor"
+      socioeduk_situacao_adolescente: "Situação do Adolescente"
+      socioeduk_tipo_cabelo: "Tipo de Cabelo"
+      socioeduk_tipo_guia_execucao: "Tipo Guia Execução"
+      socioeduk_tipo_ocorrencia: "Tipo de Ocorrência"
+      socioeduk_tipo_telefone: "Tipo Telefones"
+      socioeduk_condicao_fisica: "Condição Física"
+      socioeduk_local_psiquiatrico: "Local Psiquiatrico"
+      socioeduk_saude_jovem: "Atendimento Clínico Inicial"
+      socioeduk_saude_jovem_atendimento: "Jovens Atendidos"
+      socioeduk_saude_jovem_exame: "Exame do Jovem"
+      socioeduk_saude_jovem_vacina: "Vacina do Jovem"
+      socioeduk_saude_jovem_doencas_historica: "Doenças Histórica"
+      socioeduk_saude_jovem_saude_clinica: "Saúde Clinica"
+      socioeduk_saude_jovens_tipo_parentesco_doenca_mental: "Parentes com Doença Mental"
+      socioeduk_saude_jovens_tipo_parentesco_suicidio: "Suicídio da Família"
+      socioeduk_saude_jovens_tipo_medicamento_controlado: "Medicamento Controlado"
+      socioeduk_saude_jovens_substancias_utilizada: "Substâncias Utilizadas"
+      socioeduk_saude_jovens_parentes_viciado: "Parente Viciado"
+      socioeduk_pedagogico_jovem: "Pedagógico"
+      socioeduk_tipo_auto_consideracao: "Tipo Considerações"
+      socioeduk_saude_jovens_metodos_contraceptivo: "Metodos Contraceptivo"
+      socioeduk_jovem_saida: "Agendamento de Saída"
+      socioeduk_jovem_suicidio: 'Jovem Suicídio'
+      socioeduk_visitante: 'Visitante'
+      socioeduk_gestao_vaga_mapa: 'Mapa de vagas'
+      socioeduk_gestao_vaga_dashboard: 'Dashboard'
+      socioeduk_jovem_dashboard: 'Dashboard'
+      socioeduk_gestao_gerir_vaga: 'Gerir Vagas'
+      socioeduk_visualizar_pontuacao: 'Visualizar Pontuação'
+      socioeduk_jovem_recepcao: Recepção
+      socioeduk_jovem_recepcao_recepcao_direta: Recepção Direta
+      socioeduk_processo_recepcao_jovem_infracao: Infração do Jovem
+      socioeduk_solicitacao_vaga: Solicitação de Vagas
+      socioeduk_artigo_infracao: Infração
+      socioeduk_saude_jovem_ocorrencia: Ocorrência Médica
+      socioeduk_jovem_controle_pertence: Controle de Pertences do Jovem
+      mapa_de_bordo: "Mapa de Bordo"
+      solicitacao_transporte: "Solicitação de Transporte"
+      tipo_solicitacao_transporte: "Tipo de Solicitação"
+      veiculo: "Veículos"
+      tipo_de_combustivel: 'Tipos de Combustíveis'
+      funcao_pessoa: 'Função das Pessoas'
+      modelos_marca: 'Modelos'
+      posto_combustivel: 'Posto de Combustíveis'
+      marca_veiculo: 'Marca de Veículos'
+      usuario: "Usuário"
+      funcao: 'Funções'
+      jovem: 'Jovens'
+      indicador_assunto: 'Assuntos'
+      local_armazenamento: 'Locais de Armazenamento'
+      coleta_indicador: 'Coleta de Indicadores'
+      pessoa: 'Pessoa'
+      motorista: 'Motorista'
+      indicador_unidade_medida: 'Unidade de Medida'
+      unidades_medida: "Unidades de Medida"
+      material_movimentacao: "Movimentação de Material"
+      unidades_medidas: "Unidades de Medida"
+      grupo_material: "Grupo Material"
+      classe_material: "Classe Material"
+      material: "Material"
+      grupo_patrimonio: "Grupo Patrimônio"
+      classe_patrimonio: "Classe Patrimônio"
+      patrimonio: "Patrimônio"
+      dashboard_patrimonio: Dashboard
+      deposito: "Depósitos"
+      status_patrimonio: "Status do Patrimônio"
+      item_patrimonio: "Item Patrimonial"
+      tipo_patrimonio: "Tipo do Patrimônio"
+      categoria_patrimonio: Categoria Patrimônio
+      eixo: Eixo
+      unidade_socioeducativa: Unidade Socioeducativa
+      unidade_socioeducativa_bloco: Blocos das Unidades
+      area: Área
+      gestor_area: Gestor da Área
+      gestor_eixo: Gestor do Eixo
+      gestor_unidade: Gestor da Unidade
+      servico: Serviço
+      servico_realizado: Serviço Realizado
+      permissao: Permissão
+      capacidade_original: Capacidade Original
+      capacidade_diaria: Capacidade Diária
+      solicitacao_patrimonio: Solicitação Patrimônio
+      itens_solicitacao_patrimonio: Itens Solicitação Patrimônio
+      unidade_medida: Unidade de Medida
+      socioeduk_admissao: Admissão
+      socioeduk_admissao_anexo: Anexo Admissão
+      socioeduk_atendimento_inicial: Atendimento Inicial
+      socioeduk_atendimento_inicial_documento: Atend. Inicial Documento
+      socioeduk_contato: Contato
+      socioeduk_decisao_judicial: Decisão Judicial
+      socioeduk_deficiencia: Deficiência
+      socioeduk_documento: Documento
+      socioeduk_documento_forma_entrada: Documento Forma de Entrada
+      socioeduk_endereco: Endereço
+      socioeduk_evasao: Evasão
+      socioeduk_forma_entrada: Forma Entrada
+      socioeduk_infracao: Infração
+      socioeduk_infracao_preliminar: Infração Preliminar
+      socioeduk_jovem: Jovem
+      socioeduk_marca_corporal: Marca Corporal
+      socioeduk_opcao_sexual: Orientação Sexual
+      socioeduk_subforma_entrada: Subforma Entrada
+      socioeduk_tipo_contato: Tipo Contato
+      socioeduk_tipo_deficiencia: Tipo Deficiência
+      socioeduk_tipo_desligamento: Tipo Desligamento
+      socioeduk_tipo_infracao: Tipo Infração
+      socioeduk_tipo_marca_corporal: Tipo Marca Corporal
+      socioeduk_transferencia: Transferência
+      socioeduk_tipo_sinal: Tipo Sinal
+      socioeduk_entorpecente: Tipo Entorpecente
+      socioeduk_metodo_contraceptivo: Método Contraceptivo
+      socioeduk_situacao_escolar: Situação Escolar
+      socioeduk_tipo_local_curso: Local do Curso
+      socioeduk_pedagogico_jovem_oficina: Oficina
+      socioeduk_pedagogico_jovem_profissionalizante: Profissionalizante
+      socioeduk_pedagogico_jovem_disciplina_escolaridade: Disciplina da Escolaridade
+      socioeduk_pedagogico_jovem_escolaridade_medida: Escolaridade na Medida Socioeducativa
+      socioeduk_pedagogico_jovem_disciplina_escolaridade_medida: Disciplina na Medida Socioeuducativa
+      socioeduk_convivio_familiar: Convívio Familiar
+      socioeduk_renda_familiar: Renda Familiar
+      socioeduk_composicao_familiar: Composição Familiar
+      socioeduk_plano_individual_atendimento: Plano de Atendimento Individual
+      socioeduk_tecnico_jovem: Técnico
+      socioeduk_tecnico_jovem_visita_familiar: Visita Familiar
+      socioeduk_sugestao_relatorio: Sugestão de Relatório
+      socioeduk_tipo_retorno: Tipo de Retorno
+      socioeduk_tecnico_jovem_ultimo_relatorio: Últimos Relatórios
+      socioeduk_tecnico_jovem_plano_atendimento: Plano de Atendimento
+      socioeduk_tecnico_jovem_familia: Situação Familiar
+      socioeduk_programa_social: Programa Social
+      socioeduk_processo: Processo
+      socioeduk_tecnico_jovem_programa_social: Assiciação Programa Social
+      socioeduk_ocorrencia: Ocorrência
+      socioeduk_tipo_ocorrencia: Tipo ocorrência
+      socioeduk_jovem_apreensao: Jovem Apreensão
+      socioeduk_processo_envolvido: Processos Envolvidos
+      socioeduk_alojamento_jovem: Alojamento
+      socioeduk_gestao_fila_vaga: Relatório Vagas
+      recursoshumanos_tipo_vinculo: Tipo de Vínculo
+      recursoshumanos_tipo_legal: Tipos Legais
+      recursoshumanos_contrato: Contratos
+      recursoshumanos_cargo: Cargos
+      recursoshumanos_vinculo: Contratação
+      recursoshumanos_dashboard: Dashboard
+      recursoshumanos_aditivo: Aditivo
+      recursoshumanos_cargo_aditivo: Aditivo de Contrato
+      biblioteca_autor: Autor
+      biblioteca_emprestimo: Locação
+      biblioteca_livro: Livro
+      biblioteca_local: Local
+      biblioteca_editora: Editora
+      biblioteca_local_publicacao: Local Publicações
+      socioeduk_relatorio_diario: Sínteses Diária
+      gestao_demandas_solicitacao: Solicitação Demandas
+      urlbm_mapa: Mapa
+
+
+    attributes:
+      indicador:
+        area: 'Área Responsável'
+        indicador_unidade_medida: 'Un. Medida'
+        abrangencia: 'Abrangência'
+        periodicidade_coleta: 'Periodicidade de coleta'
+        periodicidade_avaliacao: 'Periodicidade de avaliação'
+        indicador_assunto: Assunto
+      coleta_indicador:
+        area: 'Área Responsável'
+        abrangencia_coleta: 'Abrangência'
+        indice: 'Índice'
+        mes: 'Mês'
+        periodo_coleta: 'Período'
+      usuario:
+        current_password: Senha Atual
+        password: Nova Senha
+        password_confirmation: Confirmação de Senha
+      pessoa:
+        cpf: CPF
+        usuario: 'Usuário'
+        email_pessoal: 'E-mail'
+        data_contratacao: 'Data Contratação'
+        nome_pai: 'Nome do Pai'
+        nome_mae: 'Nome da Mãe'
+        Estado_civil: 'Estado Civil'
+        conjuge: 'Cônjuge'
+        profissao: 'Profissão'
+        data_nascimento: 'Data Nascimento'
+        naturalidade: 'Naturalidade'
+        Uf: 'Uf'
+        tipo_sanguineo: 'Tipo Sanguineo'
+        numero: 'Número'
+        ctps: 'CTPS'
+        serie: 'Série'
+        emissao: 'Emissão'
+        certificado_militar: 'Certificado Militar'
+        emissor_militar: 'Orgão Emissor'
+        titulo_eleitoral: 'Título Eleitoral'
+        secao: 'Seção'
+        cidade_eleitoral: 'Cidade Eleitoral'
+        estado_eleitoral: 'Estado Eleitoral'
+        agencia: 'Agência'
+        conta_corrente: 'Conta Corrente'
+      unidade_socioeducativa:
+        endereco: Endereço
+      unidade_socioeducativa_bloco:
+        descricao: Descrição
+        unidades_socioeducativas: Unidade Socioeducativa
+      area:
+        subarea_id: Área Principal
+        unidade_socioeducativa_id: Unidade Socioeducativa
+      gestor_area:
+        area_id: Área
+        pessoa_id: Pessoa
+        data_inicio: Data Início
+        data_termino: Data Término
+      gestor_eixo:
+        eixo_id: Eixo
+        pessoa_id: Pessoa
+        data_inicio: Data Início
+        data_termino: Data Término
+      gestor_unidade:
+        unidade_socioeducativa_id: Unidade
+        pessoa_id: Pessoa
+        data_inicio: Data Início
+        data_termino: Data Término
+      servico:
+        eixo_id: Eixo
+      servico_realizado:
+        eixo_id: Eixo
+        gestor_eixo_id: Gestor Eixo
+        unidade_socioeducativa_id: Unidade
+        gestor_unidade_id: Gestor Unidade
+        area_id: Área
+        gestor_area_id: Gestor Área
+        qtd_socioeducandos_atendidos: Jovens Atendidos
+        servico_id: Serviço
+        quantidade_realizados: Qtd realizados
+        meta: Meta de Serviços
+        desempenho_meta: Desempenho da Meta
+      capacidade_original:
+        unidade_socioeducativa_id: Unidade Socioeducativa
+        usuario_id: Usuário
+      capacidade_diaria:
+        unidade_socioeducativa_id: Unidade Socioeducativa
+        usuario_id: Usuário
+      unidade_medida:
+        descricao: Descrição
+        ativo: Ativo
+      socioeduk/jovem:
+        nome: Nome completo do jovem
+        genders:
+          male: Masculino
+          female: Feminino
+          others: Outros
+        falecido: Falecido?
+        orfao: Órfão?
+        apelido: Nome social
+        dependente_quimico: Usuário de drogas?
+        data_nascimento: Data de nascimento
+        opcao_sexual: Orientação sexual
+        opcao_sexual_id: Orientação sexual
+        nome_mae: Mãe
+        nome_pai: Pai
+        nome_mae_pai: 'Nomes: Mãe/Pai'
+        idade: Idade
+        rg: RG
+        orgao_expedidor: Órgão expedidor
+        cpf: CPF
+        responsavel: Responsável
+        numero_filhos: Quantidade de filhos do jovem
+        amamentando: Amamentando?
+        socioeduk_situacao_adolescente_id: Situação
+        outras_info_fisica: Outras informações físicas
+        socioeduk_cor_olho_id: Cor dos olhos
+        socioeduk_raca_cor_id: Raça/Cor
+        socioeduk_tipo_cabelo_id: Tipo de cabelo
+        tempo_gestacao: Tempo de gestação (meses)
+        agredido: Houve Agressão no Ato da Apreensão?
+        data_providencia_documento: Data Providência Documento
+        responsavel_filhos: Responsável filho(s) do Jovem
+        numero_filhos: Nº filho(s) do jovem
+        data_movimentacao: Data
+        uf_naturalidade_id: Naturalidade
+      socioeduk/admissao:
+        jovem_id: Jovem
+      material:
+        grupo_material: Grupo
+        classe_material: Classe
+        nome: Nome Técnico
+        descricao: Especificação Técnica
+        unidades_medida: Unidade de Medida
+        quantidade: Quantidade
+        local_armazenamento: Local de Armazenamento
+      classe_material:
+        grupo_material: Grupo Material
+      patrimonio:
+        grupo_patrimonio: Grupo
+        grupo_patrimonio_id: Grupo
+        classe_patrimonio: Classe
+        classe_patrimonio_id: Classe
+        item_patrimonio: Item
+        item_patrimonio_id: Item
+        descricao: Especificação Técnica
+        unidade_socioeducativa_id: Sede/Unidades
+        area_id: Área
+        subarea_id: Subarea
+        deposito_id: Déposito
+        statsu_patrimonio: Status do Bem
+        origem_anterior_bem: Origem Anterior do Bem
+        tombo_anterior: Tombo Atenterior
+        origem_anterior: Origem Anterior do Bem
+        tombo_atual: Tombo Atual
+        origem_atual: Origem Atual do Bem
+        valor: Valor do Bem
+        ciclo_vida_util: Ciclo de Vida Útil do Bem
+        numero_siga: Nº do Siga
+        nota_fiscal: Nº Nota Fiscal
+        local_bem: Localização do bem
+      grupo_patrimonio:
+        categoria_patrimonio_id: Categoria
+        codigo: Código
+      classe_patrimonio:
+        codigo: Código
+        nome: Nome
+        grupo_patrimonio: Grupo
+      status_patrimonio:
+        descricao: Descrição
+      item_patrimonio:
+        grupo_patrimonio: Grupo
+        classe_patrimonio: Classe
+        classe_patrimonio_id: Classe
+        tipo_patrimonio: Tipo
+        tipo_patrimonio_id: Tipo
+        codigo: Nº Siga
+        descricao: Descrição
+      solicitacao_patrimonio:
+        numero_solicitacao: Nº Solicitação
+        numero_processo: Nº Processo
+        solicitante: Usuário Solicitante
+        created_at: Data/Hora Solicitação
+        justficativa: Justificativa
+        observacao: Observação
+        autorizado: Autorizado?
+        atendido: Atendido?
+      itens_solicitacao_patrimonio:
+        item_patrimonio_id: Item
+        quantidade_solicitada: Quantidade
+      recursoshumanos/contrato:
+        recursoshumanos_tipo_legal: Tipo
+        recursoshumanos_tipo_vinculo: Tipo Vínculo
+        inicio: Início
+        numero: Número
+        ano: Ano
+        doe_ce: Numero do DOE
+        data_doe_ce: Data do Diário
+        pagina_doe_ce: Página do Diário
+        inicio_vigencia: Inicio da vigência
+        final_vigencia: Fim da vigência
+      recursoshumanos/cargo:
+        recursoshumanos_contrato: Contrato 
+      recursoshumanos/aditivo:
+        recursoshumanos_contrato: Contrato
+        recursoshumanos_justificativa_aditivo: Justificativa
+        numero_processo: Nº Processo
+        descricao: Descrição
+        data: Data do Aditivo
+        anexo: Anexo
+      recursoshumanos/justificativa_aditivo:
+        descricao: Descrição
+      recursoshumanos/cargo_aditivo:
+        recursoshumanos_aditivo: Aditivo
+        operacao: Operação
+        qtd_adicionado: Quantidade
+      solicitacao_transporte:
+        tipo_solicitacao_transporte: Tipo de Solicitação
+        area: Área
+        area_id: Área Solicitante
+        data_transporte: Data de Saída
+        data_retorno: Data do Retorno
+        hora_solicitada: Hora de Saída
+        hora_prevista_retorno: Hora Prevista para Retorno
+        urgente: Urgente?
+        justificativa_urgencia: Justificativa da Urgência
+        status: Status
+        data_hora_create: Criado em
+        data_hora_saida: Data/Hora Saída
+        data_hora_retorno: Data/Hora Prevista Retorno
+        prazo: Prazo
+      mapa_de_bordo:
+        veiculo: Veículo
+        tipo_vistoria: Tipo de Vistoria
+        data_vistoria: Data da Vistoria
+        responsavel: Responsável
+        motorista: Motorista
+        km_inicial: KM Inicial
+        km_final: KM Final
+        hora_inicial: Hora Inicial
+        hora_final: Hora Final
+        percurso: Percurso
+        parecer: Parecer
+      recursoshumanos/vinculo:
+        recursoshumanos_cargo: Cargo
+        pessoas: Pessoa 
+        data_inicio: Data da Contratação
+        data_fim: Desligamento
+      status_patrimonio:
+        descricao: Descrição
+      socioeduk/tipo_sinal:
+        descricao: Descrição
+      biblioteca/editora:
+        descricao: Descrição
+      biblioteca/local_publicacao:
+        descricao: Descrição
+      biblioteca/livro:
+        titulo: Título
+        sinopse: Resumo
+        biblioteca_autor: Autor
+        biblioteca_local: Local
+        biblioteca_local_publicacao: Local da Publicação
+        biblioteca_editora: Editora
+        data_publicacao: Data da Publicação
+        paginacao: Paginação
+        assunto1: Assunto 1
+        assunto2: Assunto 2
+        css_cdu: CSS/CDU
+        isbn: ISBN
+        cutter: Cutter
+      biblioteca/local:
+        nome: Nome
+      biblioteca/autor:
+        nome: Nome
+      biblioteca/emprestimo:
+        biblioteca_livro: Livro
+        data: Data Locação
+        data_retorno: Data Retorno
+        nota: Observação
+      socioeduk/entorpecente:
+        descricao: Descrição
+        unidades_medida: Unidade de Medida
+        status: Status
+      socioeduk/metodo_contraceptivo:
+        descricao: Descrição
+        ativo: Ativo
+      socioeduk/tipo_oficina:
+        descricao: Descrição
+      socioeduk/escolaridade:
+        descricao: Descrição
+      socioeduk/pedagogico_jovem:
+        socioeduk_jovem: Jovem
+        socioeduk_tipo_alfabetizado: Tipo Alfabetização
+        socioeduk_situacao_escolar: Situação Escolar
+        socioeduk_escolaridade: Escolaridade
+        ultima_escola_frequentada: Ultima Escola Frequentada
+        ultimo_ano_escolar: Ultimo Ano Escolar
+        cgm: CGM (Código escolar)
+        socioeduk_situacao_ocupacional_anterior: Situação Ocupacional Anterior
+        socioeduk_situacao_ocupacional_atual: Situação Ocupacional Atual
+      socioeduk/disciplina_escolaridade:
+        socioeduk_escolaridade: Escolaridade
+        descricao: Descrição
+      socioeduk/situacao_escolar:
+        descricao: Descrição
+      socioeduk/tipo_alfabetizado:
+        descricao: Descrição
+      socioeduk/tipo_curso:
+        descricao: Descrição
+      socioeduk/tipo_local_curso:
+        descricao: Descrição
+      socioeduk/pedagogico_jovem_oficina:
+        socioeduk_pedagogico_jovem: Pedagógico
+        socioeduk_tipo_oficina: Tipo Oficina
+        nome: Nome
+        data_inicia: Data Inicial
+        data_fim: Data Final
+        carga_horaria: Carga Horária
+      socioeduk/situacao_disciplina:
+        descricao: Descrição
+      socioeduk/pedagogico_jovem_profissionalizante:
+        socioeduk_pedagogico_jovem: Pedagógico
+        socioeduk_tipo_local_curso: Local do Curso
+        nome_programa: Nome do Programa
+        socioeduk_tipo_curso: Tipo do Curso
+        nome_curso: Nome do Curso
+        data_inicio: Data Inicial
+        data_fim: Data Final
+        carga_horaria: Carga Horária
+        observacao: Observação
+      socioeduk/pedagogico_jovem_disciplina_escolaridade:
+        socioeduk_pedagogico_jovem: Pedagógico
+        socioeduk_disciplina_escolaridade: Disciplina
+        socioeduk_situacao_disciplina: Situação da Disciplina
+        data_conclusao: Data da Conclusão
+        observacao: Observação
+      socioeduk/pedagogico_jovem_escolaridade_medida:
+        socioeduk_pedagogico_jovem: Pedagógico
+        socioeduk_escolaridade: Escolaridade
+        socioeduk_tipo_local_curso: Local do Curso
+        escola: Escola
+        ano: Ano
+      socioeduk/pedagogico_jovem_disciplina_escolaridade_medida:
+        socioeduk_pedagogico_jovem_escolaridade_medida: Escolaridade na Medida Socioeuducativa
+        socioeduk_escolaridade: Escolaridade
+        socioeduk_situacao_disciplina: Situação da Disciplina
+        data_situacao: Data da Situação
+        observacao: Observação
+      socioeduk/convivio_familiar:
+        descricao: Descrição
+      socioeduk/renda_familiar:
+        descricao: Descrição
+      socioeduk/composicao_familiar:
+        descricao: Descrição
+      socioeduk/plano_individual_atendimento:
+        descricao: Descrição
+      socioeduk/tecnico_jovem:
+        socioeduk_jovem: Jovem
+        tem_filhos: Tem Filhos?
+        quantos_filhos: Quantos Filhos?
+        socioeduk_convivio_familiar: Convívio Familiar
+        codigo_familiar: Codigo Famíliar
+        cnis: CNIS
+        programas_sociais: Programa Social
+        socioeduk_renda_familiar: Renda Famíliar
+        socioeduk_composicao_familiar: Composição Familiar
+        socioeduk_plano_individual_atendimento: Plano Individual Atendimento
+        nome_tecnico: Nome Técnico
+        profissional_referencia: Profissional de Referência
+      socioeduk/tecnico_jovem_visita_familiar:
+        socioeduk_tecnico_jovem: Jovem
+        data_visita: Data da Visita
+        pessoa_visitada: Pessoa Visitada
+        finalidade_visita: Finalidade da Visita
+        responsavel_realizacao: Responsável da Realização
+      socioeduk/sugestao_relatorio:
+        descricao: Descrição
+      socioeduk/tipo_retorno:
+        descricao: Descrição
+      socioeduk/tecnico_jovem_ultimo_relatorio:
+        socioeduk_tecnico_jovem: Técnico
+        socioeduk_sugestao_relatorio: Sugestão de Relatório
+        data_inclusao: Data da Inclusão
+        socioeduk_tipo_retorno: Tipo de Retorno
+        unidade_socioeducativa_inclusao_id: Unidade Socioeducativa
+      socioeduk/tecnico_jovem_plano_atendimento:
+        socioeduk_tecnico_jovem: Técnico
+        data_inclusao: Data da Inclusão
+        unidade_socioeducativa_inclusao_id: Unidade Socioeducativa
+      socioeduk/tecnico_jovem_familia:
+        socioeduk_tecnico_jovem: Técnico
+        nome: Nome
+        socioeduk_escolaridade: Escolaridade
+        profissao: Profissão
+        socioeduk_tipo_parentesco: Tipo Parentesco
+      socioeduk/programa_social:
+        descricao: Descrição
+      socioeduk/tecnico_jovem_programa_social:
+        socioeduk_tecnico_jovem: Jovem
+        socioeduk_programa_social: Programa Social
+      socioeduk/bloco:
+        descricao: Descrição
+        unidade_socioeducativa: Unidade Socioeducativa
+      socioeduk/quarto:
+        descricao: Descrição
+      socioeduk/saude_jovens_substancias_utilizada:
+        saude_jovem: Jovem
+        socioeduk_saude_jovens: Jovem
+        socioeduk_entorpecente: Entorpecentes
+        iniciou_com_idade: Iniciou com idade
+        parou_com_idade: Parou com idade
+        Frequencia: Frequência
+        socioeduk_tipo_auto_consideracao: Tipo auto consideração
+        realizou_tratamento: Realizou tratamento?
+        socioeduk_tipo_tratamento: Tipo tratamento
+      socioeduk/saude_jovem:
+        socioeduk_jovem: Jovem
+        cartao_sus: Cartão do SUS
+        altura_estimada: Altura estimada
+        peso_estimado: Peso estimado
+        socioeduk_condicao_fisica: Condição Física
+        data_ultima_menstruacao: Ultima menstruação
+        data_provavel_parto: Data do provável parto
+        qtd_gestacoes: Quantas gestações?
+        qtd_parto_normal: Qnt de parto normal
+        qtd_cesariana: Qnt de parto cesariana
+        qtd_aborto: Qnt aborto
+        qtd_filhos_vivos: Qnt filhos vivos
+        filhos_deficiente_fisico: Filhos deficiente vivos
+        metodo_contraceptivo: Método contraceptivo
+        usou_drogas: Usou drogas?
+        historico_tratamento_psiquiatrico: Histórico de tratamento psiquiatrico
+        local_tratamento_psiquiatrico_id: Local tratamento psiquiatrico
+        outro_local_psiquiatrico: Outro local
+        tempo_psiquiatrico: Tempo Psiquiatrico
+        hipotese_diagnostica_transtorno_mental: Hipótese diagnosticada
+        local_tratamento_transtorno_mental_id: Local do tratamento
+        outro_local_transtorno_mental: Outro local
+        tempo_transtorno_mental: Tempo transtorno
+        medicamento_controlado: Medicamento controlado?
+        tentativa_suicidio: Tentativa suicidio?
+        tentativa_suicidio_familiar: Tentativa suicídio familiar?
+        doenca_mental_familiar: Doenças mental na família?
+        cid_mental_id: Cid mental
+        diagnostico_mental: Diagnóstico mental
+        historico_doenca_tratamento: Histórico de doenças tratadas?
+        medicamento_doenca_cronica: Medicamento de doenças cronica?
+        uso_protese: Usa prótese
+        uso_ortese: Usa ortese
+        fez_cirurgia: Fez cirurgia?
+        tem_fratura: Tem fratura?
+        tem_alergia_alimentar: Tem alergia alimentar?
+        descricao_alergia: Descrição da alergia
+        tem_alergia_medicamentosa: Tem alergia medicamentosa?
+        descricao_alergia_medicamentosa: Descrição da alergia medicamentosa
+        outras_vacinas_recebidas: Outras vacinas
+        outros_exames: Outros exames
+      socioeduk/jovem_saida:
+        socioeduk_jovem: Jovem
+        data_hora: Data
+        destino: Destino
+        observacao: Observação
+      socioeduk/doc_recepcoes:
+        doc_recepcao: Tipo de documento
+      socioeduk/processo:
+        socioeduk_jovem_recepcao: Jovem Recepcionado
+        numero_processo: Nº Processo
+        socioeduk_tipo_processo: Tipo do Processo
+        socioeduk_comarca: Comarca
+        data_representacao: Data Representação
+        data_decisao: Data da Decisão
+        nhumero_oficio: Nº Ofício
+        data_oficio: Data do Ofício
+        socioeduk_situacao_processo: Situação do Processo
+        socioeduk_status_processo: Status
+        situacao_cumprimento: Situação Cumprimento
+        cidade_comarca: Comarca
+        data_hora_infracao: Data da Infração
+        data_hora_apreensao: Data da Apreensão
+        pontuacao_reinteracao: Reiteração
+        pontuacao_certidao_positiva: Certidão Positiva
+        pontuacao_apreendido: Apreensão
+        pontuacao_continuado: Continuado
+        pontuacao_descumprimento_medida: Descumprimento Medida
+        pontuacao_organizacao_criminosa: Organização Criminosa
+        cidade_cumprimento_medida: Cumprirá medida em
+      socioeduk/jovem_suicidio:
+        unidade_socioeducativa: Unidade Socioeducativa
+        municipio: Município
+        data_entrada_unidade: Data da entrada na unidade
+        data_evento: Data e Hora do evento
+        dia_semana: Dia da semana
+        metodo: Método utilizado
+        foi_planejado: Foi planejado?
+        descricao_planejamento: Descrição
+        ouve_aviso: Ouve aviso?
+        descricao_aviso: Descrição
+        deixou_mensagem: Deixou mensagem?
+        descricao_mensagem: Mensagem
+        estava_acompanhado: Estava acompanhado?
+        descricao_acompanhamento: Descrição
+        onde_ocorreu: Onde ocorreu?
+        tempo_socorro_suicidio: Tempo de socorro do suicídio
+        quem_socorreu: Quem socorreu?
+        procedimento_socorro: Procedimento socorro
+        depressao: Depressão
+      socioeduk/endereco_jovem:
+        numero: Número
+      socioeduk/jovem_contato:
+        socioeduk_jovem: Jovem
+        socioeduk_tipo_contato: Tipo contato
+        numero: Número
+      socioeduk/jovem_caracteristica:
+        descricao: Descrição
+      socioeduk/outro_nome:
+        socioeduk_jovem: Jovem
+        descricao: Descrição
+      socioeduk/jovem_documento:
+        socioeduk_jovem: Jovem
+        socioeduk_tipo_documento: Tipo documento
+        numero: Número
+        data_emissao: Data emissão
+      socioeduk/saude_jovem:
+        socioeduk_jovem: Jovem
+        cartao_sus: Cartão SUS
+        socioeduk_condicao_fisica: Condição fisíca
+        gravida: Grávida
+        filhos_deficiente_fisico: Qtd filhos deficiente físico
+        metodo_contraceptivo: Método contraceptivo
+        usou_drogas: Usou drogas?
+        integrante_familia_usa_drogas: Integrante da família usa drogas?
+        historico_tratamento_psiquiatrico: Histórico tratamento psiquiátrico?
+        local_tratamento_psiquiatrico_id: Local tratamento psiquiátrico
+        outro_local_psiquiatrico: Outro local psiquiátrico
+        tempo_psiquiatrico: Tempo psiquiátrico
+        historico_diagnostica_transtorno_mental: Hipotese diagnóstica transtorno mental?
+        medicamento_controlado: Medicamento controlado?
+        tentativa_suicidio: Tentativa suícidio?
+        qtd_tentativas_suicidio: Qtd tentativas suícidio
+        tentativa_suicidio_familiar: Tentativa suicidio familiar?
+        doenca_mental_familiar: Doença mental familiar?
+        cid_mental_id: CID mental
+        diagnostico_mental: Diagnóstico mental
+        historico_doenca_tratamento: Histórico de tratamento de doença
+        socioeduk_cid_id: CID
+        odontologico_clinico: Odontológico
+        diagnostico: Diagnóstico
+        socioeduk_local_tratamento_id: Local de tratamento
+        outro_local_tratamento: Outro local tratamento
+        medicamento_doenca_cronica: Medicamento doença crônica
+        uso_protese: Usou protese?
+        uso_ortese: Usou ortese?
+        fez_cirurgia: Fez cirurgia?
+        tem_fratura: Tem fratura?
+        tem_alergia_alimentar: Tem alergia alimentar?
+        descricao_alergia: Descrição da alergia
+        tem_alergia_medicamentosa: Tem alergia medicamentosa?
+        descricao_alergia_medicamentosa: Descrição alergia medicamentosa
+        socioeduk_tipo_vacina_id: Tipo vacina
+        data_vacinacao: Data vacinação
+        outras_vacinas_recebidas: Outras vacinas recebidas
+        socioeduk_tipo_exame_id: Tipo exame
+        data_exame: Data exame
+        outros_exames: Outros exames
+        socioeduk_tipo_atendimento_id: Tipo atendimento
+        data_atendimento: Data atendimento
+        local_atendimento: Local atendimento
+        outro_local_atendimento: Outro local atendimento
+        socioeduk_cid_id: CID
+        diagnostico: Diagnóstico
+        nome_profissional: Nome profissional
+        descricao_atendimento: Descrição atendimento
+      socioeduk/saude_jovem_atendimento:
+        socioeduk_saude_jovem: Saúde jovem
+        saude_jovem: Saúde jovem
+        socioeduk_tipo_atendimento: Tipo atendimento
+        data_atendimento: Data atendimento
+        socioeduk_local_atendimento: Local atendimento
+        outro_local_atendimento: Outro local atendimento
+        socioeduk_cid: CID
+        diagnostico: Diagnóstico
+        nome_profissional: Nome profissional
+        descricao_atendimento: Descrição atendimento
+      socioeduk/saude_jovem_exame:
+        saude_jovem: Saúde jovem
+        socioeduk_tipo_exame: Tipo exame
+        data_exame: Data exame
+      socioeduk/saude_jovem_vacina:
+        saude_jovem_id: Saúde jovem
+        socioeduk_tipo_vacina: Tipo vacina
+        data_vacinacao: Data vacinação
+      socioeduk/saude_jovem_doencas_historica:
+        socioeduk_saude_jovem: Saúde jovem
+        socioeduk_cid: CID
+        diagnostico: Diagnóstico
+      socioeduk/saude_jovem_saude_clinica:
+        socioeduk_saude_jovem: Saúde jovem
+        odontologico_clinico: Odontológico clínico
+        socioeduk_cid: CID
+        diagnostico: Diagnóstico
+        socioeduk_local_tratamento: Local tratamento
+        outro_local_tratamento: Outro local tratamento
+      socioeduk/saude_jovens_tipo_parentesco_doenca_mental:
+        socioeduk_saude_jovens: Saúde jovem
+        socioeduk_tipo_parentesco: Tipo parentesco
+      socioeduk/saude_jovens_tipo_parentesco_suicidio:
+        socioeduk_saude_jovens: Saúde jovem
+        socioeduk_tipo_parentesco: Tipo parentesco
+      socioeduk/saude_jovens_tipo_medicamento_controlado:
+        socioeduk_saude_jovens: Saúde jovem
+        socioeduk_tipo_medicamento_controlado_id: Medicamento controlado
+      socioeduk/saude_jovens_parentes_viciado:
+        socioeduk_saude_jovens: Saúde jovem
+        socioeduk_tipo_parentesco: Tipo parentesco
+        socioeduk_entorpecente: Entorpecente
+      socioeduk/saude_jovens_metodos_contraceptivo:
+        socioeduk_saude_jovem: Jovem
+        socioeduk_metodo_contraceptivo: Método contraceptivo
+        outros_metodos: Outros métodos
+      socioeduk/visitante:
+        nome: Nome
+        socioeduk_jovem: Jovem
+        socioeduk_tipo_documento: Tipo documento
+        numero: Número
+        uf_documento: UF documento
+        foto: Foto
+        observacao: Observação
+        anexo: Anexo
+      socioeduk/processo_advogado:
+        socioeduk_processo: Processo
+        nome: Nome
+        numero: Número
+        uf_oab: UF OAB
+        defensor_publico: Defensor público
+        unidade_socioeducativa: Unidade Socioeducativo
+      socioeduk/local_tratamento:
+        descricao: Descrição
+        status: Status
+      socioeduk/tipo_auto_consideracao:
+        descricao: Descrição
+      socioeduk/cid:
+        descricao: Descrição
+      socioeduk/cor_olho:
+        descricao: Descrição
+      socioeduk/opcao_sexual:
+        descricao: Descrição
+      socioeduk/raca_cor:
+        descricao: Descrição
+      socioeduk/situacao_adolescente:
+        descricao: Descrição
+        remocao_fila: Remoção fila
+      socioeduk/tipo_atendimento:
+        descricao: Descrição
+      socioeduk/tipo_cabelo:
+        descricao: Descrição
+      socioeduk/tipo_contato:
+        descricao: Descrição
+      socioeduk/tipo_deficiencia:
+        descricao: Descrição
+      socioeduk/tipo_guia_execucao:
+        descricao: Descrição
+      socioeduk/tipo_medicamneto_controlado:
+        descricao: Descrição
+      socioeduk/tipo_ocorrencia:
+        descricao: Descrição
+      socioeduk/tipo_parentesco:
+        descricao: Descrição
+      socioeduk/tipo_telefone:
+        descricao: Descrição
+      socioeduk/tipo_tratamento:
+        descricao: Descrição
+      socioeduk/tipo_vacina:
+        descricao: Descrição
+      socioeduk/condicao_fisica:
+        descricao: Descrição
+      socioeduk/tipo_exame:
+        descricao: Descrição
+      socioeduk/ocorrencia:
+        nome: Nome
+        descricao: Descrição
+        socioeduk_tipo_ocorrencia: Tipo de ocorrência
+      socioeduk/tipo_ocorrencia:
+        descricao: Descrição
+      socioeduk/jovem_ocorrencia:
+        socioeduk_jovem: Jovem
+        socioeduk_tipo_ocorrencia: Tipo Ocorrência
+        socioeduk_ocorrencia: Ocorrência
+        data_hora: Data Hora
+        descricao: Descrição
+      socioeduk/visitante:
+        nome: Nome
+        socioeduk_tipo_documento: Tipo do documento
+        numero: Número
+        uf_documento: UF SSP
+        observacao: Observação
+      socioeduk/jovem_apreensao:
+        socioeduk_jovem: Jovem
+        antecedente_criminal: Antecedentes Criminais
+        qtd_de_processo_anteriores: Qtd processos anteriores
+        data_hora_entrada_delegacia: Data e hora da entrada na delegacia
+        dia_delegacia: Qtd de dias na delegacia
+        socioeduk_tipo_medida_socioeducativa: Tipo de medida
+        socioeduk_tipo_decisao_judicial: Tipo da decisão judicial
+        qtd_dia_internacao_medida: Qtd de dias da medida
+      socioeduk/processo_envolvido:
+        socioeduk_processo: Processo
+        socioeduk_jovem: Jovem
+        prontuario: Prontuário
+      socioeduk/alojamento_jovem:
+        socioeduk_jovem: Jovem
+        unidade_socioeducativa: Unidade Socioeducativa
+        socioeduk_bloco: Bloco
+        socioeduk_quarto: Quarto
+        justifica: Justifica
+        utilizar_exedente_vaga: Utilizar excedente de vaga
+        tamanho_roupa: Tamanho da Roupa
+        tamanho_cacaldo: Tamanho do calçado
+        numero_kit: Número do Kit
+      socioeduk/gestao_vaga:
+        de_unidade_socioeducativa_id: De Unidade
+        para_unidade_socioeducativa_id: Para Unidade
+        socioeduk_jovem: Jovem
+        data_movimentacao: Data
+        jovem_recepcao: Jovem Recepção
+        para_unidade_socioeducativa: Unidade Destino
+        status: Status
+        socioeduk_tipo_medida_socioeducativa_id: Medida
+        data_infracao: Data Infração
+        data_hora_solicitacao: Data Solicitação
+        email_solicitante: E-mail do Solicitante
+        data_apreensao: Data Apreensão
+      socioeduk/jovem_recepcao:
+        socioeduk_doc_recepcoes_id: Tipo de documento
+        doc_recepcao: Tipo de documento
+        socioeduk_jovem: Jovem
+        bo: Número de identificação
+        responsavel: Responsável
+        telefone: Telefone do Jovem
+        antecedentes: Tem antecedente pela policia?
+        nome_responsavel: Nome do Responsável do Jovem
+        presenca_familiar_junto: Familiar junto na apresentação? Quem?
+        condutor_nome: Nome do condutor
+        condutor_documento: Documento funcional do condutor
+        condutor_cargo: Cargo do condutor
+        datahora_apresentacao: Data/Hora da Recepção do Jovem
+        oficio: Ofício?
+        documentos_pessoais: Documentos pessoais?
+        decisao: Decisão do juiz?
+        corpo_delito: Exame Corpo de Delito?
+        certidao_antecedente_criminal: Certidão de Antecedentes Criminais?
+        kit_vestuario: Kit vestuario entregue?
+        agredido_bool: Sofreu agressão física?
+        data_movimentacao: Data
+        nome_mae: Mãe
+        data_nascimento: Data nascimento
+      socioeduk/processo_recepcao_jovem_infracao:
+        mandato_apreencao: Mandato apreenção
+      socioeduk/artigo_infracao:
+        descricao: Descrição
+        ponderacao: Ponderação
+      socioeduk/medida_socioeducativa:
+        socioeduk_tipo_medida_socioeducativa: Medida Socioeducativa
+        socioeduk_situacao_cumprimento: Situação de Cumprimento
+        inicio: Inicio
+        fim_previsto: Fim previsto
+        periodo_dias: Período em dias
+        socioeduk_tipo_conclusao_medida_socioeducativas_id: Motivo da conclusão
+        socioeduk_encaminhamento_conclusao_medida_socioeducativas_id: Encaminhado para
+        data_conclusao: Data
+        observacao_conclusao: Observação
+        data_sentenca_conclusao: Data Sentença
+        data_sentenca: Data Sentença
+        data_decisao: Data Decisão
+      socioeduk/solicitacao_vaga:
+        data_infracao: Data Infração
+        data_apreensao: Data Apreensão
+        socioeduk_tipo_medida_socioeducativa_id: Tipo Medida
+        socioeduk_tipo_endereco: Tipo de endereço
+        logradouro: Endereço
+        numero_logradouro: Nº
+        cep: CEP
+        cidade_comarca: Comarca
+        cidade_cumprimento_medida: Cumprirá medida em
+        doc_guia_cnj: Guia CNJ
+        doc_pessoais: Documento Pessoal
+        doc_pedido_internacao_provisoria: Representação e/ou Pedido e Internação Provisória
+        doc_certidao_antecedentes: Certidão de Antecedentes
+        doc_decisao_interlocutoria: Decisão Interlocutória ou Sentença
+        doc_estudos_tecnicos: Estudos Técnicos
+        doc_oficio_crv: Ofício CRV
+        doc_unico: Documento Único
+        doc_historico_escolar: Histórico Escolar
+        doc_historico_saude: Histórico Saúde
+        doc_comprovante_envio_malote_digital: Comprovante Envio Malote Digital
+        doc_unico: Anexo Único
+        doc_unico_array: Informe os documentos anexados
+        periodo: Dias
+      socioeduk/relatorio_diario:
+        unidade_socioeducativa_id: unidade
+        int_mas: Internação Masculino
+        int_fem: Internação Feminino
+        ip_mas: Internação Provisória Masculino
+        ip_fem: Internação Provisória Feminino
+        sl_mas: Semiliberdade Masculino
+        sl_fem: Semiliberdade Feminino
+        san_mas: Sanção Masculino
+        san_fem: Sanção Feminino
+        capacidade_nominal: Capacidade Nominal
+        capacidade_real: Capacidade Real
+        socioeducador_homem: Socioeducador Homem
+        socioeducador_mulher: Socioeducador Mulher
+        capacidade_por_adolescente: Capacidade por Adolescente
+        evasao: Evasão
+        fuga: Fuga
+        descumprimento: Descumprimento
+        situacao_crise: Situação de Crise
+        data: Data
+        resumo: Resumo
+        capacidade_socioeducador_por_adolescente: Capacidade Socioeducador/Adolescente
+        capacidade_socioeducador_por_adolescente_percentual: '% Capacidade Socioeducador por Adolescente'
+        preenchido_por: Preenchido por
+        m_unidade_socioeducativa: Unidade
+        m_int_mas: I Mas.
+        m_int_fem: I Fem.
+        m_ip_mas: IP Mas.
+        m_ip_fem: IP Fem.
+        m_sl_mas: SL Mas.
+        m_sl_fem: SL Fem.
+        m_san_mas: SA Mas.
+        m_san_fem: SA Fem.
+        m_capacidade_nominal: Normal
+        m_capacidade_real: Real
+        m_socioeducador_homem: Soc. Mas.
+        m_socioeducador_mulher: Soc. Fem.
+        m_capacidade_por_adolescente: Cap. / Adol.
+        m_evasao: Evasão
+        m_fuga: Fuga
+        m_descumprimento: Desc.
+        m_situacao_crise: Sit. Crise
+        m_data: Data
+        m_resumo: Resumo
+        m_capacidade_socioeducador_por_adolescente: Cap. Soc./Ado.
+        m_capacidade_socioeducador_por_adolescente_percentual: 
+        m_preenchido_por: Preenchido por
+      socioeduk/saude_jovem_ocorrencia:
+        socioeduk_jovem_recepcao: Jovem Recepção
+        socioeduk_tipo_atendimento: Tipo Atendimento
+        observacao: Observação
+      socioeduk/jovem_controle_pertence:
+        socioeduk_jovem_recepcao: Jovens Recepcionados
+        nome: Nome do Pertence
+        data_entrega: Data da Entrega do Pertence
+        recebente: Entregue a ...
+        entregador: Entregue por ...
+      gestao_demandas/solicitacao:
+        usuario: Usuário
+        titulo: Titulo
+        descricao: Descrição
+        created_at: Data
+      urlbm/mapa:
+        socioeduk_jovem_recepcao_id: Nome
+        num_processo: N° Proc
+        responsavel: Responsável
+        telcontato: Contato
+        data_ocorrencia: Data/Hora Ocorrência
+        data_admissao: Data/Hora Admissão
+        data_nascimento: Data Nascimento
+        urlbm_status_map_id: Status
+        reincidente: Reincidência
+        data_judicial: Data
+        bo_mapa: Bo/Ofício
+        urlbm_ato_infracional_id: Ato Infracional
+        cidade_id: Comarca
+  titles:
+    painel_gerencial: Painel Gerencial
+    socioeduk_jovens: Pesquisa Jovens com Passagem pelo Sistema
+    socioeduk_jovens_new: Cadastrar Novo Jovem
+    socioeduk_jovem_recepcoes: Jovens Ativos na Unidade de Recepção
+    socioeduk_jovem_controle_pertences: Controle de Pertences do Jovem
+    urlbm_mapas: Mapa de Acompanhamento Jovens URLBM
+    socioeduk_gestao_vagas_dashboards: Painel Gerencial
+    socioeduk_gestao_vagas_indicadores: Indicadores
+    socioeduk_jovem_recepcoes_recepcao_direta: Cadastro de Jovens Recepcionados nas Unidades do Interior
+    socioeduk_gestao_vagas: Estrutura de Capacidade por Bloco das Unidades
+    socioeduk_gestao_vagas_visualizar_vagas: Quadro de Ocupação por Unidades
+    socioeduk_gestao_vagas_fila_vagas: Monitoramento de Vagas
+    socioeduk_gestao_vagas_visualizar_pontuacao: Relatório de Pesquisa por Ativos, Sexo, Idade
+    socioeduk_gestao_vagas_acompanhar_solicitacao_vagas: Acompanhar Solicitação de Vagas
+    socioeduk_processo_new: Cadastro de Jovem com Informação do Processo Judiciário
+    socioeduk_processo_index: Pesquisar Jovem pelo Número de Processo
+    socioeduk_solicitacao_vagas_administracao_solicitante: Panorama de Vagas
+    socioeduk_solicitacao_vagas_index: Solicitar Nova Vaga
+  views:
+    socioeduk/processo:
+        data_espera: Data Inicial
+    pagination:
+      first: "&laquo;"
+      last: "&raquo;"
+      previous: "&lsaquo;"
+      next: "&rsaquo;"
+      truncate: "&hellip;"
+  recaptcha:
+      errors:
+        verification_failed: 'O captcha esta vazio, por favor tente novamente.'
+        recaptcha_unreachable: 'Erro de verificação no servidor, por favor tente novamente.'

@@ -1,0 +1,22 @@
+<%= form_for(@unidade_socioeducativa_bloco, html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @unidade_socioeducativa_bloco %>
+  <%= render 'layouts/message_required' %>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :descricao %>
+      <%= f.text_field :descricao, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :unidades_socioeducativas %>
+      <%= f.collection_select :unidades_socioeducativas_id, UnidadeSocioeducativa.all, :id, :nome, {prompt: 'Selecione'}, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10">
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+      <%= link_to I18n.t('helpers.links.cancel'), unidade_socioeducativa_blocos_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,737 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+  <div class="sidebar-collapse" >
+    <ul class="nav metismenu" id="side-menu">
+      <%= render 'layouts/navigation_header' %>
+      <!-- ATENDIMENTO INICIAL ######################################################################################################################################################################################### -->
+      <% if (!current_usuario.permissao.recursos.to_s.include?('gestao_vagas|') && current_usuario.permissao.recursos.to_s.include?('jovens|') && current_usuario.permissao.recursos.to_s.include?('mapas|')) || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+        <li class="<%= show_active(is_active_module_prefix?('socioeduk') && is_active_controller('socioeduk/jovens') || is_active_controller('socioeduk/jovem_recepcoes')) %>">
+          <a href="#"><i class="fa fa-tags"></i> <span class="nav-label" data-i18n="nav.socioeduk">Atendimento Inicial</span>
+            <span class="fa arrow"></span>
+          </a>
+          <ul class="nav nav-second-level collapse">
+            <% if current_usuario.permissao.recursos.to_s.include?('jovens|dashboards') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/jovens') && is_active_action('dashboards') %>">
+                <%= link_to dashboards_socioeduk_jovens_path do %>
+                  <i class="fa fa-bookmark"></i>Painel Gerencial
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('jovens|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/jovens') && is_active_action('index') %>">
+                <%= link_to socioeduk_jovens_path do %>
+                  <i class="fa fa-bookmark"></i>Pesquisar Jovens com Passagem pelo Sistema
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('jovens|new') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/jovens') && is_active_action('new') %>">
+                <%= link_to new_socioeduk_jovem_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastrar Novo Jovem
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('jovem_recepcoes|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/jovem_recepcoes') && is_active_action('index') %>">
+                <%= link_to socioeduk_jovem_recepcoes_path do %>
+                  <i class="fa fa-bookmark"></i>Jovens Ativos na Unidade de Recepção
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('jovem_controle_pertences|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/jovem_controle_pertences') && is_active_action('index') %>">
+                <%= link_to socioeduk_jovem_controle_pertences_path do %>
+                  <i class="fa fa-bookmark"></i>Controle de Pertences do Jovem
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('mapas|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('urlbm/mapas') && is_active_action('index') %>">
+                <%= link_to urlbm_mapas_path do %>
+                  <i class="fa fa-bookmark"></i>Mapa de Acompanhamento Jovens URLBM<% end %>
+              </li>
+            <% end %>
+
+          </ul>
+        </li>
+      <% end %>
+      <!-- GESTÃO DE VAGAS ############################################################################################################################################################################################# -->
+      <% if current_usuario.permissao.recursos.to_s.include?('gestao_vagas|') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+        <li class="<%= show_active(is_active_module_prefix?('socioeduk') && !is_active_controller('socioeduk/processos') && !is_active_controller('socioeduk/relatorio_diarios')) %>">
+          <a href="#">
+            <i class="fa fa-tags"></i><span class="nav-label" data-i18n="nav.socioeduk">Gestão de Vagas</span>
+            <span class="fa arrow"></span>
+          </a>
+          <ul class="nav nav-second-level collapse">
+            <% if current_usuario.permissao.recursos.to_s.include?('gestao_vagas|dashboards') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/gestao_vagas') && is_active_action('dashboards') %>">
+                <%= link_to dashboards_socioeduk_gestao_vagas_path do %>
+                  <i class="fa fa-bookmark"></i>Painel Gerencial
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('gestao_vagas|indicadores') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/gestao_vagas') && is_active_action('indicadores') %>">
+                <%= link_to indicadores_socioeduk_gestao_vagas_path do %>
+                  <i class="fa fa-bookmark"></i>Indicadores
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('gestao_vagas|ativos_recepcao') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/gestao_vagas') && is_active_action('ativos_recepcao') %>">
+                <%= link_to ativos_recepcao_socioeduk_gestao_vagas_path do %>
+                  <i class="fa fa-bookmark"></i>Ativos na Recepção
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('jovens|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/jovens') && is_active_action('index') %>">
+                <%= link_to socioeduk_jovens_path do %>
+                  <i class="fa fa-bookmark"></i>Pesquisar Jovens com Passagem pelo Sistema
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('jovens|new') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/jovens') && is_active_action('new') %>">
+                <%= link_to new_socioeduk_jovem_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastrar Novo Jovem
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('jovem_recepcoes|recepcao_direta') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/jovem_recepcoes') && is_active_action('recepcao_direta') %>">
+                <%= link_to recepcao_direta_socioeduk_jovem_recepcoes_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastro de Jovens Recepcionados nas Unidades do Interior
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('gestao_vagas|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/gestao_vagas') && is_active_action('index') %>">
+                <%= link_to socioeduk_gestao_vagas_path do %>
+                  <i class="fa fa-bookmark"></i>Estrutura de Capacidade por Bloco das Unidades
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('gestao_vagas|visualizar_vagas') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/gestao_vagas') && is_active_action('visualizar_vagas') %>">
+                <%= link_to visualizar_vagas_socioeduk_gestao_vagas_path do %>
+                  <i class="fa fa-bookmark"></i>Quadro de Ocupação por Unidade
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('gestao_vagas|fila_vagas') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/gestao_vagas') && is_active_action('fila_vagas') %>">
+                <%= link_to fila_vagas_socioeduk_gestao_vagas_path do %>
+                  <i class="fa fa-bookmark"></i>Monitoramento de Vagas
+                <% end %>
+              </li>
+            <% end %>
+            <!-- <% if current_usuario.permissao.recursos.to_s.include?('gestao_vagas|visualizar_pontuacao') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/gestao_vagas') && is_active_action('visualizar_pontuacao') %>">
+                <%= link_to visualizar_pontuacao_socioeduk_gestao_vagas_path do %>
+                  <i class="fa fa-bookmark"></i>Relatório Geral por Pontuação
+                <% end %>
+              </li>
+            <% end %> -->
+            <% if current_usuario.permissao.recursos.to_s.include?('gestao_vagas|acompanhar_solicitacao_vagas') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/gestao_vagas') && is_active_action('acompanhar_solicitacao_vagas') %>">
+                <%= link_to acompanhar_solicitacao_vagas_socioeduk_gestao_vagas_path do %>
+                  <i class="fa fa-bookmark"></i>Acompanhar Solicitações de Vagas
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+      <!-- PROCESSO #################################################################################################################################################################################################### -->
+      <% if current_usuario.permissao.recursos.to_s.include?('processos|') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+        <li class="<%= show_active(is_active_module_prefix?('socioeduk') && is_active_controller('socioeduk/processos')) %>">
+          <a href="#" aria-expanded="true"><i class="fa fa-tags"></i><span class="nav-label" data-i18n="nav.socioeduk">Cadastro de Processo Judiciário</span>
+            <span class="fa arrow"></span>
+          </a>
+          <ul class="nav nav-second-level collapse">
+            <% if current_usuario.permissao.recursos.to_s.include?('processos|new') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/processos') && is_active_action('new') %>">
+                <%= link_to new_socioeduk_processo_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastro de Jovem com Informação do Processo Judiciário
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('processos|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/processos') && is_active_action('index') %>">
+                <%= link_to socioeduk_processos_path do %>
+                  <i class="fa fa-bookmark"></i>Pesquisar Jovem pelo Número de Processo
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+      <!-- SISTEMA DE JUSTIÇA ############################################################################################################################################################################################# -->
+      <% if !current_usuario.pessoa.nil? or !current_usuario.pessoa.tipo_pessoa.nil? or current_usuario.pessoa.tipo_pessoa.descricao == 'Juiz' %>
+        <% if current_usuario.permissao.recursos.to_s.include?('solicitacao_vagas|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+          <li class="<%= show_active(is_active_module_prefix?('socioeduk') && is_active_controller('socioeduk/solicitacao_vagas')) %>">
+            <a href="#" aria-expanded="true"><i class="fa fa-tags"></i><span class="nav-label" data-i18n="nav.socioeduk">Sistema de Justiça</span>
+              <span class="fa arrow"></span>
+            </a>
+            <ul class="nav nav-second-level collapse">
+              <% if current_usuario.permissao.recursos.to_s.include?('solicitacao_vagas|administracao_solicitante') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+                <li class="<%= is_active_controller('socioeduk/solicitacao_vagas') && is_active_action('administracao_solicitante') %>">
+                  <%= link_to administracao_solicitante_socioeduk_solicitacao_vagas_path do %>
+                    <i class="fa fa-bookmark"></i>Panorama de Vagas
+                  <% end %>
+                </li>
+              <% end %>
+              <% if current_usuario.permissao.recursos.to_s.include?('solicitacao_vagas|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+                <li class="<%= is_active_controller('socioeduk/solicitacao_vagas') && is_active_action('index') %>">
+                  <%= link_to socioeduk_solicitacao_vagas_path do %>
+                    <i class="fa fa-bookmark"></i>Solicitar Nova Vaga
+                  <% end %>
+                </li>
+              <% end %>
+              <!-- <% if current_usuario.permissao.recursos.to_s.include?('solicitacao_vagas|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+                <li class="<%= is_active_controller('socioeduk/solicitacao_vagas') && is_active_action('index') %>">
+                  <%= link_to fila_vagas_socioeduk_gestao_vagas_path do %>
+                    <i class="fa fa-bookmark"></i>Monitoramento de Vagas
+                  <% end %>
+                </li>
+              <% end %> -->
+            </ul>
+          </li>
+        <% end %>
+      <% end %>
+      <!-- SÍNTESE DIÁRIA ############################################################################################################################################################################################### -->
+      <% if current_usuario.permissao.recursos.to_s.include?('relatorio_diarios|') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+        <li class="<%= show_active(is_active_module_prefix?('socioeduk') && !is_active_controller('socioeduk/processos') && is_active_controller('socioeduk/relatorio_diarios')) %>">
+          <a href="#"><i class="fa fa-tags"></i> <span class="nav-label" data-i18n="nav.socioeduk">Síntese Diária</span>
+            <span class="fa arrow"></span>
+          </a>
+          <ul class="nav nav-second-level collapse">
+            <% if current_usuario.permissao.recursos.to_s.include?('relatorio_diarios|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/relatorio_diarios') && is_active_action('index') %>">
+                <%= link_to socioeduk_relatorio_diarios_path do %>
+                <i class="fa fa-bookmark"></i>Cadastrar Síntese
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('relatorio_diarios|monitoramento') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/relatorio_diarios') && is_active_action('monitoramento') %>">
+                <%= link_to monitoramento_socioeduk_relatorio_diarios_path do %>
+                <i class="fa fa-bookmark"></i>Monitoramento Geral
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('relatorio_diarios|monitoramento_unidade') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/relatorio_diarios') && is_active_action('monitoramento_unidade') %>">
+                <%= link_to monitoramento_unidade_socioeduk_relatorio_diarios_path do %>
+                <i class="fa fa-bookmark"></i>Monitoramento por Unidade
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+      <!-- SAÚDE ####################################################################################################################################################################################################### -->
+      <% if current_usuario.permissao.recursos.to_s.include?('saude_jovens|') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+        <li class="<%= show_active(is_active_module_prefix?('socioeduk') && is_active_controller('socioeduk/saude_jovens') || is_active_controller('socioeduk/local_tratamentos') || is_active_controller('socioeduk/entorpecentes')) %>">
+          <a href="#"><i class="fa fa-tags"></i> <span class="nav-label" data-i18n="nav.socioeduk">Atendimento Clínico</span>
+            <span class="fa arrow"></span>
+          </a>
+          <ul class="nav nav-second-level collapse">
+            <% if current_usuario.permissao.recursos.to_s.include?('saude_jovens|new') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/saude_jovens') && is_active_action('new') %>">
+                <%= link_to new_socioeduk_saude_jovem_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastrar Atendimento Clínico
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('saude_jovens|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/saude_jovens') && is_active_action('index') %>">
+                <%= link_to socioeduk_saude_jovens_path do %>
+                  <i class="fa fa-bookmark"></i>Listar Atendimentos Clínico
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('saude_jovens|new') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/local_tratamentos') && is_active_action('new') %>">
+                <%= link_to new_socioeduk_local_tratamento_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastrar Local de Tratamento
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('entorpecentes|') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/entorpecentes') %>">
+                <%= link_to socioeduk_entorpecentes_path do %>
+                  <i class="fa fa-bookmark"></i>Listar Entorpecentes
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+      <!-- PEDAGÓGICO ################################################################################################################################################################################################## -->
+      <% if current_usuario.permissao.recursos.to_s.include?('pedagogico_jovens|') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+        <li class="<%= show_active(is_active_module_prefix?('socioeduk') && is_active_controller('socioeduk/pedagogico_jovens') || is_active_controller('socioeduk/escolaridades') || is_active_controller('socioeduk/tipo_local_cursos') || is_active_controller('socioeduk/disciplina_escolaridades') || is_active_controller('socioeduk/situacao_escolares') || is_active_controller('socioeduk/tipo_alfabetizados') || is_active_controller('socioeduk/tipo_cursos') || is_active_controller('socioeduk/tipo_oficinas') || is_active_controller('socioeduk/situacao_disciplinas')) %>">
+          <a href="#"><i class="fa fa-tags"></i> <span class="nav-label" data-i18n="nav.socioeduk">Pedagógico / Profissionalizante</span>
+            <span class="fa arrow"></span>
+          </a>
+          <ul class="nav nav-second-level collapse">
+            <% if current_usuario.permissao.recursos.to_s.include?('pedagogico_jovens|new') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/pedagogico_jovens') && is_active_action('new') %>">
+                <%= link_to new_socioeduk_pedagogico_jovem_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastrar Atendimentos Pedagógicos
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('pedagogico_jovens|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/pedagogico_jovens') && is_active_action('index') %>">
+                <%= link_to socioeduk_pedagogico_jovens_path do %>
+                  <i class="fa fa-bookmark"></i>Listar Atendimentos Pedagógicos
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('escolaridades|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/escolaridades') && is_active_action('index') %>">
+                <%= link_to socioeduk_escolaridades_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastrar Escolaridades
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('tipo_local_cursos|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/tipo_local_cursos') && is_active_action('index') %>">
+                <%= link_to socioeduk_tipo_local_cursos_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastrar Local do Curso
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('disciplina_escolaridades|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/disciplina_escolaridades') && is_active_action('index') %>">
+                <%= link_to socioeduk_disciplina_escolaridades_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastrar Disciplinas Escolares
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('situacao_escolares|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/situacao_escolares') && is_active_action('index') %>">
+                <%= link_to socioeduk_situacao_escolares_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastrar Situação Escolar
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('tipo_alfabetizados|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/tipo_alfabetizados') && is_active_action('index') %>">
+                <%= link_to socioeduk_tipo_alfabetizados_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastrar tTipo Alfabetização
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('tipo_cursos|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/tipo_cursos') && is_active_action('index') %>">
+                <%= link_to socioeduk_tipo_cursos_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastrar Tipos de Curso
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('tipo_oficinas|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/tipo_oficinas') && is_active_action('index') %>">
+                <%= link_to socioeduk_tipo_oficinas_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastrar Tipos de Oficina
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('situacao_disciplinas|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/situacao_disciplinas') && is_active_action('index') %>">
+                <%= link_to socioeduk_situacao_disciplinas_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastrar Situação da Disciplina
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+      <!-- TÉCNICO ##################################################################################################################################################################################################### -->
+      <% if current_usuario.permissao.recursos.to_s.include?('tecnico_jovens|') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+        <li class="<%= show_active(is_active_module_prefix?('socioeduk') && is_active_controller('socioeduk/tecnico_jovens') || is_active_controller('socioeduk/convivio_familiares') || is_active_controller('socioeduk/composicao_familiares') || is_active_controller('socioeduk/plano_individual_atendimentos') || is_active_controller('socioeduk/programa_sociais') || is_active_controller('socioeduk/renda_familiares')) %>">
+          <a href="#"><i class="fa fa-tags"></i> <span class="nav-label" data-i18n="nav.socioeduk">Atendimento Técnico</span>
+            <span class="fa arrow"></span>
+          </a>
+          <ul class="nav nav-second-level collapse">
+            <% if current_usuario.permissao.recursos.to_s.include?('tecnico_jovens|new') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/tecnico_jovens') && is_active_action('new') %>">
+                <%= link_to new_socioeduk_tecnico_jovem_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastrar atendimento técnico
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('tecnico_jovens|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/tecnico_jovens') && is_active_action('index') %>">
+                <%= link_to socioeduk_tecnico_jovens_path do %>
+                  <i class="fa fa-bookmark"></i>Listar atendimentos técnico
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('convivio_familiares|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/convivio_familiares') && is_active_action('index') %>">
+                <%= link_to socioeduk_convivio_familiares_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastrar convívio familiar
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('renda_familiares|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/renda_familiares') && is_active_action('index') %>">
+                <%= link_to socioeduk_renda_familiares_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastrar renda familiar
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('composicao_familiares|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/composicao_familiares') && is_active_action('index') %>">
+                <%= link_to socioeduk_composicao_familiares_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastrar composição familiar
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('plano_individual_atendimentos|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/plano_individual_atendimentos') && is_active_action('index') %>">
+                <%= link_to socioeduk_plano_individual_atendimentos_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastrar PIA
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('programa_sociais|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/programa_sociais') && is_active_action('index') %>">
+                <%= link_to socioeduk_programa_sociais_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastrar programas sociais
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+      <!-- OCORRÊNCIAS ################################################################################################################################################################################################# -->
+      <% if current_usuario.permissao.recursos.to_s.include?('jovem_ocorrencias|') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+        <li class="<%= show_active(is_active_module_prefix?('socioeduk') && is_active_controller('socioeduk/jovem_ocorrencias') || is_active_controller('socioeduk/jovem_saidas') || is_active_controller('socioeduk/jovem_suicidios') || is_active_controller('socioeduk/visitantes')) %>">
+          <a href="#"><i class="fa fa-tags"></i> <span class="nav-label" data-i18n="nav.socioeduk">Registro de Ocorrências</span>
+            <span class="fa arrow"></span>
+          </a>
+          <ul class="nav nav-second-level collapse">
+            <% if current_usuario.permissao.recursos.to_s.include?('jovem_ocorrencias|new') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= show_active(is_active_controller('socioeduk/jovem_ocorrencias') && is_active_action('new')) %>">
+                <%= link_to new_socioeduk_jovem_ocorrencia_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastrar ocorrência
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('jovem_ocorrencias|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= show_active(is_active_controller('socioeduk/jovem_ocorrencias') && is_active_action('index')) %>">
+                <%= link_to socioeduk_jovem_ocorrencias_path do %>
+                  <i class="fa fa-bookmark"></i>Listar ocorrências
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('jovem_saidas|new') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/jovem_saidas') && is_active_action('new') %>">
+                <%= link_to new_socioeduk_jovem_saida_path do %>
+                  <i class="fa fa-bookmark"></i>Informar saída jovem
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('visitantes|new') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/visitantes') && is_active_action('new') %>">
+                <%= link_to new_socioeduk_visitante_path do %>
+                  <i class="fa fa-bookmark"></i>Cadastro de visitantes jovem
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('jovem_suicidios|new') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/jovem_suicidios') && is_active_action('new') %>">
+                <%= link_to new_socioeduk_jovem_suicidio_path do %>
+                  <i class="fa fa-bookmark"></i>Ocorrência de suicídio
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+      <!-- RELATÓRIOS ################################################################################################################################################################################################## -->
+      <% if current_usuario.permissao.recursos.to_s.include?('relatorios|') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+        <li class="<%= show_active(is_active_module_prefix?('socioeduk') && is_active_controller('socioeduk/relatorios')) %>">
+          <a href="#"><i class="fa fa-tags"></i> <span class="nav-label" data-i18n="nav.socioeduk">Relatórios</span>
+            <span class="fa arrow"></span>
+          </a>
+          <ul class="nav nav-second-level collapse">
+            <% if current_usuario.permissao.recursos.to_s.include?('relatorios|movimentacao_transferencias') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= show_active(is_active_controller('socioeduk/relatorios') && is_active_action('movimentacao_transferencias')) %>">
+                <%= link_to movimentacao_transferencias_socioeduk_relatorios_path do %>
+                  <i class="fa fa-bookmark"></i>Transferências efetuadas
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('relatorios|mapeamento_atendimentos') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= show_active(is_active_controller('socioeduk/relatorios') && is_active_action('mapeamento_atendimentos')) %>">
+                <%= link_to mapeamento_atendimentos_socioeduk_relatorios_path do %>
+                  <i class="fa fa-bookmark"></i>Mapeamento de atendimentos
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('relatorios|quantidade_por_tipo_conclusao_medidas') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= show_active(is_active_controller('socioeduk/relatorios') && is_active_action('quantidade_por_tipo_conclusao_medidas')) %>">
+                <%= link_to quantidade_por_tipo_conclusao_medidas_socioeduk_relatorios_path do %>
+                  <i class="fa fa-bookmark"></i>Tipo de conclusão Medida
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('relatorios|total_jovens_provisoria_decurso_ip') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= show_active(is_active_controller('socioeduk/relatorios') && is_active_action('total_jovens_provisoria_decurso_ip')) %>">
+                <%= link_to total_jovens_provisoria_decurso_ip_socioeduk_relatorios_path do %>
+                  <i class="fa fa-bookmark"></i>Total Decurso de IP
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('relatorios|tempo_cumprimento_por_medidas') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= show_active(is_active_controller('socioeduk/relatorios') && is_active_action('tempo_cumprimento_por_medidas')) %>">
+                <%= link_to tempo_cumprimento_por_medidas_socioeduk_relatorios_path do %>
+                  <i class="fa fa-bookmark"></i>Tempo cumprimeto por medida
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('relatorios|qtd_infracoes_tentada_consumada') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= show_active(is_active_controller('socioeduk/relatorios') && is_active_action('qtd_infracoes_tentada_consumada')) %>">
+                <%= link_to qtd_infracoes_tentada_consumada_socioeduk_relatorios_path do %>
+                  <i class="fa fa-bookmark"></i>Por Ato Infracional
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('relatorios|relacao_adolescentes') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= show_active(is_active_controller('socioeduk/relatorios') && is_active_action('relacao_adolescentes')) %>">
+                <%= link_to relacao_adolescentes_socioeduk_relatorios_path do %>
+                  <i class="fa fa-bookmark"></i>Relação dos adolescentes
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('relatorios|qtd_jovens_por_sexo') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= show_active(is_active_controller('socioeduk/relatorios') && is_active_action('qtd_jovens_por_sexo')) %>">
+                <%= link_to qtd_jovens_por_sexo_socioeduk_relatorios_path do %>
+                  <i class="fa fa-bookmark"></i>Jovens ativos por sexo
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('relatorios|quantitativo_por_ato_infracionais') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= show_active(is_active_controller('socioeduk/relatorios') && is_active_action('quantitativo_por_ato_infracionais')) %>">
+                <%= link_to quantitativo_por_ato_infracionais_socioeduk_relatorios_path do %>
+                  <i class="fa fa-bookmark"></i>Quantitativo de jovem por atos infracionais
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('relatorios|ocupacao_quantitativos') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= show_active(is_active_controller('socioeduk/relatorios') && is_active_action('ocupacao_quantitativos')) %>">
+                <%= link_to ocupacao_quantitativos_socioeduk_relatorios_path do %>
+                  <i class="fa fa-bookmark"></i>Quantitativo de Ocupação
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('relatorios|quantitativo_por_comarcas') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= show_active(is_active_controller('socioeduk/relatorios') && is_active_action('quantitativo_por_comarcas')) %>">
+                <%= link_to quantitativo_por_comarcas_socioeduk_relatorios_path do %>
+                  <i class="fa fa-bookmark"></i>Quantitativo por comarcas
+                <% end %>
+              </li>
+            <% end %><% if current_usuario.permissao.recursos.to_s.include?('relatorios|quantitativo_em_espera') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= show_active(is_active_controller('socioeduk/relatorios') && is_active_action('quantitativo_em_espera')) %>">
+                <%= link_to quantitativo_em_espera_socioeduk_relatorios_path do %>
+                  <i class="fa fa-bookmark"></i>Quantitativo de Jovem Aguardando Vaga
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+      <!-- CONFIGURAÇÕES ################################################################################################################################################################################################## -->
+      <% if current_usuario.permissao.recursos.to_s.include?('configuracoes|') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+        <li class="<%= show_active(is_active_module_prefix?('socioeduk') && is_active_controller('socioeduk/configuracoes')) %>">
+          <a href="#"><i class="fa fa-tags"></i> <span class="nav-label" data-i18n="nav.socioeduk">Configurações</span>
+            <span class="fa arrow"></span>
+          </a>
+          <ul class="nav nav-second-level collapse">
+            <% if current_usuario.permissao.recursos.to_s.include?('configuracoes|configuracao_emails') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= show_active(is_active_controller('socioeduk/configuracoes') && is_active_action('configuracao_emails')) %>">
+                <%= link_to socioeduk_configuracoes_configuracao_emails_path do %>
+                  <i class="fa fa-bookmark"></i>Email Automático
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+      <!-- TABELAS AUXILIARES ########################################################################################################################################################################################## -->
+      <% if current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+        <li class="<%= show_active(is_active_controller('socioeduk')) %>">
+          <a href="#" aria-expanded="true"><i class="fa fa-tags"></i><span class="nav-label" data-i18n="nav.socioeduk">Cadastros Auxiliares</span>
+            <span class="fa arrow"></span>
+          </a>
+          <ul class="nav nav-second-level collapse">
+            <% if current_usuario.permissao.recursos.to_s.include?('cids|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/cids') %>">
+                <%= link_to socioeduk_cids_path do %>
+                  <i class="fa fa-bookmark"></i><%= I18n.t("activerecord.models.socioeduk_cid").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('artigo_infracoes|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/artigo_infracoes') %>">
+                <%= link_to socioeduk_artigo_infracoes_path do %>
+                  <i class="fa fa-bookmark"></i><%= I18n.t("activerecord.models.socioeduk_artigo_infracao").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('cor_olhos|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/cor_olhos') %>">
+                <%= link_to socioeduk_cor_olhos_path do %>
+                  <i class="fa fa-bookmark"></i><%= I18n.t("activerecord.models.socioeduk_cor_olho").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('local_tratamentos|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/local_tratamentos') %>">
+                <%= link_to socioeduk_local_tratamentos_path do %>
+                  <i class="fa fa-bookmark"></i><%= I18n.t("activerecord.models.socioeduk_local_tratamento").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('metodo_contraceptivos|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/metodo_contraceptivos') %>">
+                <%= link_to socioeduk_metodo_contraceptivos_path do %>
+                  <i class="fa fa-bookmark"></i><%= I18n.t("activerecord.models.socioeduk_metodo_contraceptivo").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('opcao_sexuais|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/opcao_sexuais') %>">
+                <%= link_to socioeduk_opcao_sexuais_path do %>
+                  <i class="fa fa-bookmark"></i><%= I18n.t("activerecord.models.socioeduk_opcao_sexual").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('raca_cores|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/raca_cores') %>">
+                <%= link_to socioeduk_raca_cores_path do %>
+                  <i class="fa fa-bookmark"></i><%= I18n.t("activerecord.models.socioeduk_raca_cor").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('situacao_adolescentes|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/situacao_adolescentes') %>">
+                <%= link_to socioeduk_situacao_adolescentes_path do %>
+                  <i class="fa fa-bookmark"></i><%= I18n.t("activerecord.models.socioeduk_situacao_adolescente").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('tipo_atendimentos|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/tipo_atendimentos') %>">
+                <%= link_to socioeduk_tipo_atendimentos_path do %>
+                  <i class="fa fa-bookmark"></i><%= I18n.t("activerecord.models.socioeduk_tipo_atendimento").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('tipo_cabelos|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/tipo_cabelos') %>">
+                <%= link_to socioeduk_tipo_cabelos_path do %>
+                  <i class="fa fa-bookmark"></i><%= I18n.t("activerecord.models.socioeduk_tipo_cabelo").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('tipo_contatos|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/tipo_contatos') %>">
+                <%= link_to socioeduk_tipo_contatos_path do %>
+                  <i class="fa fa-bookmark"></i><%= I18n.t("activerecord.models.socioeduk_tipo_contato").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('tipo_deficiencias|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/tipo_deficiencias') %>">
+                <%= link_to socioeduk_tipo_deficiencias_path do %>
+                  <i class="fa fa-bookmark"></i><%= I18n.t("activerecord.models.socioeduk_tipo_deficiencia").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('tipo_guia_execucoes|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/tipo_guia_execucoes') %>">
+                <%= link_to socioeduk_tipo_guia_execucoes_path do %>
+                  <i class="fa fa-bookmark"></i><%= I18n.t("activerecord.models.socioeduk_tipo_guia_execucao").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('tipo_medicamento_controlados|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/tipo_medicamento_controlados') %>">
+                <%= link_to socioeduk_tipo_medicamento_controlados_path do %>movimentacao_transferenciasedicamento_controlado").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('tipo_ocorrencias|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/tipo_ocorrencias') %>">
+                <%= link_to socioeduk_tipo_ocorrencias_path do %>
+                  <i class="fa fa-bookmark"></i><%= I18n.t("activerecord.models.socioeduk_tipo_ocorrencia").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('tipo_parentescos|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/tipo_parentescos') %>">
+                <%= link_to socioeduk_tipo_parentescos_path do %>
+                  <i class="fa fa-bookmark"></i><%= I18n.t("activerecord.models.socioeduk_tipo_parentesco").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('tipo_sinais|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/tipo_sinais') %>">
+                <%= link_to socioeduk_tipo_sinais_path do %>
+                  <i class="fa fa-bookmark"></i><%= I18n.t("activerecord.models.socioeduk_tipo_sinal").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('tipo_telefones|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/tipo_telefones') %>">
+                <%= link_to socioeduk_tipo_telefones_path do %>
+                  <i class="fa fa-bookmark"></i><%= I18n.t("activerecord.models.socioeduk_tipo_telefone").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('tipo_tratamentos|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/tipo_tratamentos') %>">
+                <%= link_to socioeduk_tipo_tratamentos_path do %>
+                  <i class="fa fa-bookmark"></i><%= I18n.t("activerecord.models.socioeduk_tipo_tratamento").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('tipo_vacinas|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/tipo_vacinas') %>">
+                <%= link_to socioeduk_tipo_vacinas_path do %>
+                  <i class="fa fa-bookmark"></i><%= I18n.t("activerecord.models.socioeduk_tipo_vacina").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('condicao_fisicas|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/condicao_fisicas') %>">
+                <%= link_to socioeduk_condicao_fisicas_path do %>
+                  <i class="fa fa-bookmark"></i><%= I18n.t("activerecord.models.socioeduk_condicao_fisica").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('tipo_exames|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('socioeduk/tipo_exames') %>">
+                <%= link_to socioeduk_tipo_exames_path do %>
+                  <i class="fa fa-bookmark"></i><%= I18n.t("activerecord.models.socioeduk_tipo_exame").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if current_usuario.permissao.recursos.to_s.include?('unidades_medidas|index') || current_usuario.permissao.recursos.to_s.include?('administrator|system') %>
+              <li class="<%= is_active_controller('unidades_medida') %>">
+                <%= link_to unidades_medidas_path do %>
+                  <i class="fa fa-bookmark"></i><%= I18n.t("activerecord.models.unidades_medida").pluralize %></span>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>

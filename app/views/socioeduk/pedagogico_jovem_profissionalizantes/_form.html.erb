@@ -1,0 +1,62 @@
+<%= form_for(@socioeduk_pedagogico_jovem_profissionalizante, html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @socioeduk_pedagogico_jovem_profissionalizante %>
+  <%= render 'layouts/message_required' %>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_pedagogico_jovem %>
+      <%= f.collection_select :socioeduk_pedagogico_jovem_id, Socioeduk::PedagogicoJovem.all, :id, :id, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_tipo_local_curso %>
+      <%= f.collection_select :socioeduk_tipo_local_curso_id, Socioeduk::TipoLocalCurso.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :nome_programa %>
+      <%= f.text_field :nome_programa, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_tipo_curso %>
+      <%= f.collection_select :socioeduk_tipo_curso_id, Socioeduk::TipoCurso.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :nome_curso %>
+      <%= f.text_field :nome_curso, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-5 col-offset-1">
+      <%= f.label :data_fim %>
+      <%= f.text_field :data_fim, class: 'form-control datepicker' %>
+    </div>
+    <div class="col-sm-5 col-offset-1">
+      <%= f.label :data_inicio %>
+      <%= f.text_field :data_inicio, class: 'form-control datepicker' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :carga_horaria %>
+      <%= f.text_field :carga_horaria, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :observacao %>
+      <%= f.text_area :observacao, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10">
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+      <%= link_to I18n.t('helpers.links.cancel'), socioeduk_pedagogico_jovem_profissionalizantes_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+<% end %>

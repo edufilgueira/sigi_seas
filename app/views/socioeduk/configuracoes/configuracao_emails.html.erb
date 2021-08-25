@@ -1,0 +1,145 @@
+
+<div class="ibox-content">
+    <div class="row">
+        <% if !params[:msg].nil? %>
+            <div class="alert alert-danger" role="alert"><%= params[:msg] %></div>
+        <% end %>
+        <% if !params[:notice].nil? %>
+            <div class="alert alert-success" role="alert"><%= params[:notice] %></div>
+        <% end %>
+
+        <div class="col-sm-12 b-r">
+        <%= form_for(:frm, url: socioeduk_configuracoes_configuracao_emails_path, method: :post) do |f| %>
+            <% if params[:body] %>
+                <div class="col-sm-12"">
+                    <%= tinymce %> 
+                    <%= f.text_area :body, rows: 30, cols: 25, :class => "tinymce", value: @body %>
+                </div>
+                <div class="col-sm-6"">
+                    <%= raw @tipo_filtro_configuracao_email.parametros %> 
+                </div>
+                <div style="display:none">
+            <% elsif %>
+                <div>
+            <% end %>
+            <div class="form-group">
+                <div class="col-sm-6"">
+                    <%= f.label :Ação, class: 'required' %>
+                    <%= f.select :acao, Socioeduk::TipoAcaoConfiguracaoEmail.all.collect{|t| [t.nome, t.id]}, {include_blank: '--Selecione ação--', selected: @acao}, class: 'form-control', data: {remote: true, url: socioeduk_configuracoes_configuracao_email_filtro_por_acao_path}, required: true %>
+                </div>
+                <div class="col-sm-6"">
+                <%= f.label :filtro, class: 'required' %>
+                <% if params[:id].nil? %>
+                    <%= f.select :filtro, options_for_select([]), {include_blank: '--selecione--', selected: @filtro}, class: 'form-control', required: true %>
+                <% elsif %>
+                    <%= f.select :filtro, Socioeduk::TipoFiltroConfiguracaoEmail.where(socioeduk_tipo_acao_configuracao_email_id: @acao).collect{|t| [t.nome, t.id]}, {include_blank: '--selecione--', selected: @filtro}, class: 'form-control', required: true %>
+                <% end %>
+                </div>
+                <div class="col-sm-12"">
+                    <%= f.label :descrição, class: 'required' %>
+                    <%= f.text_field :descricao, class: 'form-control', value: @descricao, required: true  %>
+                </div>
+
+                <!-- BLOCO QUE DECIDE QUAL FILTRO EXIBIR -->
+                <% if params[:id].nil? %>
+                    <!-- MODO NOVO -->
+                    <div id="cidade_comarca" style="display:block;">
+                        <div class="col-sm-12"">
+                            <%= f.label :filtro, class: 'required' %>
+                            <%= f.select :valor, Cidade.where(estado_id: 6).order(:nome).collect{|t| [t.nome, t.id]}, {include_blank: '--selecione--', selected: @valor}, class: 'form-control', disabled: true, required: true%>
+                        </div>
+                    </div>
+                <% elsif %>
+                    <!-- MODO EDIÇÃO -->
+                    <% if @filtro == 1 %>
+                        <div class="col-sm-12"">
+                            <%= f.label :filtro, class: 'required' %>
+                            <%= f.select :valor, Cidade.where(estado_id: 6).order(:nome).collect{|t| [t.nome, t.id]}, {include_blank: '--selecione--', selected: @valor}, class: 'form-control', disabled: false, required: true %>
+                        </div>
+                    <% end %>
+                <% end %>
+            </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <%= f.hidden_field :id, value: @id %>
+                    <%= f.hidden_field :valor_descricao, value: @valor_descricao %>
+                    <%= f.submit 'salvar', class: "btn btn-primary" %>
+                </div>
+            </div>
+        <% end %>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 b-r">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Ação</th>
+                    <th scope="col">Filtro</th>
+                    <th scope="col">Valor</th>
+                    <th scope="col">Descricao</th>
+                    <th scope="col">#</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @configuracao_emails.each do |configuracao_email| %>
+                    <tr>
+                    <td><%= configuracao_email.socioeduk_tipo_acao_configuracao_email&.nome %></td>
+                    <td><%= configuracao_email.socioeduk_tipo_filtro_configuracao_email&.nome %></td>
+                    <td><%= configuracao_email.valor_descricao %></td>
+                    <td><%= configuracao_email.descricao %></td>
+                    <td>
+                        <% if !configuracao_email.body.blank? %>
+                            <%= link_to('<i class="fas fa-text-height"></i>'.html_safe, {controller: :configuracoes, action: :configuracao_emails, id: configuracao_email.id, body: true }, class: "btn btn-xs btn-success") %>
+                        <% elsif %>
+                            <%= link_to('<i class="fas fa-text-height"></i>'.html_safe, {controller: :configuracoes, action: :configuracao_emails, id: configuracao_email.id, body: true }, class: "btn btn-xs btn-default") %>
+                        <% end %>
+                        <% pessoas = Socioeduk::ConfiguracaoEmailPessoa.where(socioeduk_configuracao_email_id: configuracao_email.id).length %>
+                        <% funcoes = Socioeduk::ConfiguracaoEmailFuncao.where(socioeduk_configuracao_email_id: configuracao_email.id).length %>
+                        <% areas = Socioeduk::ConfiguracaoEmailArea.where(socioeduk_configuracao_email_id: configuracao_email.id).length %>
+                        <% soma = areas + funcoes + pessoas %>
+                        <% if soma > 0 %>
+                            <%= link_to('<i class="fas fa-envelope-square"></i>'.html_safe, {controller: :configuracoes, action: :configuracao_email_pessoas, id: configuracao_email.id }, class: "btn btn-xs btn-warning", :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', onclick: 'organizar_tabela_nested_no_modal()') %>
+                        <% elsif %>
+                            <%= link_to('<i class="fas fa-envelope-square"></i>'.html_safe, {controller: :configuracoes, action: :configuracao_email_pessoas, id: configuracao_email.id }, class: "btn btn-xs btn-default", :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', onclick: 'organizar_tabela_nested_no_modal()') %>
+                        <% end %>
+                        <%= link_to('<i class="far fa-edit"></i>'.html_safe, {controller: :configuracoes, action: :configuracao_emails, id: configuracao_email.id }, class: "btn btn-xs btn-primary") %>
+                        <%= link_to('<i class="fa fa-trash"></i>'.html_safe, {controller: :configuracoes, action: :configuracao_email_destroy, id: configuracao_email.id }, class: "btn btn-xs btn-danger", method: :configuracao_email_destroy, data: {confirm: 'Deseja apagar a configuração de envio de email?'}) %>
+                    </td>
+                    </tr>
+                <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    
+    $("#frm_filtro").on('change',function(){
+        if(this.value == 1){
+            $("#frm_valor").attr("disabled", false);
+            $("#cidade_comarca").css("display", 'block');
+        }
+        else{
+            $("#frm_valor").attr("disabled", true);
+            $("#cidade_comarca").css("display", 'none');
+        }
+    })
+
+    $("#frm_valor").on('change',function(){
+        $('#frm_valor_descricao').val($('#frm_valor option:selected').text());
+    })
+
+
+
+    function esconder_campos(){
+        setTimeout(function(){
+          $("#cidade_comarca").css("display", 'none');
+        },100);
+    }
+    esconder_campos();
+</script>

@@ -1,0 +1,1 @@
+json.partial! "unidade_socioeducativa_areas/unidade_socioeducativa_area", unidade_socioeducativa_area: @unidade_socioeducativa_area

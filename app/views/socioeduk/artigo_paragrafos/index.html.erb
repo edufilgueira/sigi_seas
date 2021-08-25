@@ -1,0 +1,51 @@
+<%- model_class = Socioeduk::ArtigoParagrafo -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_artigo_paragrafo', default: Socioeduk::ArtigoParagrafo.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.socioeduk_artigo_paragrafo', default: Socioeduk::ArtigoParagrafo.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= link_to_new new_socioeduk_artigo_paragrafo_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_artigo_infracao) %></th>
+                                    <th><%= model_class.human_attribute_name(:descricao) %></th>
+                                    <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @socioeduk_artigo_paragrafos.each do |socioeduk_artigo_paragrafo| %>
+                <tr>
+                                    <td><%= socioeduk_artigo_paragrafo.socioeduk_artigo_infracao.descricao %></td>
+                                    <td><%= socioeduk_artigo_paragrafo.descricao %></td>
+                                    <td>
+                    <%= link_to_show(socioeduk_artigo_paragrafo) %>
+                    <%= link_to_edit(edit_socioeduk_artigo_paragrafo_path(socioeduk_artigo_paragrafo)) %>
+                    <%= link_to_delete(socioeduk_artigo_paragrafo) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

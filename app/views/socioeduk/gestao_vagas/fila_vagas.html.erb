@@ -1,0 +1,212 @@
+<%- model_class = Socioeduk::GestaoVaga -%>
+<% content_for :title do %>
+  <%=  I18n.t('activerecord.models.socioeduk_gestao_vaga', default: Socioeduk::GestaoVaga.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <!-- <h5><%#= I18n.t('activerecord.models.socioeduk_gestao_vaga', default: Socioeduk::GestaoVaga.model_name.human.pluralize.titleize) %></h5> -->
+        <h5>Lista de Jovens por: Região, Gênero e Medida</h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <h1><%= I18n.t('titles.socioeduk_gestao_vagas_fila_vagas') %></h1>
+        <%= form_tag(fila_vagas_socioeduk_gestao_vagas_path) do %>
+          <div class="row">
+            <div class="col-lg-5">
+              <div class="ibox ">
+                <div class="ibox-title" style="background-color: #eb6d6d; color: #fff; border-radius: 10px;">
+                  <h5>.:: Outros</h5>
+                </div>
+                <div class="ibox-content">
+                  <% if @tipo_lista == 'lista_cumprindo_medida' %>
+                    <%= radio_button_tag 'tipo_lista', 'lista_cumprindo_medida', true %>  <label for="tipo_lista_lista_cumprindo_medida">Cumprindo medida</label>
+                    <%= radio_button_tag 'tipo_lista', 'fila_espera' %>  <label for="tipo_lista_fila_espera">Fila de espera</label><br>
+                  <% else %>
+                    <%= radio_button_tag 'tipo_lista', 'lista_cumprindo_medida' %>  <label for="tipo_lista_lista_cumprindo_medida">Cumprindo medida</label>
+                    <%= radio_button_tag 'tipo_lista', 'fila_espera', true %>  <label for="tipo_lista_fila_espera">Fila de espera</label><br>
+                  <% end %>
+                  <label>Unidade</label>
+                  <%= select_tag "unidade_socioeducativa_id", options_from_collection_for_select(UnidadeSocioeducativa.centros_socioeducativos.order(:nome), "id", "sigla_nome", selected: @unidade), {include_blank: '--Selecione a unidade--'} %>
+                  <label>Idade</label>
+                  <%= select_tag "idade", options_for_select([["12","12"],["13","13"],["14","14"],["15","15"],["16","16"],["17","17"],["18","18"],["19","19"],["20","20"],["21","21"]], selected: @idade), {include_blank: '-- Selecione uma idade --'} %>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2">
+              <div class="ibox ">
+                <div class="ibox-title" style="background-color: #6c996f; color: #fff; border-radius: 10px;">
+                  <h5>.:: Região</h5>
+                </div>
+                <div class="ibox-content">
+                  <% @lista_regioes.each do |lista_regiao| %>
+                    <% if @regioes.nil? %>
+                      <%= check_box_tag "regiao[#{remover_acentos(lista_regiao&.nome)&.gsub(' ', '_')&.downcase}]", lista_regiao.id %>
+                      <label for="regiao_<%= remover_acentos(lista_regiao&.nome)&.gsub(' ', '_')&.downcase %>"><%= lista_regiao&.nome&.upcase %></label>
+                    <% else %>
+                      <% if @regioes.include?(lista_regiao.id.to_s) %>
+                        <%= check_box_tag "regiao[#{remover_acentos(lista_regiao&.nome)&.gsub(' ', '_')&.downcase}]", lista_regiao.id, selected: true %>
+                        <label for="regiao_<%= remover_acentos(lista_regiao&.nome)&.gsub(' ', '_')&.downcase %>"><%= lista_regiao&.nome&.upcase %></label>
+                      <% else %>
+                        <%= check_box_tag "regiao[#{remover_acentos(lista_regiao&.nome)&.gsub(' ', '_')&.downcase}]", lista_regiao.id %>
+                        <label for="regiao_<%= remover_acentos(lista_regiao&.nome)&.gsub(' ', '_')&.downcase %>"><%= lista_regiao&.nome&.upcase %></label>
+                      <% end %>
+                    <% end %>
+                    <br>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2">
+              <div class="ibox ">
+                <div class="ibox-title" style="background-color: #dca423; color: #fff; border-radius: 10px;">
+                  <h5>.:: Gênero</h5>
+                </div>
+                <div class="ibox-content">
+                  <% if @generos.nil? %>
+                    <%= check_box_tag "sexo[feminino]", 'F' %>
+                    <label for="sexo_feminino">FEMININO</label>
+                    <br>
+                    <%= check_box_tag "sexo[masculino]", 'M' %>
+                    <label for="sexo_masculino">MASCULINO</label>
+                  <% else %>
+                    <% if @generos.include?("'F'") %>
+                      <%= check_box_tag "sexo[feminino]", 'F', selected: true %>
+                      <label for="sexo_feminino">FEMININO</label>
+                    <% else %>
+                      <%= check_box_tag "sexo[feminino]", 'F' %>
+                      <label for="sexo_feminino">FEMININO</label>
+                    <% end %>
+                    <br>
+                    <% if @generos.include?("'M'") %>
+                      <%= check_box_tag "sexo[masculino]", 'M', selected: true %>
+                    <label for="sexo_masculino">MASCULINO</label>
+                    <% else %>
+                      <%= check_box_tag "sexo[masculino]", 'M' %>
+                    <label for="sexo_masculino">MASCULINO</label>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3">
+              <div class="ibox ">
+                <div class="ibox-title" style="background-color: #405cb1; color: #fff; border-radius: 10px;">
+                  <h5>.:: Medida</h5>
+                </div>
+                <div class="ibox-content">
+                  <% @lista_medidas.each do |medida| %>
+                    <% if @medidas.nil? %>
+                      <%= check_box_tag "medida[#{remover_acentos(medida&.descricao)&.gsub(' ', '_')&.downcase}]", medida.id %>
+                      <label for="medida_<%= remover_acentos(medida&.descricao)&.gsub(' ', '_')&.downcase %>"><%= medida&.descricao&.upcase %></label>
+                    <% else %>
+                      <% if @medidas.include?(medida.id.to_s) %>
+                        <%= check_box_tag "medida[#{remover_acentos(medida&.descricao)&.gsub(' ', '_')&.downcase}]", medida.id, selected: true %>
+                        <label for="medida_<%= remover_acentos(medida&.descricao)&.gsub(' ', '_')&.downcase %>"><%= medida&.descricao&.upcase %></label>
+                      <% else %>
+                        <%= check_box_tag "medida[#{remover_acentos(medida&.descricao)&.gsub(' ', '_')&.downcase}]", medida.id %>
+                        <label for="medida_<%= remover_acentos(medida&.descricao)&.gsub(' ', '_')&.downcase %>"><%= medida&.descricao&.upcase %></label>
+                      <% end %>
+                    <% end %>
+                    <br>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%= link_to_download_file_csv(baixar_relatorio_csv_socioeduk_gestao_vagas_path(file: @file_path), target: '_blank') %>
+          <table align="center" style="float: right;">
+            <td style="width: 200px;"><span id="legend" style='background:#d7ead5;'></span>Dentro da Capacidade <br></td>
+            <td style="width: 200px;"><span id="legend" style='background:#ffffdb;'></span>Acima da Capacidade <br></td>
+            <td style="width: 200px;"><span id="legend" style='background:#ffd7d7;'></span> Superlotação <br></td>
+          </table>
+          <%= submit_tag "Buscar", class: 'btn btn-primary', style: "text-align: right!important;" %>
+          <%= link_to "Limpar", fila_vagas_socioeduk_gestao_vagas_path, class:"btn btn-warning", style: "text-align: right!important;" %>
+        <% end %>
+        <% if !@processos.nil? %>
+          <br> Total: <span style="text-align: right!important;font-size: 12px;padding: 6px 10px 6px 10px;" class="badge badge-default"><%= @processos.length %> Jovens</span>
+
+          <table class="table table-hover table-sm sortable">
+            <thead>
+              <tr>
+                <th style="text-align: left; width: 60px;">#</th>
+                <th style="text-align: left;">Nomes</th>
+                <th style="text-align: left;">Idade</th>
+                <th style="text-align: left;">Nome da Mãe</th>
+                <th style="text-align: left;">Unidade</th>
+                <th style="text-align: left;">Data Apreensão</th>
+                <th style="text-align: left;">Tempo em Cumprimento</th>
+                <th style="text-align: left;">Última Medida</th>
+                <th style="text-align: left;">Situação</th>
+                <th style="text-align: left;">Pontuação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% count = 0 %>
+              <% @processos.each do |processo| %>
+                <% count += 1 %>
+                  <% if count <= @capacidade_base %>
+                    <tr style="background: #d7ead5;">
+                  <% elsif count <= @capacidade_base_19 %>
+                    <tr style="background: #ffffdb;">
+                  <% else %>
+                    <tr style="background: #ffd7d7;">
+                  <% end %>
+                    <td><%= count %></td>
+                    <td><%= link_to processo[:nome], edit_socioeduk_processo_path(id: processo[:id]) %></td>
+                    <td><%= processo[:idade].to_i %></td>
+                    <td><%= processo[:nome_mae] %></td>
+                    <td><a title="<%= processo[:unidade] %>" data-toggle="tooltip"><%= processo[:sigla] %></a></td>
+                    <td><%= processo[:data_hora_apreensao].strftime('%d/%m/%Y') %></td>
+                    <td><%= time_diff_in_natural_language((Date.today + 1), Date.parse(processo[:data_hora_apreensao].strftime('%d-%m-%Y'))) %></td>
+                    <td><%= processo[:medida_socioeducativa] %></td>
+                    <td><%= processo[:situacao] %></td>
+                    <td><%= number_with_precision(processo[:pontuacao], separator: '.', precision: 2) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <% if !@solicitacoes.nil? %>
+          
+            <table class="table table-hover table-sm sortable">
+              <thead>
+                <tr>
+                  <th style="text-align: left; width: 35px;">#</th>
+                  <th style="text-align: left;">Nomes</th>
+                  <th style="text-align: left;">Data Apreensão</th>
+                  <th style="text-align: left;">Data Solicitação</th>
+                  <th style="text-align: left;">Última Medida</th>
+                  <th style="text-align: left;">Pontuação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% count = 0 %>
+                <% @solicitacoes.each do |solicitacao| %>
+                  <% count += 1 %>
+                  <tr>
+                    <td style="text-align: left;"><%= count %></td>
+                    <td style="text-align: left;"><%= solicitacao[:nome] %></td>
+                    <td style="text-align: left;"><%= solicitacao[:data_apreensao]&.strftime('%d/%m/%Y') %></td>
+                    <td style="text-align: left;"><%= solicitacao[:created_at]&.strftime('%d/%m/%Y') %></td>
+                    <td style="text-align: left;"><%= solicitacao[:medida_socioeducativa] %></td>
+                    <td style="text-align: left;"><%= number_with_precision(solicitacao[:pontuacao], separator: '.', precision: 2) %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

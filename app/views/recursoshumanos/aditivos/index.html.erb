@@ -1,0 +1,59 @@
+<%- model_class = Recursoshumanos::Aditivo -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.recursoshumanos_aditivo', default: Recursoshumanos::Aditivo.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.recursoshumanos_aditivo', default: Recursoshumanos::Aditivo.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= link_to_new new_recursoshumanos_aditivo_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                                    <th><%= model_class.human_attribute_name(:recursoshumanos_contrato) %></th>
+                                    <th><%= model_class.human_attribute_name(:recursoshumanos_justificativa_aditivo) %></th>
+                                    <th><%= model_class.human_attribute_name(:numero_processo) %></th>
+                                    <th><%= model_class.human_attribute_name(:descricao) %></th>
+                                    <th><%= model_class.human_attribute_name(:data) %></th>
+                                    <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @recursoshumanos_aditivos.each do |recursoshumanos_aditivo| %>
+                <tr>
+                                    <td><%= recursoshumanos_aditivo.recursoshumanos_contrato %></td>
+                                    <td><%= recursoshumanos_aditivo.recursoshumanos_justificativa_aditivo %></td>
+                                    <td><%= recursoshumanos_aditivo.numero_processo %></td>
+                                    <td><%= recursoshumanos_aditivo.descricao %></td>
+                                    <td><%= recursoshumanos_aditivo.data %></td>
+                                    <td>
+                    
+                    <%= link_to image_tag("pdf_preview.png", size: "30x30",style: "margin: 0px 2px 5px 0px;"), recursoshumanos_aditivo.anexo.url,  target: '_blank' %>
+                    <%= link_to_show(recursoshumanos_aditivo) %>
+                    <%= link_to_edit(edit_recursoshumanos_aditivo_path(recursoshumanos_aditivo)) %>
+                    <%= link_to_delete(recursoshumanos_aditivo) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,225 @@
+<%= form_for(@socioeduk_medida_socioeducativa, :url => (@socioeduk_medida_socioeducativa.new_record? ? socioeduk_medida_socioeducativas_path : socioeduk_medida_socioeducativa_path(@socioeduk_medida_socioeducativa)), html: { class: 'form-horizontal' }) do |f| %>
+  <%= render 'layouts/message_required' %>
+  
+  <div class="row">
+    <div class="col-sm-12">
+      <%= f.label :socioeduk_numero_processo_id %>
+      <%= f.collection_select :socioeduk_numero_processo_id, Socioeduk::NumeroProcesso.where(socioeduk_processo_id: @id_processo), :id, :numero, {prompt: "selecione"}, {class: "form-control"} %>  
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-5">
+      <%= f.label :socioeduk_tipo_medida_socioeducativa %>
+      <%= f.collection_select :socioeduk_tipo_medida_socioeducativa_id, Socioeduk::TipoMedidaSocioeducativa.where(tipo_medida:'FECHADO'), :id , :descricao, {prompt: "selecione"} ,{class: "form-control", onchange: "calcularDataSimples(); exibirData(this.value);", data: {remote: true, url: socioeduk_processos_listar_conclusao_path} } %>  
+    </div>
+    <div class="col-sm-5">
+      <%= f.label :socioeduk_situacao_cumprimento %>
+      <%= f.collection_select :socioeduk_situacao_cumprimento_id, Socioeduk::SituacaoCumprimento.all, :id , :descricao, {prompt: "selecione"} ,{class: "form-control", onchange: "concluirMedida()"} %> 
+    </div>
+    <div class="col-sm-2 data_sentenca_medida">
+      <%= f.label :data_sentenca %>
+      <%= f.text_field :data_sentenca, class: 'form-control maskdata' %>
+    </div>
+    <div class="col-sm-2 data_decisao_medida">
+      <%= f.label :data_decisao %>
+      <%= f.text_field :data_decisao, class: 'form-control maskdata' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-5">
+      <%= f.label :inicio %>
+      <%= f.text_field :inicio, class: 'form-control maskdata', onblur: "desabilitar_botao(); verificar_inicio(this);", onkeyup: "desabilitar_botao()", onchange: "calcularDataSimples()" %>
+      <label id="validador_inicio" style="color: #990000;display: none;"></label>
+    </div>
+    <div class="col-sm-5">
+      <%= f.label :fim_previsto %>
+      <%= f.text_field :fim_previsto, class: 'form-control maskdata', readonly: true %>
+    </div>
+    <div class="col-sm-2">
+      <%= f.label :periodo_dias %>
+      <%= f.text_field :periodo_dias, class: 'form-control', onblur: "desabilitar_botao()", onkeyup: "calcularDataSimples();desabilitar_botao();" %>
+    </div>
+  </div>
+  <br>
+  <div class="concluir">
+    <h3>Concluir Medida Socioeducativa</h3>
+    <div class="row">
+      <div class="col-sm-2">
+        <%= f.label :data_conclusao, required: "true" %>
+        <%= f.text_field :data_conclusao, class: 'form-control maskdata', onkeyup: "desabilitar_botao_concluido_ou_evadido()" %>
+      </div>
+      <div class="col-sm-4">
+        <%= f.label :socioeduk_tipo_conclusao_medida_socioeducativas_id %>
+        <%#= f.collection_select :socioeduk_tipo_conclusao_medida_socioeducativas_id, Socioeduk::TipoConclusaoMedidaSocioeducativa.where(ativo: true), :id, :descricao, {prompt: '---selecione---'}, class: 'form-control', onchange: "dataSentenca(this.value);desabilitar_botao_concluido_ou_evadido()", disabled: true %>
+        <%#= f.label :novo_campo_conclusão %>
+        <% if @socioeduk_medida_socioeducativa.new_record? %>
+          <%= f.select :socioeduk_medida_socioeducativa_motivo_conclusao_id, options_for_select([]), {include_blank: '--selecione--'}, class: 'form-control' %>
+        <% else %>
+          <%= f.collection_select :socioeduk_medida_socioeducativa_motivo_conclusao_id, Socioeduk::Processo.listar_conclusoes_por_medida(@socioeduk_medida_socioeducativa.socioeduk_tipo_medida_socioeducativa_id), :id, :descricao, {prompt: '--selecione--', selected: @socioeduk_medida_socioeducativa.socioeduk_medida_socioeducativa_motivo_conclusao_id}, class: 'form-control' %>
+        <% end %>
+      </div>
+      <div class="col-sm-4">
+        <%= f.label :socioeduk_encaminhamento_conclusao_medida_socioeducativas_id %>
+        <%= f.collection_select :socioeduk_encaminhamento_conclusao_medida_socioeducativas_id, Socioeduk::EncaminhamentoConclusaoMedidaSocioeducativa.where(ativo: true).order('descricao'), :id, :descricao, {prompt: '---selecione---'}, class: 'form-control', onchange: "desabilitar_botao_concluido_ou_evadido()" %>
+      </div>
+      <div class="col-sm-2 data_sentenca_conclusao">
+        <%= f.label :data_sentenca_conclusao %>
+        <%= f.text_field :data_sentenca_conclusao, class: 'form-control maskdata', onkeyup: "desabilitar_botao_concluido_ou_evadido()" %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <%= f.label :observacao_conclusao %>
+        <%= f.text_area :observacao_conclusao, class: 'form-control', onkeyup: "desabilitar_botao_concluido_ou_evadido()" %>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="form-group">
+    <div class="col-sm-12">
+      <%= f.hidden_field :socioeduk_processo_id, value: @id_processo %>
+      <%= f.hidden_field :status_tela, value: @nil_item %>
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with }, disabled: 'true', id: "botao_salvar_medida" %>
+      <div class="btn btn-warning" href="#" onclick="close_modal_auxiliar()">Cancelar</div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+  function verificar_inicio(campo) {
+    anos = calcular_qtd_de_anos_relacionado_data_atual(campo);
+    //DESLIGA BOTÃO SALVAR SE DATA INFORMATA FOR MAIOR QUE DATA ATUAL
+    if (anos < 0) {
+      $('#validador_inicio').css('display', 'block');
+      $('#validador_inicio').empty().html('ERRO: A data de inicio não<br> pode ser maior ou igual que a data atual.');
+      $('#botao_salvar_medida').prop("disabled", true);
+    }
+    //QUANDO A DATA FOR 25 ANOA A MENOS O SISTEMA DEVE INFORMAR
+    else if (anos >= 1) {
+      $('#validador_inicio').css('display', 'block');
+      $('#validador_inicio').empty().html('ERRO: Tem certeza que diferença de ' + anos + ' anos esta correta?');
+      //$('#botao_salvar_medida').prop("disabled", true);
+    } else {
+      $('#validador_inicio').css('display', 'none');
+      $('#validador_inicio').empty().html('');
+      $('#botao_salvar_medida').prop("disabled", false);
+    }
+  }
+
+  if($('#socioeduk_medida_socioeducativa_status_tela').val() == 'true'){
+    $('#socioeduk_medida_socioeducativa_inicio').val($('#socioeduk_processo_data_hora_apreensao').val());
+  }
+
+  $('.maskdata').mask('00/00/0000', {reverse: false});
+  $('.concluir').hide();
+  
+  $('.data_sentenca_conclusao').hide();
+  function dataSentenca(motivo) {
+    if (motivo == '15') {
+      $('.data_sentenca_conclusao').show();
+    } else {
+      $('#socioeduk_medida_socioeducativa_data_sentenca_conclusao').val('');
+      $('.data_sentenca_conclusao').hide();
+    }
+  }
+
+  $("#socioeduk_medida_socioeducativa_socioeduk_numero_processo_id").change(function(){
+    desabilitar_botao();
+  });
+  $("#socioeduk_medida_socioeducativa_socioeduk_tipo_medida_socioeducativa_id").change(function(){
+    desabilitar_botao();
+  });
+  $("#socioeduk_medida_socioeducativa_socioeduk_situacao_cumprimento_id").change(function(){
+    desabilitar_botao();
+  });
+
+  function desabilitar_botao(){
+    var idNumerpProcesso = $('#socioeduk_medida_socioeducativa_socioeduk_numero_processo_id').find(":selected").val();
+    var idTipoMedida = $('#socioeduk_medida_socioeducativa_socioeduk_tipo_medida_socioeducativa_id').find(":selected").val();
+    var idSituacao = $('#socioeduk_medida_socioeducativa_socioeduk_situacao_cumprimento_id').find(":selected").val();
+    var inicio = $('#socioeduk_medida_socioeducativa_inicio').val();
+    var dias = $('#socioeduk_medida_socioeducativa_periodo_dias').val();
+    
+    if(idNumerpProcesso > 0 && idTipoMedida > 0 && idSituacao > 0 && inicio != "" && dias != ""){
+      $('#botao_salvar_medida').prop("disabled", false);
+      desabilitar_botao_concluido_ou_evadido();
+    }
+    else{
+      $('#botao_salvar_medida').prop("disabled", true);
+      desabilitar_botao_concluido_ou_evadido();
+    }
+  }
+
+  function desabilitar_botao_concluido_ou_evadido(){
+    var idNumerpProcesso = $('#socioeduk_medida_socioeducativa_socioeduk_numero_processo_id').find(":selected").val();
+    var data_conclusao = $('#socioeduk_medida_socioeducativa_data_conclusao').val();
+    var idMotivo = $('#socioeduk_medida_socioeducativa_socioeduk_medida_socioeducativa_motivo_conclusao_id').find(":selected").val();
+    var idEncaminhado = $('#socioeduk_medida_socioeducativa_socioeduk_encaminhamento_conclusao_medida_socioeducativas_id').find(":selected").val();
+    var situacao_medida = $('#socioeduk_medida_socioeducativa_socioeduk_situacao_cumprimento_id').val();
+    //var observacao = $('#socioeduk_medida_socioeducativa_observacao_conclusao').val();
+    
+    if(situacao_medida == 3){
+      if(idNumerpProcesso > 0 && data_conclusao != '' && idMotivo > 0 && idEncaminhado > 0)
+        $('#botao_salvar_medida').prop("disabled", false);
+      else
+        $('#botao_salvar_medida').prop("disabled", true);
+    }
+    else if(idNumerpProcesso > 0 && situacao_medida == 5){
+      if(data_conclusao != '')
+        $('#botao_salvar_medida').prop("disabled", false);
+      else
+        $('#botao_salvar_medida').prop("disabled", true);
+    }
+  }
+
+  function concluirMedida() {
+    var situacao_medida = $('#socioeduk_medida_socioeducativa_socioeduk_situacao_cumprimento_id').val();
+
+    if(situacao_medida == 5){
+      $('.concluir').show();
+      $('#socioeduk_medida_socioeducativa_data_conclusao').prop("disabled", false);
+      $('#socioeduk_medida_socioeducativa_socioeduk_medida_socioeducativa_motivo_conclusao_id').prop("disabled", true);
+      $('#socioeduk_medida_socioeducativa_socioeduk_encaminhamento_conclusao_medida_socioeducativas_id').prop("disabled", true);
+      //$('#socioeduk_medida_socioeducativa_observacao_conclusao').prop("disabled", false);
+    }
+    else{
+      $('.concluir').hide();
+      $('#socioeduk_medida_socioeducativa_data_conclusao').prop("disabled", false);
+      $('#socioeduk_medida_socioeducativa_socioeduk_medida_socioeducativa_motivo_conclusao_id').prop("disabled", false);
+      $('#socioeduk_medida_socioeducativa_socioeduk_encaminhamento_conclusao_medida_socioeducativas_id').prop("disabled", false);
+      //$('#socioeduk_medida_socioeducativa_observacao_conclusao').prop("disabled", false);
+    }
+
+    if (situacao_medida == 3) {
+      $('.concluir').show();
+    }
+  }
+
+  $('.data_sentenca_medida').hide();
+  $('.data_decisao_medida').hide();
+  function exibirData(medida_socioeducativa_id) {
+    if (medida_socioeducativa_id == 1) {
+      $('#socioeduk_medida_socioeducativa_data_decisao').val('');
+      $('.data_decisao_medida').hide();
+      $('.data_sentenca_medida').show();
+    } else if (medida_socioeducativa_id == 2) {
+      $('#socioeduk_medida_socioeducativa_data_decisao').val('');
+      $('.data_decisao_medida').show();
+      $('.data_sentenca_medida').hide();
+    } else if (medida_socioeducativa_id == 4) {
+      $('#socioeduk_medida_socioeducativa_data_decisao').val('');
+      $('.data_decisao_medida').hide();
+      $('.data_sentenca_medida').show();
+    } else if (medida_socioeducativa_id == 3) {
+      $('#socioeduk_medida_socioeducativa_data_sentenca').val('');
+      $('.data_sentenca_medida').hide();
+      $('.data_decisao_medida').show();
+    } else {
+      $('.data_sentenca_medida').hide();
+      $('.data_decisao_medida').hide();
+    }
+  }
+  exibirData($('#socioeduk_medida_socioeducativa_socioeduk_tipo_medida_socioeducativa_id').val());  
+
+</script>

@@ -1,0 +1,1 @@
+json.array! @socioeduk_solicitacao_vaga_infracoes, partial: 'socioeduk_solicitacao_vaga_infracoes/socioeduk_solicitacao_vaga_infracao', as: :socioeduk_solicitacao_vaga_infracao

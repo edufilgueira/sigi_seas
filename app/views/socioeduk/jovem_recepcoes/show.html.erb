@@ -1,0 +1,107 @@
+<% content_for :title do %>
+  <%= t('.title', default: @socioeduk_jovem_recepcao.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t('.title', default: @socioeduk_jovem_recepcao.class.model_name.human ) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                                    
+                  
+                  <th><%= Socioeduk::JovemRecepcao.human_attribute_name :socioeduk_jovem %></th>
+                                    
+                  
+                  <th><%= Socioeduk::JovemRecepcao.human_attribute_name :antecedentes %></th>
+                                    
+                  
+                  <th><%= Socioeduk::JovemRecepcao.human_attribute_name :bo %></th>
+                                    
+                  
+                  <th><%= Socioeduk::JovemRecepcao.human_attribute_name :responsavel %></th>
+                                    
+                  
+                  <th><%= Socioeduk::JovemRecepcao.human_attribute_name :nome_responsavel %></th>
+                                    
+                  
+                  <th><%= Socioeduk::JovemRecepcao.human_attribute_name :telefone %></th>
+                                    
+                  
+                  <th><%= Socioeduk::JovemRecepcao.human_attribute_name :presenca_familiar_junto %></th>
+                                    
+                  
+                  <th><%= Socioeduk::JovemRecepcao.human_attribute_name :condutor_nome %></th>
+                                    
+                  
+                  <th><%= Socioeduk::JovemRecepcao.human_attribute_name :condutor_documento %></th>
+                                    
+                  
+                  <th><%= Socioeduk::JovemRecepcao.human_attribute_name :condutor_cargo %></th>
+                                    
+                  
+                  <th><%= Socioeduk::JovemRecepcao.human_attribute_name :datahora_apresentacao %></th>
+                                    
+                  
+                  <th><%= Socioeduk::JovemRecepcao.human_attribute_name :oficio %></th>
+                                    
+                  
+                  <th><%= Socioeduk::JovemRecepcao.human_attribute_name :documentos_pessoais %></th>
+                                    
+                  
+                  <th><%= Socioeduk::JovemRecepcao.human_attribute_name :decisao %></th>
+                                    
+                  
+                  <th><%= Socioeduk::JovemRecepcao.human_attribute_name :corpo_delito %></th>
+                                    
+                  
+                  <th><%= Socioeduk::JovemRecepcao.human_attribute_name :certidao_antecedente_criminal %></th>
+                                    
+                  
+                  <th><%= Socioeduk::JovemRecepcao.human_attribute_name :kit_vestuario %></th>
+                                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_recepcao.socioeduk_jovem %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_recepcao.antecedentes %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_recepcao.bo %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_recepcao.responsavel %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_recepcao.nome_responsavel %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_recepcao.telefone %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_recepcao.presenca_familiar_junto %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_recepcao.condutor_nome %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_recepcao.condutor_documento %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_recepcao.condutor_cargo %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_recepcao.datahora_apresentacao %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_recepcao.oficio %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_recepcao.documentos_pessoais %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_recepcao.decisao %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_recepcao.corpo_delito %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_recepcao.certidao_antecedente_criminal %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_jovem_recepcao.kit_vestuario %></td>
+                                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', socioeduk_jovem_recepcoes_path, class: 'btn btn-default') %>
+<%= link_to 'Editar', edit_socioeduk_jovem_recepcao_path(@socioeduk_jovem_recepcao), class: 'btn btn-success' %>

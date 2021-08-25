@@ -1,0 +1,1 @@
+json.array! @socioeduk_pedagogico_jovem_escolaridade_medidas, partial: 'socioeduk_pedagogico_jovem_escolaridade_medidas/socioeduk_pedagogico_jovem_escolaridade_medida', as: :socioeduk_pedagogico_jovem_escolaridade_medida

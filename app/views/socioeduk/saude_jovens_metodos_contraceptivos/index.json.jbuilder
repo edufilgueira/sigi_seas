@@ -1,0 +1,1 @@
+json.array! @socioeduk_saude_jovens_metodos_contraceptivos, partial: 'socioeduk_saude_jovens_metodos_contraceptivos/socioeduk_saude_jovens_metodos_contraceptivo', as: :socioeduk_saude_jovens_metodos_contraceptivo

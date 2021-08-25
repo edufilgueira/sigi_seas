@@ -1,0 +1,71 @@
+<% content_for :title do %>
+  <%= t('.title', default: @socioeduk_visitante.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t('.title', default: @socioeduk_visitante.class.model_name.human ) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                                    
+                  
+                  <th><%= Socioeduk::Visitante.human_attribute_name :nome %></th>
+                                    
+                  
+                  <th><%= Socioeduk::Visitante.human_attribute_name :socioeduk_jovem %></th>
+                                    
+                  
+                  <th><%= Socioeduk::Visitante.human_attribute_name :socioeduk_tipo_documento %></th>
+                                    
+                  
+                  <th><%= Socioeduk::Visitante.human_attribute_name :numero %></th>
+                                    
+                  
+                  <th><%= Socioeduk::Visitante.human_attribute_name :uf_documento %></th>
+                                    
+                  
+                  <th><%= Socioeduk::Visitante.human_attribute_name :foto %></th>
+                                    
+                  
+                  <th><%= Socioeduk::Visitante.human_attribute_name :observacao %></th>
+                                    
+                  
+                  <th><%= Socioeduk::Visitante.human_attribute_name :anexo %></th>
+                                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_visitante.nome %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_visitante.socioeduk_jovem %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_visitante.socioeduk_tipo_documento %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_visitante.numero %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_visitante.uf_documento %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_visitante.foto %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_visitante.observacao %></td>
+                                    <td style="min-width: 90px; word-break: break-all;"><%= @socioeduk_visitante.anexo %></td>
+                                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', socioeduk_visitantes_path, class: 'btn btn-default') %>
+<%= link_to 'Editar', edit_socioeduk_visitante_path(@socioeduk_visitante), class: 'btn btn-success' %>

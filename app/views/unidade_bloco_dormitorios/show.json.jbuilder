@@ -1,0 +1,1 @@
+json.partial! "unidade_bloco_dormitorios/unidade_bloco_dormitorio", unidade_bloco_dormitorio: @unidade_bloco_dormitorio

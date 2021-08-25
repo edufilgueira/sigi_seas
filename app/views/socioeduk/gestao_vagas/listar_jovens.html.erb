@@ -1,0 +1,36 @@
+<%- model_class = Socioeduk::Jovem -%>
+<% content_for :ibox_content do %>
+  <table class="table table-hover table-sm">
+    <thead>
+      <tr>
+        <th width="25px">Prontuário</th>
+        <th><%= model_class.human_attribute_name(:nome) %></th>
+        <th width="18%"><%= I18n.t('helpers.actions') %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @jovens.each do |jovem| %>
+        <tr>
+          <td><%= prontuario_mask(jovem.jovem_id) %></td>
+          <td><%= jovem.nome %></td>
+          <td>
+            <% if(!@UnidadeSocioeducativa.recepcao) %>
+              <%= link_to('<i class="fas fa-exchange-alt"></i>'.html_safe, {controller: :gestao_vagas, action: :transferir, id_unidade:@id_unidade, id_jovem_recepcao:jovem.jovem_recepcao_id},:remote => true, 'data-toggle' => "modal",'data-target' => '#modal-window', class: "btn btn-sm btn-danger add_nested_fields_link", title: "Transferir Jovem") %>
+            <% else %>
+                <span class="label label-danger">Recepção</span>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<div class="form-group">
+    <div class="col-sm-10">
+      <%= link_to 'Voltar', visualizar_vagas_socioeduk_gestao_vagas_path, class: 'btn btn-warning' %>
+    </div>
+</div>
+
+<% end -%>
+
+<%= render partial: 'common/box', locals: { title: I18n.t('activerecord.models.socioeduk_jovem', default: Socioeduk::Jovem.model_name.plural.humanize.upcase) } %>

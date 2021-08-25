@@ -1,0 +1,592 @@
+<%- model_class = Socioeduk::GestaoVaga -%>
+<% content_for :ibox_content do %>
+<h1><%= I18n.t('titles.socioeduk_gestao_vagas_dashboards') %></h1>
+<div class="row">
+  <div class="form-group">
+    <div class="col-sm-6">
+      <div class="widget navy-bg p-lg text-center">
+          <div class="m-b-md">
+              <i class="fa fa-bell fa-4x"></i>
+              <h1 class="m-xs"><%= @total_alertas %></h1>
+              <h3 class="font-bold no-margins">
+                  Notificações
+              </h3>
+              <small>Alertas Encontrados.</small>
+          </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <%= pie_chart @grafico, height: "240px", legend: "right" %>
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-6">
+  <div class="thumbnail">
+    <div>
+      <div>
+        <a class="btn btn-primary btn-circle pull-right" id="click_jovem_admitido_mas_sem_processo_vaga_negada"><i class="fa fa-list"></i></a>
+      </div>
+    </div>
+    <h4>Jovens Aguardando Vaga</h4>
+    <div class="caption">
+      <div class="ibox-content">
+        <h1 class="no-margins">
+          <%= @qtd_jovem_admitido_mas_sem_processo_vaga_negada %>
+        </h1>
+        <small>QTDE</small>
+        <div id="jovem_admitido_mas_sem_processo_vaga_negada" style="display:none">
+          <br>
+          <table width="100%" class="table">
+            <tr>
+              <td><b>JOVEM</b></td>
+            </tr>
+            <% @jovem_admitido_mas_sem_processo_vaga_negada.each do | j | %>
+                <tr>
+                  <td><%= link_to j.nome, edit_socioeduk_jovem_path(j.jovem_id) %></td>
+                </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="form-group">
+    <div class="col-sm-6">
+      <div class="thumbnail">
+        <div>
+          <a class="btn btn-primary btn-circle pull-right" id="click_n_processo_incompleto"><i class="fa fa-list"></i></a>
+        </div>
+        <h4>Cadastro de Jovem com Número de Processo Incompleto</h4>
+        <div class="caption">
+          <div class="ibox-content">
+            <h1 class="no-margins">
+              <%= @qtd_n_processo_incompleto %>
+            </h1>
+            <small>QTDE</small>
+            <div id="n_processo_incompleto" style="display:none">
+              <br>
+              <table width="100%" class="table">
+                <tr>
+                  <td><b>JOVEM</b></td>
+                  <td><b>Nº PROCESSO</b></td>
+                </tr>
+                <% @n_processo_incompleto.each do | p | %>
+                    <tr>
+                      <td><%= p.nome %></td>
+                      <td>
+                        <%= link_to p.numero, edit_socioeduk_processo_path(p.id) %>
+                      </td>
+                    </tr>
+                <% end %>
+              </table>
+            </div>
+            <!--<div class="stat-percent font-bold text-info">10<br>ocupados</div>-->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="thumbnail">
+        <div>
+          <a class="btn btn-primary btn-circle pull-right" id="click_sem_processo_ato_infracional"><i class="fa fa-list"></i></a>
+        </div>
+        <h4>Cadastro de Jovem sem Informação de Ato Infracional</h4>
+        <div class="caption">
+          <div class="ibox-content">
+            <h1 class="no-margins">
+              <%= @qtd_sem_processo_ato_infracional %>
+            </h1>
+            <small>QTDE</small>
+            <div id="sem_processo_ato_infracional" style="display:none">
+              <br>
+              <table width="100%" class="table">
+                <tr>
+                  <td><b>JOVEM</b></td>
+                </tr>
+                <% @sem_processo_ato_infracional.each do | p | %>
+                    <tr>
+                      <td><%= link_to p.nome, edit_socioeduk_processo_path(p.id) %></td>
+                    </tr>
+                <% end %>
+              </table>
+            </div>
+            <!--<div class="stat-percent font-bold text-info">10<br>ocupados</div>-->
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-sm-6">
+      <div class="thumbnail">
+        <div>
+          <div>
+            <a class="btn btn-primary btn-circle pull-right" id="click_sem_jovem_sem_medida"><i class="fa fa-list"></i></a>
+          </div>
+        </div>
+        <h4>Cadastro de Jovem sem Informação de Medida</h4>
+        <div class="caption">
+          <div class="ibox-content">
+            <h1 class="no-margins">
+              <%= @qtd_sem_jovem_sem_medida %>
+            </h1>
+            <!--<div class="stat-percent font-bold text-info">10<br>ocupados</div>-->
+            <small>QTDE</small>
+            <div id="sem_jovem_sem_medida" style="display:none">
+              <br>
+              <table width="100%" class="table">
+                <tr>
+                  <td><b>JOVEM</b></td>
+                </tr>
+                <% @sem_jovem_sem_medida.each do | p | %>
+                    <tr>
+                      <td><%= link_to p.nome, edit_socioeduk_processo_path(p.id) %></td>
+                    </tr>
+                <% end %>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="thumbnail">
+        <div>
+          <div>
+            <a class="btn btn-primary btn-circle pull-right" id="click_jovem_admitido_mas_sem_processo"><i class="fa fa-list"></i></a>
+          </div>
+        </div>
+        <h4>Jovens Atualmente na Unidade de Recepção</h4>
+        <div class="caption">
+          <div class="ibox-content">
+            <h1 class="no-margins">
+              <%= @qtd_jovem_admitido_mas_sem_processo %>
+            </h1>
+            <!--<div class="stat-percent font-bold text-info">10<br>ocupados</div>-->
+            <small>QTDE</small>
+            <div id="jovem_admitido_mas_sem_processo" style="display:none">
+              <br>
+              <table width="100%" class="table">
+                <tr>
+                  <td><b>JOVEM</b></td>
+                </tr>
+                <% @jovem_admitido_mas_sem_processo.each do | j | %>
+                    <tr>
+                      <td><%= link_to j.nome, edit_socioeduk_jovem_path(j.jovem_id) %></td>
+                    </tr>
+                <% end %>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="thumbnail">
+        <div>
+          <div>
+              <a class="btn btn-primary btn-circle pull-right" id="click_jovem_com_medida_vencida"><i class="fa fa-list"></i></a>
+          </div>
+        </div>
+        <h4>Jovens com Medidas Vencidas</h4>
+        <div class="caption">
+          <div class="ibox-content">
+            <h1 class="no-margins">
+              <%= @qtd_n_medidas_socioeducativa_vencida %>
+            </h1>
+            <small>QTDE</small>
+            <div id="n_medidas_socioeducativa_vencida" style="display:none">
+              <br>
+              <table width="100%" class="table">
+                <tr>
+                  <td><b>JOVEM</b></td>
+                  <td><b>UNIDADE</b></td>
+                </tr>
+                <% @n_medidas_socioeducativa_vencida.each do | m | %>
+                    <tr>
+                      <td><%= link_to m.nome_jovem, edit_socioeduk_processo_path(m.numero_processo) %></td>
+                      <td><%= m.nome_unidade %></td>
+                      
+                      </td>
+                    </tr>
+                <% end %>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="thumbnail">
+        <div>
+          <div>
+              <a class="btn btn-primary btn-circle pull-right" id="click_medidas_concluidas_e_nao_finalizadas"><i class="fa fa-list"></i></a>
+          </div>
+        </div>
+        <h4>Cadastro de Jovens com Medidas Concluídas e Não Finalizadas</h4>
+        <div class="caption">
+          <div class="ibox-content">
+            <h1 class="no-margins">
+              <%= @qtd_medidas_concluidas_e_nao_finalizadas %>
+            </h1>
+            <small>QTDE</small>
+            <div id="medidas_concluidas_e_nao_finalizadas" style="display:none">
+              <br>
+              <table width="100%" class="table">
+                <tr>
+                  <td><b>JOVEM</b></td>
+                </tr>
+                <% @medidas_concluidas_e_nao_finalizadas.each do | m | %>
+                    <tr>
+                      <td><%= link_to m.nome, edit_socioeduk_processo_path(m.id) %></td>      
+                      </td>
+                    </tr>
+                <% end %>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="thumbnail">
+        <div>
+          <div>
+              <a class="btn btn-primary btn-circle pull-right" id="click_processo_evadido_nao_finalizado"><i class="fa fa-list"></i></a>
+          </div>
+        </div>
+        <h4>Cadastro de Jovem Evadido Não Finalizado no Sistema</h4>
+        <div class="caption">
+          <div class="ibox-content">
+            <h1 class="no-margins">
+              <%= @qtd_processo_evadido_nao_finalizado %>
+            </h1>
+            <small>QTDE</small>
+            <div id="processo_evadido_nao_finalizado" style="display:none">
+              <br>
+              <table width="100%" class="table">
+                <tr>
+                  <td><b>JOVEM</b></td>
+                </tr>
+                <% @processo_evadido_nao_finalizado.each do | m | %>
+                    <tr>
+                      <td><%= link_to m.nome, edit_socioeduk_processo_path(m.id) %></td>
+                      </td>
+                    </tr>
+                <% end %>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="thumbnail">
+        <div>
+          <div>
+              <a class="btn btn-primary btn-circle pull-right" id="click_jovem_sem_unidade"><i class="fa fa-list"></i></a>
+          </div>
+        </div>
+        <h4>Cadastro de Jovem sem Informação de Unidade</h4>
+        <div class="caption">
+          <div class="ibox-content">
+            <h1 class="no-margins">
+              <%= @qtd_jovem_sem_unidade %>
+            </h1>
+            <small>QTDE</small>
+            <div id="jovem_sem_unidade" style="display:none">
+              <br>
+              <table width="100%" class="table">
+                <tr>
+                  <td><b>JOVEM</b></td>
+                </tr>
+                <% @jovem_sem_unidade.each do | m | %>
+                    <tr>
+                      <td><%= link_to m.nome, socioeduk_jovem_path(m.id) %></td>
+                      </td>
+                    </tr>
+                <% end %>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="thumbnail">
+        <div>
+          <div>
+              <a class="btn btn-primary btn-circle pull-right" id="click_jovem_homonimo"><i class="fa fa-list"></i></a>
+          </div>
+        </div>
+        <h4>Cadastro de Jovens com Nomes Homônimos</h4>
+        <div class="caption">
+          <div class="ibox-content">
+            <h1 class="no-margins">
+              <%= @qtd_jovem_homonimo %>
+            </h1>
+            <small>QTDE</small>
+            <div id="jovem_homonimo" style="display:none">
+              <br>
+              <table width="100%" class="table">
+                <tr>
+                  <td><b>QTD</b></td>
+                  <td><b>JOVENS</b></td>
+                  <td><b>PRONTUÁRIO</b></td>
+                  <td><b>DEL</b></td>
+                </tr>
+                <% @jovem_homonimo.each do | m | %>
+                  <tr>
+                    <td><%= m.qtd %></td>
+                    <td><%= m.nome %></td>
+                    <td>
+                      <% m.ids.sort.each do | i | %>
+                        [<%= link_to prontuario_mask(i), socioeduk_jovem_path(i) %>]
+                      <% end %>
+                    </td>
+                    <td><%= link_to('<i class="fa fa-trash"></i>'.html_safe, {controller: :gestao_vagas, action: :flag_hononimo, ids: m.ids}, class: "btn btn-xs btn-danger add_nested_fields_link", title: "Transferir Jovem") %></td>
+                  </tr>
+                <% end %>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="thumbnail">
+        <div>
+          <div>
+              <a class="btn btn-primary btn-circle pull-right" id="click_processos_mais_medidas_ativas"><i class="fa fa-list"></i></a>
+          </div>
+        </div>
+        <h4>Cadastro de Jovem com Mais de uma Medida não Concluída no Sistema</h4>
+        <div class="caption">
+          <div class="ibox-content">
+            <h1 class="no-margins">
+              <%= @qtd_processos_mais_medidas_ativas %>
+            </h1>
+            <small>QTDE</small>
+            <div id="processos_mais_medidas_ativas" style="display:none">
+              <br>
+              <table width="100%" class="table">
+                <tr>
+                  <td><b>QTD</b></td>
+                  <td><b>JOVENS</b></td>
+                </tr>
+                <% @processos_mais_medidas_ativas.each do | m | %>
+                  <tr>
+                    <td><%= m.qtd %></td>
+                    <td><%= link_to m.nome, edit_socioeduk_processo_path(m.processo_id) %></td>
+                  </tr>
+                <% end %>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="thumbnail">
+        <div>
+          <div>
+              <a class="btn btn-primary btn-circle pull-right" id="click_processos_sem_correlacao_ato_infracional"><i class="fa fa-list"></i></a>
+          </div>
+        </div>
+        <h4>Processos Sem Correlação de Ato Infracional</h4>
+        <div class="caption">
+          <div class="ibox-content">
+            <h1 class="no-margins">
+              <%= @qtd_processos_sem_correlacao_ato_infracional %>
+            </h1>
+            <small>QTDE</small>
+            <div id="processos_sem_correlacao_ato_infracional" style="display:none">
+              <br>
+              <table width="100%" class="table">
+                <tr>
+                  <td><b>Processo</b></td>
+                </tr>
+                <% @processos_sem_correlacao_ato_infracional.each do | p | %>
+                  <tr>
+                    <td><%= link_to p.id, edit_socioeduk_processo_path(p.id) %></td>
+                  </tr>
+                <% end %>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="thumbnail">
+        <div>
+          <div>
+              <a class="btn btn-primary btn-circle pull-right" id="click_jovens_ativos_com_mais_de_um_processo"><i class="fa fa-list"></i></a>
+          </div>
+        </div>
+        <h4>Jovens Ativos Com Mais de 1 Cadastro de Processo</h4>
+        <div class="caption">
+          <div class="ibox-content">
+            <h1 class="no-margins">
+              <%= @qtd_jovens_ativos_com_mais_de_um_processo %>
+            </h1>
+            <small>QTDE</small>
+            <div id="jovens_ativos_com_mais_de_um_processo" style="display:none">
+              <br>
+              <table width="100%" class="table">
+                <tr>
+                  <td><b>Jovens</b></td>
+                  <td><b>QTD</b></td>
+                  <td><b>Cadastro</b></td>
+                </tr>
+                <% @jovens_ativos_com_mais_de_um_processo.each do | p | %>
+                  <tr>
+                    <td><%= link_to p.nome, edit_socioeduk_processo_path(p.id) %></td>
+                    <td><%= p.qtd %></td>
+                    <td><%= p.created_at %></td>
+                  </tr>
+                <% end %>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<% end -%>
+<%= render partial: 'common/box', locals: { title: I18n.t('activerecord.models.unidade_socioeducativa', default: UnidadeSocioeducativa.model_name.plural.humanize.upcase) } %>
+
+<script>
+
+$("#click_n_processo_incompleto").click(function(){
+  if($('#n_processo_incompleto').fadeIn().css('display') == "none"){
+    $('#n_processo_incompleto').fadeIn().css('display', 'block');
+    $('#n_processo_incompleto').css('display', 'block');
+  }
+  else
+    $('#n_processo_incompleto').fadeIn().css('display', 'none');
+});
+
+$("#click_sem_processo_ato_infracional").click(function(){
+  if($('#sem_processo_ato_infracional').fadeIn().css('display') == "none"){
+    $('#sem_processo_ato_infracional').fadeIn().css('display', 'block');
+    $('#sem_processo_ato_infracional').css('display', 'block');
+  }
+  else
+    $('#sem_processo_ato_infracional').fadeIn().css('display', 'none');
+});
+
+$("#click_sem_jovem_sem_medida").click(function(){
+  if($('#sem_jovem_sem_medida').fadeIn().css('display') == "none"){
+    $('#sem_jovem_sem_medida').fadeIn().css('display', 'block');
+    $('#sem_jovem_sem_medida').css('display', 'block');
+  }
+  else
+    $('#sem_jovem_sem_medida').fadeIn().css('display', 'none');
+});
+
+$("#click_jovem_admitido_mas_sem_processo").click(function(){
+  if($('#jovem_admitido_mas_sem_processo').fadeIn().css('display') == "none"){
+    $('#jovem_admitido_mas_sem_processo').fadeIn().css('display', 'block');
+    $('#jovem_admitido_mas_sem_processo').css('display', 'block');
+  }
+  else
+    $('#jovem_admitido_mas_sem_processo').fadeIn().css('display', 'none');
+});
+
+$("#click_jovem_admitido_mas_sem_processo_vaga_negada").click(function(){
+  if($('#jovem_admitido_mas_sem_processo_vaga_negada').fadeIn().css('display') == "none"){
+    $('#jovem_admitido_mas_sem_processo_vaga_negada').fadeIn().css('display', 'block');
+    $('#jovem_admitido_mas_sem_processo_vaga_negada').css('display', 'block');
+  }
+  else
+    $('#jovem_admitido_mas_sem_processo_vaga_negada').fadeIn().css('display', 'none');
+});
+
+$('#click_jovem_com_medida_vencida').click(function(){
+  if($('#n_medidas_socioeducativa_vencida').fadeIn().css('display') == "none"){
+    $('#n_medidas_socioeducativa_vencida').fadeIn().css('display', 'block');
+    $('#n_medidas_socioeducativa_vencida').css('display', 'block');
+  }
+  else
+    $('#n_medidas_socioeducativa_vencida').fadeIn().css('display', 'none');
+});
+
+$('#click_medidas_concluidas_e_nao_finalizadas').click(function(){
+  if($('#medidas_concluidas_e_nao_finalizadas').fadeIn().css('display') == "none"){
+    $('#medidas_concluidas_e_nao_finalizadas').fadeIn().css('display', 'block');
+    $('#medidas_concluidas_e_nao_finalizadas').css('display', 'block');
+  }
+  else
+    $('#medidas_concluidas_e_nao_finalizadas').fadeIn().css('display', 'none');
+});
+
+$('#click_processo_evadido_nao_finalizado').click(function(){
+  if($('#processo_evadido_nao_finalizado').fadeIn().css('display') == "none"){
+    $('#processo_evadido_nao_finalizado').fadeIn().css('display', 'block');
+    $('#processo_evadido_nao_finalizado').css('display', 'block');
+  }
+  else
+    $('#processo_evadido_nao_finalizado').fadeIn().css('display', 'none');
+});
+
+$('#click_jovem_sem_unidade').click(function(){
+  if($('#jovem_sem_unidade').fadeIn().css('display') == "none"){
+    $('#jovem_sem_unidade').fadeIn().css('display', 'block');
+    $('#jovem_sem_unidade').css('display', 'block');
+  }
+  else
+    $('#jovem_sem_unidade').fadeIn().css('display', 'none');
+});
+
+$('#click_jovem_homonimo').click(function(){
+  if($('#jovem_homonimo').fadeIn().css('display') == "none"){
+    $('#jovem_homonimo').fadeIn().css('display', 'block');
+    $('#jovem_homonimo').css('display', 'block');
+  }
+  else
+    $('#jovem_homonimo').fadeIn().css('display', 'none');
+});
+
+$('#click_processos_mais_medidas_ativas').click(function(){
+  if($('#processos_mais_medidas_ativas').fadeIn().css('display') == "none"){
+    $('#processos_mais_medidas_ativas').fadeIn().css('display', 'block');
+    $('#processos_mais_medidas_ativas').css('display', 'block');
+  }
+  else
+    $('#processos_mais_medidas_ativas').fadeIn().css('display', 'none');
+});
+
+$('#click_processos_sem_correlacao_ato_infracional').click(function(){
+  if($('#processos_sem_correlacao_ato_infracional').fadeIn().css('display') == "none"){
+    $('#processos_sem_correlacao_ato_infracional').fadeIn().css('display', 'block');
+    $('#processos_sem_correlacao_ato_infracional').css('display', 'block');
+  }
+  else
+    $('#processos_sem_correlacao_ato_infracional').fadeIn().css('display', 'none');
+});
+
+$('#click_jovens_ativos_com_mais_de_um_processo').click(function(){
+  if($('#jovens_ativos_com_mais_de_um_processo').fadeIn().css('display') == "none"){
+    $('#jovens_ativos_com_mais_de_um_processo').fadeIn().css('display', 'block');
+    $('#jovens_ativos_com_mais_de_um_processo').css('display', 'block');
+  }
+  else
+    $('#jovens_ativos_com_mais_de_um_processo').fadeIn().css('display', 'none');
+});
+
+
+
+</script>

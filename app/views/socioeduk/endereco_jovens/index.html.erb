@@ -1,0 +1,26 @@
+<%- model_class = Socioeduk::EnderecoJovem -%>
+
+<table class="table table-hover table-sm">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:cidade) %></th>
+      <th><%= model_class.human_attribute_name(:rua) %></th>
+      <th><%= model_class.human_attribute_name(:numero) %></th>
+      <th><%= model_class.human_attribute_name(:complemento) %></th>
+      <th><%= model_class.human_attribute_name(:bairro) %></th>
+      <th><%= model_class.human_attribute_name(:cep) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% socioeduk_endereco_jovens.each do |socioeduk_endereco_jovem| %>
+    <tr>
+      <td><%= socioeduk_endereco_jovem.cidade&.nome %></td>
+      <td><%= socioeduk_endereco_jovem.rua %></td>
+      <td><%= socioeduk_endereco_jovem.numero %></td>
+      <td><%= socioeduk_endereco_jovem.complemento %></td>
+      <td><%= socioeduk_endereco_jovem.bairro %></td>
+      <td><%= socioeduk_endereco_jovem.cep %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

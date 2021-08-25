@@ -1,0 +1,2 @@
+var tipo_medida = $('#socioeduk_medida_socioeducativa_socioeduk_tipo_medida_socioeducativa_id :selected').text().toLowerCase();
+$('#socioeduk_medida_socioeducativa_socioeduk_medida_socioeducativa_motivo_conclusao_id').empty().append('<option value="">Selecione item de '+tipo_medida+'</option>').append("<%= j options_from_collection_for_select(@conclusao_medida, :id, :descricao) %>");

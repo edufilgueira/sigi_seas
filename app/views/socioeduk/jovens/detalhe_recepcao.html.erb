@@ -1,0 +1,399 @@
+<% content_for :title do %>
+  <%= t('.title', :default => [:"helpers.titles.#{params[:action]}"], :model => Socioeduk::Jovem.model_name.human.capitalize) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><b style="font-size: 1.5em;"><%= @jovem.nome.upcase %></b></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            
+            <%= link_to('<h3><i class="glyphicon glyphicon-link"></i> PROCESSO</h3>'.html_safe, {controller: :processos, action: :edit, id: @processo.id}, class: "") %>
+            <% if !@processo.blank? %>
+              <table class="tabela_dados_plana">
+                <tr class="td_dados_plano_tr">
+                  <td class="td_dados_plano"><dt>Situação do Processo:</dt></td>
+                  <td class="td_dados_plano"><dt>Cumprirá medida em:</dt></td>
+                  <td class="td_dados_plano"><dt>Comarca:</dt></td>
+                  <td class="td_dados_plano"><dt>Numero oficio:</dt></td>
+                </tr>
+                <tr class="td_dados_plano_tr">
+                  <td><%= @processo.socioeduk_situacao_processo&.descricao %></td>
+                  <td><%= @processo&.cidade_medida %></td>
+                  <td><%= Socioeduk::NumeroProcesso.where(socioeduk_processo_id: @processo.id, principal: true).first&.cidade&.nome %></td>
+                  <td><%= @processo.numero_oficio %></td>
+                </tr>
+                <tr class="td_dados_plano_tr">
+                  <td style="width: 25%"><dt>Data Hora da Infração:</dt></td>
+                  <td style="width: 25%"><dt>Data e Hora da Apreensão:</dt></td>
+                  <td style="width: 25%"><dt>Data Representação:</dt></td>
+                  <td style="width: 25%"><dt>Data da Decisão:</dt></td>
+                </tr>
+                <tr class="td_dados_plano_tr">
+                  <td><%= @processo.data_hora_infracao %></td>
+                  <td><%= @processo.data_hora_apreensao %></td>
+                  <td><%= @processo.data_representacao %></td>
+                  <td><%= @processo.data_decisao %></td>
+                </tr>
+                <tr>
+                  <td COLSPAN=4 style="padding-bottom: 10px;"><dt>NÚMEROS:</dt>
+                    <% num = "" %>
+                    <% @numero_processos.each do |numero_processo| %>
+                      <span class="label label-info pull-left" style="font-size: 15px; margin-right: 5px;"><%= link_to(numero_processo.numero.html_safe, {controller: :processos, action: :edit, id: @processo.id}, style: "color:#FFF") %></span>
+                    <% end %>
+                    
+                  </td>
+                </tr>
+
+              </table>
+            <% end %>
+
+            <h3>Natureza do Ato Infracional</h3>
+            <% if !@processo_naturezas.blank? %>
+              <table class="table table-hover" style="border: 1px solid #e5e6e7;">
+                <thead class="thead-dark">
+                  <tr style="background-color: #ececec">
+                    <th>Tipo Natureza</th>
+                    <th>Infração</th>
+                    <th>Continuado?</th>
+                    <th>Estupro de Vulnerável</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @processo_naturezas.each do |processo_natureza| %>
+                    <tr>
+                      <td style="vertical-align: middle;"><%= processo_natureza.tipo_natureza %></td>
+                      <td style="vertical-align: middle;"><%= processo_natureza.socioeduk_artigo_infracao&.descricao %></td>
+                      <td style="vertical-align: middle;">
+                        <% if(processo_natureza.pontuacao_continuado) %>
+                          <div class="btn btn-sm btn-danger btn-circle"><i class="fas fa-times"></i></div>
+                          <div class="btn btn-sm btn-primary btn-circle "><i class="fas fa-check"></i></div>
+                        <% else %>
+                          <div class="btn btn-sm btn-danger btn-circle"><i class="fas fa-times"></i></div>
+                        <% end %>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <% if(processo_natureza.estupro_vulneravel) %>
+                          <div class="btn btn-sm btn-primary btn-circle"><i class="fas fa-check"></i></div>
+                        <% else %>
+                          <div class="btn btn-sm btn-danger btn-circle"><i class="fas fa-times"></i></div>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% else%>
+              <div class="painel" role="alert">Natureza não informada</div>
+            <% end %>
+
+            <h3>Medidas Socioeducativas</h3>
+            <% if !@medida_socioeducativas.blank? %>
+              <table class="table table-hover" style="border: 1px solid #e5e6e7;">
+                <thead class="thead-dark">
+                  <tr style="background-color: #ececec">
+                    <th colspan='2'>Nº Processo</th>
+                    <th>Medida Socioeducativa</th>
+                    <th>Situação</th>
+                    <th>Início</th>
+                    <th>Fim Previsto</th>
+                    <th>Período de Dias</th>
+                    <th class="no-print"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @medida_socioeducativas.each do |medida_socioeducativa| %>
+                    <% if (medida_socioeducativa.socioeduk_situacao_cumprimento&.id == 3 || medida_socioeducativa.socioeduk_situacao_cumprimento&.id == 5) %>
+                      <tr style="background: #e8f9f2;">
+                        <td rowspan="2"><div style='border-right: 2px solid #a7a7a7;height: 57px;'></div></td>
+                        <td><%= medida_socioeducativa.socioeduk_numero_processo.numero %></td>
+                        <td style="vertical-align: middle;">
+                          <% if (medida_socioeducativa.socioeduk_tipo_medida_socioeducativa.id == 1 || medida_socioeducativa.socioeduk_tipo_medida_socioeducativa.id == 4)%>
+                            <table width="100%">
+                              <tr>
+                                <td width="50%"><%= medida_socioeducativa.socioeduk_tipo_medida_socioeducativa&.descricao %></td>
+                                <td width="50%"><span style="font-size:10px" class="label label-primary no-print">Data Sentença: <%= medida_socioeducativa.data_sentenca %></span></td>
+                              </tr>
+                            </table>
+                          <% elsif medida_socioeducativa.socioeduk_tipo_medida_socioeducativa.id == 3 %>
+                            <table width="100%">
+                              <tr>
+                                <td width="50%"><%= medida_socioeducativa.socioeduk_tipo_medida_socioeducativa&.descricao %></td>
+                                <td width="50%"><span style="font-size:10px" class="label label-warning no-print">Data Decisão: <%= medida_socioeducativa.data_decisao %></span></td>
+                              </tr>
+                            </table>
+                          <% elsif %>
+                            <%= medida_socioeducativa.socioeduk_tipo_medida_socioeducativa&.descricao %>
+                          <% end %>
+                        </td>
+                        <td style="vertical-align: middle;"><%= medida_socioeducativa.socioeduk_situacao_cumprimento&.descricao %></td>
+                        <td style="vertical-align: middle;"><%= medida_socioeducativa.inicio %></td>
+                        <td style="vertical-align: middle;"><%= medida_socioeducativa.fim_previsto %></td>
+                        <td style="vertical-align: middle;"><%= medida_socioeducativa.periodo_dias %></td>
+                        <td rowspan="2" class="no-print">
+                          <a id="exibir_historico" onclick="exibir_historico('historico<%= medida_socioeducativa.id %>')" class="btn btn-secondary"><i class="fas fa-history"></i></a>
+                        </td>
+                      </tr>
+                      <tr style="background: #e8f9f2;">
+                          <td colspan="1" style="border-top: 0px;">
+                            <label for="detalhe_medida_socioeducativa">Data: </label>
+                            <%= medida_socioeducativa.data_conclusao %>
+                          </td>
+                          <td colspan="1" style="border-top: 0px;">
+                            <label for="detalhe_medida_socioeducativa">Motivo da conclusão: </label>
+                            
+                            <%= medida_socioeducativa.socioeduk_medida_socioeducativa_motivo_conclusao&.socioeduk_tipo_conclusao_medida_socioeducativa&.descricao %>
+                          </td>
+                          <td colspan="1" style="border-top: 0px;">
+                            <label for="detalhe_medida_socioeducativa">Encaminhado para: </label>
+                            <%= medida_socioeducativa.socioeduk_encaminhamento_conclusao_medida_socioeducativas&.descricao %>
+                          </td>
+                          <td colspan="3" style="border-top: 0px;">
+                            <label for="detalhe_medida_socioeducativa">Observação: </label>
+                            <%= medida_socioeducativa.observacao_conclusao %>
+                          </td>
+                      </tr>
+                      <tr style="background: #FFF; display: none;" id="historico<%= medida_socioeducativa.id %>">
+                        <td colspan="8" style="border-top: 0px;padding-bottom: 25px; padding-top: 25px;">
+                          <table class="tabela-historico">
+                            <thead class="thead-dark">
+                              <tr style="background-color: #ececec">
+                                <th>Nº Processo</th>
+                                <th>Medida Socioeducativa</th>
+                                <th>Situação</th>
+                                <th>Início</th>
+                                <th>Fim Previsto</th>
+                                <th>Período de Dias</th>
+                                <th>Dt Conclusão</th>
+                                <th>Dt Sent Concl</th>
+                                <th>Dt Sent</th>
+                                <th>Dt Decisão</th>
+                                <th>Tipo Conclusão</th>
+                                <th>Encaminhamento</th>
+                                <th>Observação</th>
+                              </tr>
+                            </thead>
+                            <% medida_socioeducativa_historicos = Socioeduk::MedidaSocioeducativaHistorico.where(socioeduk_medida_socioeducativa_id: medida_socioeducativa.id).order('id desc') %>
+                            <% medida_socioeducativa_historicos.each do |medida_socioeducativa_historico| %>
+                              <tr>
+                                <td><%= medida_socioeducativa_historico.socioeduk_numero_processo.numero %></td>
+                                <td><%= medida_socioeducativa_historico.socioeduk_tipo_medida_socioeducativa&.descricao %></td>
+                                <td>
+                                  <% if medida_socioeducativa.socioeduk_situacao_cumprimento.id == 3 %>
+                                    <span style="font-size: 8px;" class="label label-primary"><%= medida_socioeducativa_historico.socioeduk_situacao_cumprimento&.descricao %></span>
+                                  <% elsif medida_socioeducativa.socioeduk_situacao_cumprimento.id == 5 %>
+                                    <span style="font-size: 8px;" class="label label-danger"><%= medida_socioeducativa_historico.socioeduk_situacao_cumprimento&.descricao %></span>
+                                  <% elsif %>
+                                    <span style="font-size: 8px;" class="label label-warning"><%= medida_socioeducativa_historico.socioeduk_situacao_cumprimento&.descricao %></span>
+                                  <% end %>
+                                </td>
+                                <td><%= medida_socioeducativa_historico.inicio %></td>
+                                <td><%= medida_socioeducativa_historico.fim_previsto %></td>
+                                <td><%= medida_socioeducativa_historico.periodo_dias %></td>
+                                <td><%= medida_socioeducativa_historico.data_conclusao %></td>
+                                <td><%= medida_socioeducativa_historico.data_sentenca_conclusao %></td>
+                                <td><%= medida_socioeducativa_historico.data_sentenca %></td>
+                                <td><%= medida_socioeducativa_historico.data_decisao %></td>
+                                <td><%= medida_socioeducativa_historico.socioeduk_medida_socioeducativa_motivo_conclusao&.socioeduk_tipo_conclusao_medida_socioeducativa&.descricao %></td>
+                                <td><%= medida_socioeducativa_historico.socioeduk_encaminhamento_conclusao_medida_socioeducativas&.descricao %></td>
+                                <td><%= medida_socioeducativa_historico.observacao_conclusao %></td>
+                              </tr>
+                            <% end %>
+                          </table>
+                        </td>
+                      </tr>
+                    <% elsif %>
+                      <tr>
+                        <td></td>
+                        <td style="vertical-align: middle;"><%= medida_socioeducativa.socioeduk_numero_processo.numero %></td>
+                        <td style="vertical-align: middle;">
+                          <% if (medida_socioeducativa.socioeduk_tipo_medida_socioeducativa.id == 1 || medida_socioeducativa.socioeduk_tipo_medida_socioeducativa.id == 4)%>
+                            <table width="100%">
+                              <tr>
+                                <td width="50%"><%= medida_socioeducativa.socioeduk_tipo_medida_socioeducativa&.descricao %></td>
+                                <td width="50%"><span style="font-size:10px" class="label label-primary no-print">Data Sentença: <%= medida_socioeducativa.data_sentenca %></span></td>
+                              </tr>
+                            </table>
+                          <% elsif medida_socioeducativa.socioeduk_tipo_medida_socioeducativa.id == 3 %>
+                            <table width="100%">
+                              <tr>
+                                <td width="50%"><%= medida_socioeducativa.socioeduk_tipo_medida_socioeducativa&.descricao %></td>
+                                <td width="50%"><span style="font-size:10px" class="label label-warning no-print">Data Decisão: <%= medida_socioeducativa.data_decisao %></span></td>
+                              </tr>
+                            </table>
+                          <% elsif %>
+                            <%= medida_socioeducativa.socioeduk_tipo_medida_socioeducativa&.descricao %>
+                          <% end %>
+                        </td>
+                        <td style="vertical-align: middle;"><%= medida_socioeducativa.socioeduk_situacao_cumprimento&.descricao %></td>
+                        <td style="vertical-align: middle;"><%= medida_socioeducativa.inicio %></td>
+                        <td style="vertical-align: middle;"><%= medida_socioeducativa.fim_previsto %></td>
+                        <td style="vertical-align: middle;"><%= medida_socioeducativa.periodo_dias %></td>
+                        <td class="no-print">
+                          <a id="exibir_historico" onclick="exibir_historico('historico<%= medida_socioeducativa.id %>')" class="btn btn-secondary"><i class="fas fa-history"></i></a>
+                        </td>
+                      </tr>
+                      <tr style="background: #FFF; display: none;" id="historico<%= medida_socioeducativa.id %>">
+                        <td colspan="8" style="border-top: 0px;padding-bottom: 25px; padding-top: 25px;">
+                          <table class="tabela-historico">
+                            <thead class="thead-dark">
+                              <tr style="background-color: #ececec">
+                                <th>Nº Processo</th>
+                                <th>Medida Socioeducativa</th>
+                                <th>Situação</th>
+                                <th>Início</th>
+                                <th>Fim Previsto</th>
+                                <th>Período de Dias</th>
+                                <th>Dt Conclusão</th>
+                                <th>Dt Sent Concl</th>
+                                <th>Dt Sent</th>
+                                <th>Dt Decisão</th>
+                                <th>Tipo Conclusão</th>
+                                <th>Encaminhamento</th>
+                                <th>Observação</th>
+                              </tr>
+                            </thead>
+                            <% medida_socioeducativa_historicos = Socioeduk::MedidaSocioeducativaHistorico.where(socioeduk_medida_socioeducativa_id: medida_socioeducativa.id).order('id desc') %>
+                            <% medida_socioeducativa_historicos.each do |medida_socioeducativa_historico| %>
+                              <tr>
+                                <td><%= medida_socioeducativa_historico.socioeduk_numero_processo.numero %></td>
+                                <td><%= medida_socioeducativa_historico.socioeduk_tipo_medida_socioeducativa&.descricao %></td>
+                                <td>
+                                  <% if medida_socioeducativa.socioeduk_situacao_cumprimento.id == 3 %>
+                                    <span style="font-size: 8px;" class="label label-primary"><%= medida_socioeducativa_historico.socioeduk_situacao_cumprimento&.descricao %></span>
+                                  <% elsif medida_socioeducativa.socioeduk_situacao_cumprimento.id == 5 %>
+                                    <span style="font-size: 8px;" class="label label-danger"><%= medida_socioeducativa_historico.socioeduk_situacao_cumprimento&.descricao %></span>
+                                  <% elsif %>
+                                    <span style="font-size: 8px;" class="label label-warning"><%= medida_socioeducativa_historico.socioeduk_situacao_cumprimento&.descricao %></span>
+                                  <% end %>
+                                </td>
+                                <td><%= medida_socioeducativa_historico.inicio %></td>
+                                <td><%= medida_socioeducativa_historico.fim_previsto %></td>
+                                <td><%= medida_socioeducativa_historico.periodo_dias %></td>
+                                <td><%= medida_socioeducativa_historico.data_conclusao %></td>
+                                <td><%= medida_socioeducativa_historico.data_sentenca_conclusao %></td>
+                                <td><%= medida_socioeducativa_historico.data_sentenca %></td>
+                                <td><%= medida_socioeducativa_historico.data_decisao %></td>
+                                <td><%= medida_socioeducativa_historico.socioeduk_medida_socioeducativa_motivo_conclusao&.socioeduk_tipo_conclusao_medida_socioeducativa&.descricao %></td>
+                                <td><%= medida_socioeducativa_historico.socioeduk_encaminhamento_conclusao_medida_socioeducativas&.descricao %></td>
+                                <td><%= medida_socioeducativa_historico.observacao_conclusao %></td>
+                              </tr>
+                            <% end %>
+                          </table>
+                        </td>
+                      </tr>
+                    <% end %>  
+                  <% end %>
+                </tbody>
+              </table>
+            <% else%>
+              <div class="painel" role="alert">Medida socioeducativa não informada</div>
+            <% end %>
+
+            <h3>Histórico de Transferências</h3>
+            <% if !@gestao_vagas.blank? %>
+              <table class="table table-hover" style="border: 1px solid #e5e6e7;">
+                <thead class="thead-dark">
+                  <tr style="background-color: #ececec">
+                    <th>Data</th>
+                    <th>Origem</th>
+                    <th>Destino</th>
+                    <th>Status</th>
+                    <th class="no-print">Ação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @gestao_vagas.each do |gestao_vaga| %>
+                    <tr>
+                      <td style="vertical-align: middle;"><%= gestao_vaga.data_movimentacao %></td>
+                      <td style="vertical-align: middle;"><%= gestao_vaga.sigla_origem %> - <%= gestao_vaga.unidade_origem %></td>
+                      <td style="vertical-align: middle;"><%= gestao_vaga.sigla_destino %> - <%= gestao_vaga.unidade_destino %></td>
+                      <td style="vertical-align: middle;"><%= gestao_vaga.status %></td>
+                      <td style="vertical-align: middle;" class="no-print">
+                        <%= link_to content_tag(:i, nil, class: 'fas fa-edit'), editar_historico_transferencia_socioeduk_jovens_path(id: gestao_vaga.id, recepcao_id: @id_jovem_recepcao), :remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', class: "btn btn-xs btn-primary", title: "Editar Histórico" %>
+                        <% if gestao_vaga.ativo %>
+                          <%= link_to('<i class="fas fa-exchange-alt"></i>'.html_safe, {controller: :jovens, action: :transferir_jovem, id_unidade_origem:gestao_vaga.unidade_destino_id, id_jovem_recepcao:gestao_vaga.jovem_recepcao_id},:remote => true, 'data-toggle' => "modal",'data-target' => '#modal-window', class: "btn btn-xs btn-warning add_nested_fields_link", title: "Transferir Jovem", onclick:"executar_mascaras_campos()") %>
+                          <%= link_to('<i class="fa fa-trash"></i>'.html_safe, {controller: :jovens, action: :deletar_transferir_jovem, id: gestao_vaga.id}, method: :deletar_transferir_jovem, data: {confirm: 'Deseja, realmente, deletar a transferência?'}, class: "btn btn-xs btn-danger add_nested_fields_link", title: "Transferir Jovem") %>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% else%>
+              <div class="painel" role="alert">Histórico de Transferencias não informado</div>
+            <% end %>
+
+            <% if !@observacoes.blank? %>
+              <h3>Observações do Processo</h3>
+              <table class="table table-hover" style="border: 1px solid #e5e6e7;">
+                <thead class="thead-dark">
+                  <tr style="background-color: #ececec">
+                    <th>Observação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @observacoes.each do |observacao| %>
+                    <tr>
+                      <td style="vertical-align: middle;"><%= observacao.observacao %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% end %>
+
+            <h3>Audiências</h3>
+            <% if !@audiencias.blank? %>
+              <table class="table table-hover" style="border: 1px solid #e5e6e7;">
+                <thead class="thead-dark">
+                  <tr style="background-color: #ececec">
+                    <th>Nº Processo</th>
+                    <th>Data</th>
+                    <th>Observação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @audiencias.each do |audiencia| %>
+                    <tr>
+                      <td style="vertical-align: middle;"><%= audiencia.numero_processo %></td>
+                      <td style="vertical-align: middle;"><%= audiencia.datahora %></td>
+                      <td style="vertical-align: middle;"><%= audiencia.observacao %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% else%>
+              <div class="painel" role="alert">Audiência não informada</div>
+            <% end %>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- -->
+<script>
+function exibir_historico(id){
+
+  if($('#'+id).fadeIn().css('display') == "none"){
+    $('#'+id).fadeIn().css('display', 'table-row');
+    $('#'+id).css('display', 'table-row');
+  }
+  else{
+    $('#'+id).fadeIn().css('display', 'none');
+  }
+
+}
+</script>

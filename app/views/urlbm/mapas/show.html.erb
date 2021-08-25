@@ -1,0 +1,69 @@
+<% content_for :title do %>
+  <%= t('.title', default: @urlbm_mapa.class.model_name.human ) %>
+<% end -%>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%= t('.title', default: @urlbm_mapa.class.model_name.human ) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+          <table class="table table-condensed">
+          <thead>
+            <tr>
+                <th><%= Urlbm::Mapa.human_attribute_name :socioeduk_jovem_recepcao %></th>
+                <th><%= Urlbm::Mapa.human_attribute_name :num_processo %></th>
+                <th><%= Urlbm::Mapa.human_attribute_name :responsavel %></th>
+                <th><%= Urlbm::Mapa.human_attribute_name :telefone %></th>
+                <th><%= Urlbm::Mapa.human_attribute_name :data_ocorrencia %></th>
+                <th><%= Urlbm::Mapa.human_attribute_name :data_admissao %></th>
+                <th><%= Urlbm::Mapa.human_attribute_name :data_nascimento %></th>
+                <th><%= Urlbm::Mapa.human_attribute_name :data_judicial %></th>
+                <th><%= Urlbm::Mapa.human_attribute_name :reincidente %></th>
+                <th onload="calcularIdade(@urlbm_mapa.data_nascimento)"><%= Urlbm::Mapa.human_attribute_name :idade %></th>
+                <th><%= Urlbm::Mapa.human_attribute_name :bo_mapa %></th>
+                <th><%= Urlbm::Mapa.human_attribute_name :obs %></th>
+                <!--<th><%= Urlbm::Mapa.human_attribute_name :socioeduk_jovens %></th>-->
+                <th><%= Urlbm::Mapa.human_attribute_name :urlbm_ato_infracional %></th>
+                <th><%= Urlbm::Mapa.human_attribute_name :cidade %></th>
+            </tr>
+              </thead>
+              <tbody>
+                <tr>
+                    <td style="min-width: 90px; word-break: break-all;"><%= @urlbm_mapa.socioeduk_jovem_recepcao.socioeduk_jovem.nome %></td>
+                    <td style="min-width: 90px; word-break: break-all;"><%= @urlbm_mapa.num_processo %></td>
+                    <td style="min-width: 90px; word-break: break-all;"><%= @urlbm_mapa.telefone %></td>
+                    <td style="min-width: 90px; word-break: break-all;"><%= @urlbm_mapa.data_ocorrencia %></td>
+                    <td style="min-width: 90px; word-break: break-all;"><%= @urlbm_mapa.data_admissao %></td>
+                    <td style="min-width: 90px; word-break: break-all;"><%= @urlbm_mapa.data_nascimento %></td>
+                    <td style="min-width: 90px; word-break: break-all;"><%= @urlbm_mapa.data_judicial %></td>
+                    <td style="min-width: 90px; word-break: break-all;"><%= @urlbm_mapa.reincidente %></td>
+                    <td style="min-width: 90px; word-break: break-all;" id="idade"><%= @urlbm_mapa.idade %></td>
+                    <td style="min-width: 90px; word-break: break-all;"><%= @urlbm_mapa.bo_mapa %></td>
+                    <td style="min-width: 90px; word-break: break-all;"><%= @urlbm_mapa.obs %></td>
+                    <!--<td style="min-width: 90px; word-break: break-all;"><%= @urlbm_mapa.socioeduk_jovem %></td>-->
+                    <td style="min-width: 90px; word-break: break-all;"><%= @urlbm_mapa.urlbm_ato_infracional %></td>
+                    <td style="min-width: 90px; word-break: break-all;"><%= @urlbm_mapa.cidade %></td>
+                    <td style="min-width: 90px; word-break: break-all;"><%= @urlbm_mapa.responsavel %></td>
+                                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to('Listar', urlbm_mapas_path, class: 'btn btn-default') %>
+<%= link_to 'Editar', edit_urlbm_mapa_path(@urlbm_mapa), class: 'btn btn-success' %>

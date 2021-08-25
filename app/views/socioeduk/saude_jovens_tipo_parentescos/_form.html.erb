@@ -1,0 +1,22 @@
+<%= form_for(@socioeduk_saude_jovens_tipo_parentesco, html: { class: 'form-horizontal' }) do |f| %>
+  <%#= render 'layouts/error_messages', model_name: @socioeduk_saude_jovens_tipo_parentesco %>
+  <%= render 'layouts/message_required' %>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_saude_jovem %>
+      <%= f.collection_select :socioeduk_saude_jovem_id, Socioeduk::SaudeJovem.all, :id, :id, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-offset-1">
+      <%= f.label :socioeduk_tipo_parentesco %>
+       <%= f.collection_select :socioeduk_tipo_parentesco_id, Socioeduk::TipoParentesco.all, :id, :descricao, {include_blank: '--selecione--'}, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10">
+      <%= f.submit nil, class: 'btn btn-primary', data: { disable_with: disable_with } %>
+      <%= link_to I18n.t('helpers.links.cancel'), socioeduk_saude_jovens_tipo_parentescos_path, class: 'btn btn-warning' %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,65 @@
+<%- model_class = UnidadeSocioeducativaArea -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.unidade_socioeducativa_area', default: UnidadeSocioeducativaArea.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.unidade_socioeducativa_area', default: UnidadeSocioeducativaArea.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <%= form_tag({action: :index}, method: :get) do %>
+          <%#= form_for(:unidade_socioeducativa_area, :url => {action: :index}, method: 'POST') do |f| %>
+            <div class="row">
+              <div class="col-sm-6">
+                <%= select_tag :unidades_socioeducativas_id, options_from_collection_for_select(UnidadeSocioeducativa.all, :id, :nome_sigla), {include_blank: true, prompt: "-- Selecione --", class: 'form-control'} %>
+              </div>
+              <div class="col-sm-2">
+                <%= submit_tag 'Buscar', class: 'btn btn-primary' %>
+              </div>
+            </div>
+          <% end %>
+
+          <div class="col-sm-12 b-r">
+            <%= link_to_new new_unidade_socioeducativa_area_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                                    <th><%= model_class.human_attribute_name(:unidade_socioeducativa) %></th>
+                                    <th><%= model_class.human_attribute_name(:area) %></th>
+                                    <th><%= model_class.human_attribute_name(:email) %></th>
+                                    <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @unidade_socioeducativa_areas.each do |unidade_socioeducativa_area| %>
+                <tr>
+                                    <td><%= unidade_socioeducativa_area.unidade_socioeducativa %></td>
+                                    <td><%= unidade_socioeducativa_area.area %></td>
+                                    <td><%= unidade_socioeducativa_area.email %></td>
+                                    <td>
+                    <%= link_to_show(unidade_socioeducativa_area) %>
+                    <%= link_to_edit(edit_unidade_socioeducativa_area_path(unidade_socioeducativa_area)) %>
+                    <%= link_to_delete(unidade_socioeducativa_area) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

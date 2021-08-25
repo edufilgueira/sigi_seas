@@ -1,0 +1,100 @@
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5>Relatório de Média de Tempo de Cumprimento por Medida</h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <%= form_for(:frm, :url => {action: :tempo_cumprimento_por_medidas}, method: 'POST') do |f| %>
+            <div class="form-group">
+              <div class="col-sm-2"">
+                <%= f.text_field :data_inicial, placeholder: "Data Inicial", class: "form-control maskdata datepicker", value: @data_inicial%>
+              </div>
+              <div class="col-sm-2">
+                <%= f.text_field :data_final, placeholder: "Data Final", class: "form-control maskdata datepicker", value: @data_final %>
+              </div>
+              <div class="col-sm-4">
+                <%= f.select :unidade, UnidadeSocioeducativa.all.collect {|p| [ p.nome, p.id ] }, {include_blank: "Unidade", selected: @unidade}, class: 'form-control' %>
+              </div>
+              <div class="col-sm-4">
+                <%= f.select :regiao, Cidade.where('id = regiao_pai').collect {|p| [ p.nome, p.id ] }, {include_blank: "Região", selected: @regiao}, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group" style="padding-top: 40px;">
+              <div class="col-sm-4">
+                <%= f.select :tipo_medida, Socioeduk::TipoMedidaSocioeducativa.where("tipo_medida = 'FECHADO'").collect {|p| [ p.descricao, p.id ] }, {include_blank: "Tipo de Medida", selected: @tipo_medida}, class: 'form-control' %>
+              </div>
+              <div class="col-sm-4">
+                <%= f.select :situacao_cumprimento, Socioeduk::SituacaoCumprimento.all.collect {|p| [ p.descricao, p.id ] }, {include_blank: "Situação de Cumprimento", selected: @situacao_cumprimento}, class: 'form-control' %>
+              </div>
+              <div class="col-sm-2">
+                <%= f.submit 'Buscar', class: "btn btn-primary" %>
+              </div>
+            </div>  
+          <% end %>
+          <%= @msg %>
+          <% if !@lista.nil? && @lista.length > 0 %>
+            
+            <div class="col-sm-12">
+              <div class="widget navy-bg p-lg text-center" style="font-size: 18px;">
+                  <div class="m-b-md">
+                      <i class="fa fa-bell fa-4x"></i>
+                      <h1 class="m-xs"><%= @meses %> <%= @text_mes %> e <%= @dias %> <%= @text_dia %></h1>
+                      <h3 class="font-bold no-margins"></h3>
+                      <small>Média do tempo de cumprimento das medidas</small>
+                  </div>
+              </div>
+            </div>
+
+            <table class="table table-hover table-sm sortable">
+              <thead>
+                <tr>
+                  <th style="width:50px">#</th>
+                  <th>ID</th>
+                  <th>Nome</th>
+                  <th>Situação</th>
+                  <th>Inicial</th>
+                  <th>Final</th>
+                  <th>Dias</th>
+                  <th>Ação</th>
+                </tr>
+              </thead>
+              <tbody>
+              <% count = 0 %>
+              <% @lista.each do |valor| %>
+              <% count += 1 %>
+                <tr>
+                  <td><%= count %></td>
+                  <td><%= valor[:id_processo] %></td>
+                  <td><%= valor[:nome] %></td>
+                  <td><%= valor[:situacao_cumprimento] %></td>
+                  <td><%= valor[:inicial] %></td>
+                  <td><%= valor[:fim_previsto] %></td>
+                  <td><%= valor[:dias] %></td>
+                  <td>
+                    <%= link_to('<i class="glyphicon glyphicon-link"></i>'.html_safe, {controller: :processos, action: :edit, id: valor[:id_processo]}, class: "btn btn-xs btn-success", title: "Informação do Processo") %>
+                    <%= link_to('<i class="fa fa-info-circle"></i>'.html_safe, {controller: :jovens, action: :show, id: valor[:id_jovem]}, class: "btn btn-info btn-xs btn-success", title: "Informação dos Jovens") %>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+              </tbody>
+            </table>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,1 @@
+json.array! @socioeduk_processo_recepcao_jovem_infracoes, partial: 'socioeduk_processo_recepcao_jovem_infracoes/socioeduk_processo_recepcao_jovem_infracao', as: :socioeduk_processo_recepcao_jovem_infracao

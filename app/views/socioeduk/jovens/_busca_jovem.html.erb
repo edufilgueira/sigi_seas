@@ -1,0 +1,29 @@
+<br>
+<%= search_form_for @q do |f| %>
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-2">
+            <%= f.search_field :id_eq, placeholder: "Nº Prontuário", class: "form-control" %>
+        </div>
+        <div class="col-sm-3">
+            <% if :nome_cont %>
+            <%= f.search_field :nome_cont, placeholder: "Nome", class: "form-control", onblur: "remover_ascentos_nome()" %>
+            <% end %>
+        </div>
+        <div class="col-sm-3">
+            <%= f.search_field :nome_mae_or_nome_pai_cont, placeholder: "Responsável", class: "form-control" %>
+        </div>
+        <div class="col-sm-2">
+            <%= f.search_field :rg_or_cpf_cont, placeholder: "N° do Documento", class: "form-control" %>
+        </div>
+        <%= f.submit 'Buscar', class: "btn btn-primary" %>
+        <%= link_to "Limpar", socioeduk_jovens_path, class:"btn btn-warning" %>
+    </div>
+</div>
+<% end %>
+<script>
+    function remover_ascentos_nome() {
+        texto = $("#q_nome_cont").val();
+        $("#q_nome_cont").val(retira_acentos(texto));
+    }
+</script>

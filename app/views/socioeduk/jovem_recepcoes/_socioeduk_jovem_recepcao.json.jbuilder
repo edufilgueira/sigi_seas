@@ -1,0 +1,2 @@
+json.extract! socioeduk_jovem_recepcao, :id, :socioeduk_jovem_id, :antecedentes, :bo, :responsavel, :nome_responsavel, :telefone, :presenca_familiar_junto, :condutor_nome, :condutor_documento, :condutor_cargo, :datahora_apresentacao, :oficio, :documentos_pessoais, :decisao, :corpo_delito, :certidao_antecedente_criminal, :kit_vestuario, :created_at, :updated_at
+json.url socioeduk_jovem_recepcao_url(socioeduk_jovem_recepcao, format: :json)

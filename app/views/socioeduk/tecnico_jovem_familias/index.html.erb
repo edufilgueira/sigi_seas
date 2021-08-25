@@ -1,0 +1,57 @@
+<%- model_class = Socioeduk::TecnicoJovemFamilia -%>
+<% content_for :title do %>
+<%=  I18n.t('activerecord.models.socioeduk_tecnico_jovem_familia', default: Socioeduk::TecnicoJovemFamilia.model_name.human.pluralize.titleize) %>
+<% end -%>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <h5><%=  I18n.t('activerecord.models.socioeduk_tecnico_jovem_familia', default: Socioeduk::TecnicoJovemFamilia.model_name.human.pluralize.titleize) %></h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-sm-12 b-r">
+            <%= link_to_new new_socioeduk_tecnico_jovem_familia_path %>
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_tecnico_jovem) %></th>
+                                    <th><%= model_class.human_attribute_name(:nome) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_escolaridade) %></th>
+                                    <th><%= model_class.human_attribute_name(:profissao) %></th>
+                                    <th><%= model_class.human_attribute_name(:socioeduk_tipo_parentesco) %></th>
+                                    <th width="18%"><%= I18n.t('helpers.actions') %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @socioeduk_tecnico_jovem_familias.each do |socioeduk_tecnico_jovem_familia| %>
+                <tr>
+                                    <td><%= socioeduk_tecnico_jovem_familia.socioeduk_tecnico_jovem %></td>
+                                    <td><%= socioeduk_tecnico_jovem_familia.nome %></td>
+                                    <td><%= socioeduk_tecnico_jovem_familia.socioeduk_escolaridade %></td>
+                                    <td><%= socioeduk_tecnico_jovem_familia.profissao %></td>
+                                    <td><%= socioeduk_tecnico_jovem_familia.socioeduk_tipo_parentesco %></td>
+                                    <td>
+                    <%= link_to_show(socioeduk_tecnico_jovem_familia) %>
+                    <%= link_to_edit(edit_socioeduk_tecnico_jovem_familia_path(socioeduk_tecnico_jovem_familia)) %>
+                    <%= link_to_delete(socioeduk_tecnico_jovem_familia) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
